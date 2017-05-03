@@ -1,0 +1,4 @@
+--cpu Cortex-M3 ".\神舟iii号\stm32f10x_it.o" ".\神舟iii号\main.o" ".\神舟iii号\stm32f10x_rcc.o" ".\神舟iii号\stm32f10x_gpio.o" ".\神舟iii号\misc.o" ".\神舟iii号\stm32f10x_exti.o" ".\神舟iii号\stm32f10x_spi.o" ".\神舟iii号\stm32f10x_fsmc.o" ".\神舟iii号\stm32f10x_usart.o" ".\神舟iii号\stm32f10x_sdio.o" ".\神舟iii号\stm32f10x_dma.o" ".\神舟iii号\stm32f10x_i2c.o" ".\神舟iii号\core_cm3.o" ".\神舟iii号\system_stm32f10x.o" ".\神舟iii号\stm32_eval.o" ".\神舟iii号\startup_stm32f10x_xl.o" --library_type=microlib --strict --scatter ".\神舟III号\串口中断收发程序.sct" 
+--autoat --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\神舟III号\串口中断收发程序.map" -o ".\神舟III号\串口中断收发程序.axf"

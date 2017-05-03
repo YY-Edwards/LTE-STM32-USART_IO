@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<userOverrides>
+  <override>
+    <path>G:\IAR\IAR\Project\keyscanf_usart\main.c</path>
+    <encoding>GB2312</encoding>
+  </override>
+</userOverrides>
+
+
