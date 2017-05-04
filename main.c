@@ -25,6 +25,14 @@
 /** @addtogroup STM32F10x_StdPeriph_Examples
   * @{
   */
+    
+PUTCHAR_PROTOTYPE
+{
+    USART_SendData(USART1, ch);
+    while (USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET)
+    {}
+    return ch;
+}
 
 /** @addtogroup USART_Interrupt
   * @{
@@ -68,15 +76,21 @@ __IO TestStatus TransferStatus2 = FAILED;
 static u8  fac_us=0;//us微秒延时倍乘数
 static u16 fac_ms=0;//ms毫秒延时倍乘数
 
-static volatile u8 press_counter = 0;
-static volatile u8  pressed_row_number =0x99;
-static volatile u16 key_value = 0x99;
+
+//列如按下键为key0,则短按键值为0xA0, 长按键值为0xB0,释放键值为0xC0
+volatile u8 press_counter = 0;
+static volatile u8  pressed_row_number =0;
+static volatile u16 current_key_value = 0x99;//当前按键值
+static volatile u16 last_key_value = 0x99;//上次按键值
+
+static volatile u16 pressed_value =0x99;//按下后返回的键值（包括短按长按）
+static volatile u16 release_value =0x99;//释放返回的键值
 
 static KeyStatus_t KeyStatus = KEY_NOT_PRESS;
-static volatile u8 row1_pressed_flag = 0;//第一列
-static volatile u8 row2_pressed_flag = 0;//第二列
-static volatile u8 row3_pressed_flag = 0;//第三列
-static volatile u8 row4_pressed_flag = 0;//第四列
+volatile u8 row1_pressed_flag = 0;//第一列
+volatile u8 row2_pressed_flag = 0;//第二列
+volatile u8 row3_pressed_flag = 0;//第三列
+volatile u8 row4_pressed_flag = 0;//第四列
 
  NVIC_InitTypeDef NVIC_InitStructure;
 
@@ -116,12 +130,13 @@ int main(void)
   
   EXTI_USER_Init();//外部中断初始化，在这里初始化4列对应的中断输入
   
-  USART1_Init();//串口1初始化
+  USART1_Init();//串口1初始化,带打印调试
   
   TIM3_Int_Init(100-1, 7199);//定时器3初始化,10Khz的计数频率，计数到100为10ms  
   
   GPIO_SetBits(GPIO_LED, DS1_PIN|DS2_PIN|DS3_PIN|DS4_PIN);/*关闭所有的LED指示灯*/
   
+  printf("\r\n/***********************key scan start*********************/\r\n");
   while(1)
   {
     switch(KeyStatus)
@@ -132,48 +147,50 @@ int main(void)
         if(row1_pressed_flag | row2_pressed_flag |row3_pressed_flag |row4_pressed_flag)
         {
           //扫描行
-          GPIO_SetBits(GPIO_KEY_INTERFACE, COL1_PIN)//第一行置0
-          GPIO_ResetBits(GPIO_KEY_INTERFACE, COL2_PIN)//第二行置1
+          GPIO_ResetBits(GPIO_KEY_INTERFACE, COL1_PIN);//第一行置0
+          GPIO_SetBits(GPIO_KEY_INTERFACE, COL2_PIN);//第二行置1
+          pressed_row_number = row1_pressed_flag + row2_pressed_flag 
+            + row3_pressed_flag +row4_pressed_flag;//列计算
           switch(pressed_row_number)
           {
             case 1:
               
               if(GPIO_ReadInputDataBit(GPIO_KEY_INTERFACE, ROW1_PIN) ==0)
-                key_value =0x00;
+                current_key_value =0x00;
               else
-                key_value =0x04;
+                current_key_value =0x04;
               
               break;
               
             case 2:
               
               if(GPIO_ReadInputDataBit(GPIO_KEY_INTERFACE, ROW2_PIN) ==0)
-                key_value =0x01;
+                current_key_value =0x01;
               else
-                key_value =0x05;
+                current_key_value =0x05;
               
               break;
               
             case 3:
               
               if(GPIO_ReadInputDataBit(GPIO_KEY_INTERFACE, ROW3_PIN) ==0)
-                key_value =0x02;
+                current_key_value =0x02;
               else
-                key_value =0x06;
+                current_key_value =0x06;
               
               break;
               
             case 4:
               
               if(GPIO_ReadInputDataBit(GPIO_KEY_INTERFACE, ROW4_PIN) ==0)
-                key_value =0x03;
+                current_key_value =0x03;
               else
-                key_value =0x07;
+                current_key_value =0x07;
               
               break;
               
             default:
-              printf("key err !!!\n");
+              printf("key pressed_row_number err !!!\n");
               KeyStatus = KEY_NOT_PRESS;
               break;
           }
@@ -184,55 +201,161 @@ int main(void)
         break;
         
     case KEY_PRESSED:
-        
-          switch(key_value)
+      
+         GPIO_ResetBits(GPIO_KEY_INTERFACE, COL1_PIN);//第一行置0
+         GPIO_ResetBits(GPIO_KEY_INTERFACE, COL2_PIN);//第二行置0  
+          switch(current_key_value)
           {
             case 0x00:
             case 0x04:
               
-              if(row1_pressed_flag)
+              if(press_counter > 40)//大于400ms的按键
+              {
+                if(current_key_value == 0x00)pressed_value = 0xB0;//key0长按
                 else
+                  pressed_value = 0xB4;//key4长按
+                  
+              }
+              else
+              {
+                if(current_key_value == 0x00)pressed_value = 0xA0;//key0短按
+                else
+                  pressed_value = 0xA4;//key4短按        
+               }
+              
+              if(!row1_pressed_flag)//判断按键是否为释放
                    KeyStatus = KEY_RELEASE;
                 
               break;
               
            case 0x01:
            case 0x05:
-               if(row2_pressed_flag)
+             
+               if(press_counter > 40)//大于400ms的按键
+              {
+                if(current_key_value == 0x01)pressed_value = 0xB1;//key1长按
                 else
+                  pressed_value = 0xB5;//key5长按
+                  
+              }
+              else
+              {
+                if(current_key_value == 0x01)pressed_value = 0xA1;//key1短按
+                else
+                  pressed_value = 0xA5;//key5短按        
+               }
+               
+               if(!row2_pressed_flag)
                    KeyStatus = KEY_RELEASE;
                
               break;
               
            case 0x02:
            case 0x06:
-               if(row3_pressed_flag)
+             
+               if(press_counter > 40)//大于400ms的按键
+              {
+                if(current_key_value == 0x02)pressed_value = 0xB2;//key2长按
                 else
+                  pressed_value = 0xB6;//key6长按
+                  
+              }
+              else
+              {
+                if(current_key_value == 0x02)pressed_value = 0xA2;//key2短按
+                else
+                  pressed_value = 0xA6;//key6短按        
+               }
+               
+               if(!row3_pressed_flag)
                    KeyStatus = KEY_RELEASE;
                
               break;
               
            case 0x03:
-           case 0x04:
-               if(row4_pressed_flag)
+           case 0x07:
+             
+               if(press_counter > 40)//大于400ms的按键
+              {
+                if(current_key_value == 0x03)pressed_value = 0xB3;//key3长按
                 else
+                  pressed_value = 0xB7;//key7长按
+                  
+              }
+              else
+              {
+                if(current_key_value == 0x03)pressed_value = 0xA3;//key3短按
+                else
+                  pressed_value = 0xA7;//key7短按        
+               }
+               
+               if(!row4_pressed_flag)
                    KeyStatus = KEY_RELEASE;
                
               break;
               
           default:
-              printf("key err !!!\n");
+              printf("key current_key_value err !!!\n");
               KeyStatus = KEY_NOT_PRESS;
               break;
           }
-              
-        
+          
+          TIM_Cmd(TIM3, DISABLE);  //关闭TIM3
+          press_counter = 0;//清空计数
+          
         break;
                 
       case KEY_RELEASE:
         
         
+        switch(pressed_value)
+          {
+            case 0xA0:
+            case 0xB0:
+              release_value = 0xC0;
+              break;
+              
+            case 0xA1:
+            case 0xB1:
+              release_value = 0xC1;
+              break;
+              
+            case 0xA2:
+            case 0xB2:
+              release_value = 0xC2;
+              break;
+              
+             case 0xA3:
+             case 0xB3:
+               release_value = 0xC3;
+               break;
+               
+             case 0xA4:
+             case 0xB4:
+               release_value = 0xC4;
+               break;
+               
+             case 0xA5:
+             case 0xB5:
+               release_value = 0xC5;
+               break;
+               
+             case 0xA6:
+             case 0xB6:
+               release_value = 0xC6;
+               break;
+               
+             case 0xA7:
+             case 0xB7:
+               release_value = 0xC7;
+               break;
+               
+          default:
+            break;
+            
+          }
         
+        KeyStatus = KEY_NOT_PRESS;
         
         
         
@@ -240,12 +363,21 @@ int main(void)
         
         
       default:
+        printf("key status err !!!\n");
+        KeyStatus = KEY_NOT_PRESS;
         break;
      
     
     }
     //delay_ms(1);
+    
+    if((pressed_value!=pressed_value) && (pressed_value !=0x99))
+    printf("pressed_value : 0x%x", pressed_value);
+    
+    if((release_value!=release_value) &&(release_value !=0x99))
+    printf("release_value : 0x%x", release_value);
   
+    
   }
 
 }
@@ -299,8 +431,8 @@ void USART1_Init(void)
   USART_Init(USART1, &USART_InitStructure);
  
   /*使能串口1的发送和接收中断*/
-  USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
-  USART_ITConfig(USART1, USART_IT_TXE, ENABLE);
+  //USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
+  //USART_ITConfig(USART1, USART_IT_TC, ENABLE);
   
   /* Enable the USART1 Interrupt */
   NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
@@ -311,8 +443,8 @@ void USART1_Init(void)
 
   /* 使能串口1 */
   USART_Cmd(USART1, ENABLE);
-  
   USART_ClearFlag(USART1,USART_FLAG_TC); //清除USART_FLAG_TC，解决第一个字节不能发出的问题 
+  
 
 
 }
@@ -343,6 +475,7 @@ void KEY_Init(void)
   GPIO_InitStructure.GPIO_Pin = COL1_PIN|COL2_PIN; 
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_Init(GPIO_KEY_INTERFACE, &GPIO_InitStructure); 
   
   /* KEY列选使用的GPIO管脚模式*/
   GPIO_InitStructure.GPIO_Pin = ROW1_PIN|ROW2_PIN|ROW3_PIN|ROW4_PIN; 
@@ -395,7 +528,7 @@ void EXTI_USER_Init(void)
   GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,GPIO_PinSource2);     //把GPIOA的Pin2设置为EXTI的输入线
   EXTI_InitStructure.EXTI_Line=EXTI_Line2;                       //中断线2
   EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;	         //中断模式设置
-  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling; //双边沿触发
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling; //下降沿触发
   EXTI_InitStructure.EXTI_LineCmd = ENABLE;
   EXTI_Init(&EXTI_InitStructure);		//根据EXTI_InitStruct中指定的参数初始化外设EXTI寄存器
   
@@ -403,7 +536,7 @@ void EXTI_USER_Init(void)
   GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,GPIO_PinSource3);     //把GPIOA的Pin3设置为EXTI的输入线
   EXTI_InitStructure.EXTI_Line=EXTI_Line3;                       //中断线3
   EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;	         
-  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling;
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
   EXTI_InitStructure.EXTI_LineCmd = ENABLE;
   EXTI_Init(&EXTI_InitStructure);		
   
@@ -411,7 +544,7 @@ void EXTI_USER_Init(void)
   GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,GPIO_PinSource4);     //把GPIOA的Pin4设置为EXTI的输入线
   EXTI_InitStructure.EXTI_Line=EXTI_Line4;                       //中断线4
   EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;	         
-  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling; 
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling; 
   EXTI_InitStructure.EXTI_LineCmd = ENABLE;
   EXTI_Init(&EXTI_InitStructure);		
   
@@ -419,7 +552,7 @@ void EXTI_USER_Init(void)
   GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,GPIO_PinSource5);     //把GPIOA的Pin5设置为EXTI的输入线
   EXTI_InitStructure.EXTI_Line=EXTI_Line5;                       //中断线5
   EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;	         
-  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling; 
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling; 
   EXTI_InitStructure.EXTI_LineCmd = ENABLE;
   EXTI_Init(&EXTI_InitStructure);		//根据EXTI_InitStruct中指定的参数初始化外设EXTI寄存器
   

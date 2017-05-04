@@ -23,7 +23,7 @@
 #define __PLATFORM_CONFIG_H
 
 /* Includes ------------------------------------------------------------------*/
-
+#include "stdio.h"
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /* Uncomment the line corresponding to the STMicroelectronics evaluation board
@@ -32,6 +32,12 @@
  #define USE_STM3210E_EVAL
 #endif
 
+#ifdef __GNUC__
+  #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#else
+  #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#endif /* __GNUC__ */   
+  
 /* Define the STM32F10x hardware depending on the used evaluation board */
 
 

@@ -169,7 +169,7 @@
         <option>
           <name>CCDefines</name>
           <state>USE_STDPERIPH_DRIVER</state>
-          <state>STM32F10X_MD_VL</state>
+          <state>STM32F10X_XL</state>
           <state>USE_STM32100B_EVAL</state>
         </option>
         <option>
@@ -1114,8 +1114,8 @@
         <option>
           <name>CCDefines</name>
           <state>USE_STDPERIPH_DRIVER</state>
-          <state>STM32F10X_CL</state>
-          <state>USE_STM3210C_EVAL</state>
+          <state>STM32F10X_XL</state>
+          <state>USE_STM3210E_EVAL</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1596,7 +1596,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>###Unitialized###</state>
+          <state>Project.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>
@@ -2037,7 +2037,7 @@
         </option>
         <option>
           <name>OGUseCmsis</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGUseCmsisDspLib</name>
@@ -2541,7 +2541,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>###Unitialized###</state>
+          <state>Project.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>

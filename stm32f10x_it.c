@@ -49,6 +49,14 @@ extern uint8_t NbrOfDataToTransfer2;
 extern uint8_t NbrOfDataToRead1;
 extern uint8_t NbrOfDataToRead2;
 
+extern volatile u8 row1_pressed_flag;//第一列
+extern volatile u8 row2_pressed_flag;//第二列
+extern volatile u8 row3_pressed_flag;//第三列
+extern volatile u8 row4_pressed_flag;//第四列
+extern volatile u8 press_counter;
+extern void delay_ms(u16 xms);
+
+
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
@@ -167,24 +175,24 @@ void USART1_IRQHandler(void)
   if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
   {
     /* Read one byte from the receive data register */
-    RxBuffer1[RxCounter1++] = USART_ReceiveData(USART1);
+    //RxBuffer1[RxCounter1++] = USART_ReceiveData(USART1);
 
     if(RxCounter1 == NbrOfDataToRead1)
     {
       /* Disable the USART1 Receive interrupt */
-      USART_ITConfig(USART1, USART_IT_RXNE, DISABLE);
+      //USART_ITConfig(USART1, USART_IT_RXNE, DISABLE);
     }
   }
   
-  if(USART_GetITStatus(USART1, USART_IT_TXE) != RESET)
+  if(USART_GetITStatus(USART1, USART_IT_TC) != RESET)
   {   
     /* Write one byte to the transmit data register */
-    USART_SendData(USART1, TxBuffer1[TxCounter1++]);
+    //USART_SendData(USART1, TxBuffer1[TxCounter1++]);
 
     if(TxCounter1 == NbrOfDataToTransfer1)
     {
       /* Disable the USART1 Transmit interrupt */
-      USART_ITConfig(USART1, USART_IT_TXE, DISABLE);
+      //USART_ITConfig(USART1, USART_IT_TXE, DISABLE);
     }    
   }
 }
@@ -201,7 +209,7 @@ void TIM3_IRQHandler(void)   //TIM3中断
   if(TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)  //检查TIM3更新中断发生与否
      {
         TIM_ClearITPendingBit(TIM3, TIM_IT_Update);  //清除TIMx更新中断标志 
-        press_counter++://计数
+        press_counter++;//计数
       }
 }
 
@@ -212,18 +220,12 @@ void TIM3_IRQHandler(void)   //TIM3中断
   */
 void EXTI2_IRQHandler(void)
 {
-  u8 ReadValue;
-  //ReadValue = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_7)
+  static volatile u8 ReadValue =1;
   if(EXTI_GetITStatus(EXTI_Line2)!= RESET)
   {
     delay_ms(10);//延时防抖动
     ReadValue = GPIO_ReadInputDataBit(GPIO_KEY_INTERFACE, ROW1_PIN);
-    if(ReadValue)//释放
-    {
-      pressed_row_number = 1;
-      row1_pressed_flag =0;
-    }
-    else//按下
+    if(ReadValue == 0)//按下
     {
       row1_pressed_flag =1;
  
@@ -242,9 +244,21 @@ void EXTI2_IRQHandler(void)
   */
 void EXTI3_IRQHandler(void)
 {
-    if(EXTI_GetITStatus(EXTI_Line3)!= RESET)
+  u8 ReadValue;
+  if(EXTI_GetITStatus(EXTI_Line3)!= RESET)
   {
-    
+    delay_ms(10);//延时防抖动
+    ReadValue = GPIO_ReadInputDataBit(GPIO_KEY_INTERFACE, ROW2_PIN);
+    if(ReadValue)//释放
+    {
+      row2_pressed_flag =0;
+    }
+    else//按下
+    {
+      row2_pressed_flag =1;
+ 
+    }
+        
     
     EXTI_ClearITPendingBit(EXTI_Line3);
   }
@@ -260,9 +274,21 @@ void EXTI3_IRQHandler(void)
   */
 void EXTI4_IRQHandler(void)
 {
-   if(EXTI_GetITStatus(EXTI_Line4)!= RESET)
+  u8 ReadValue;
+  if(EXTI_GetITStatus(EXTI_Line4)!= RESET)
   {
-    
+    delay_ms(10);//延时防抖动
+    ReadValue = GPIO_ReadInputDataBit(GPIO_KEY_INTERFACE, ROW3_PIN);
+    if(ReadValue)//释放
+    {
+      row3_pressed_flag =0;
+    }
+    else//按下
+    {
+      row3_pressed_flag =1;
+ 
+    }
+        
     
     EXTI_ClearITPendingBit(EXTI_Line4);
   }
@@ -279,13 +305,25 @@ void EXTI4_IRQHandler(void)
 void EXTI9_5_IRQHandler(void)
 {
   
-    if(EXTI_GetITStatus(EXTI_Line5)!= RESET)
+  u8 ReadValue;
+  if(EXTI_GetITStatus(EXTI_Line5)!= RESET)
   {
-    
+    delay_ms(10);//延时防抖动
+    ReadValue = GPIO_ReadInputDataBit(GPIO_KEY_INTERFACE, ROW4_PIN);
+    if(ReadValue)//释放
+    {
+
+      row4_pressed_flag =0;
+    }
+    else//按下
+    {
+      row4_pressed_flag =1;
+ 
+    }
+        
     
     EXTI_ClearITPendingBit(EXTI_Line5);
   }
-  
   
 }
 
