@@ -45,7 +45,7 @@ Stop=1
 Freq=10000000
 MultiCoreRunAll=1
 [DebugChecksum]
-Checksum=1285851880
+Checksum=526134822
 [JLinkDriver]
 CStepIntDis=_ 0
 [Exceptions]
@@ -55,11 +55,14 @@ StopOnThrow=_ 0
 ShowArgs=0
 [Disassembly]
 MixedMode=1
-[Disassemble mode]
-mode=0
-[Breakpoints2]
-Bp0=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.145.3" 0 0 1 "" 0 "" 0
-Count=1
+[struct_types]
+Fmt0=ScanKeyProtocol_t-Checksum	4	0
+Fmt1=ScanKeyProtocol_t-Header	4	0
+Fmt2=ScanKeyProtocol_t-KeyValue	4	0
+Fmt3=ScanKeyProtocol_t-Status	4	0
+Fmt4=ScanKeyProtocol_t-Terminator	4	0
+[watch_formats]
+Fmt0={W}0:sizeof(ScanKeyProtocol_t)	4	0
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -67,9 +70,6 @@ Category=_ 0
 [TermIOLog]
 LoggingEnabled=_ 0
 LogFile=_ ""
-[Aliases]
-Count=0
-SuppressDialog=0
 [CallStackLog]
 Enabled=0
 [DriverProfiling]
@@ -78,3 +78,12 @@ Mode=0
 Graph=0
 Symbiont=0
 Exclusions=
+[Disassemble mode]
+mode=0
+[Breakpoints2]
+Bp0=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.130.3" 0 0 1 "" 0 "" 0
+Bp1=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.122.3" 0 0 1 "" 0 "" 0
+Count=2
+[Aliases]
+Count=0
+SuppressDialog=0

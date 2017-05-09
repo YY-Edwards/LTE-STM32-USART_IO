@@ -34,12 +34,20 @@ PUTCHAR_PROTOTYPE
     return ch;
 }
 
+int simple_uart_put(u8 ch)
+{
+    USART_SendData(USART1, ch);
+    while (USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET)
+    {}
+    return ch;
+}
+
 /** @addtogroup USART_Interrupt
   * @{
   */ 
 
 /* Private typedef -----------------------------------------------------------*/
-typedef enum { FAILED = 0, PASSED = !FAILED} TestStatus;
+//typedef enum { FAILED = 0, PASSED = !FAILED} TestStatus;
 
 typedef enum key_states_e{  
     KEY_NOT_PRESS,  //初始状态，未按下
@@ -48,30 +56,11 @@ typedef enum key_states_e{
 }KeyStatus_t; 
 
 /* Private define ------------------------------------------------------------*/
-#define TxBufferSize1   (countof(TxBuffer1) - 1)
-#define TxBufferSize2   (countof(TxBuffer2) - 1)
-#define RxBufferSize1   TxBufferSize2
-#define RxBufferSize2   TxBufferSize1
-
 /* Private macro -------------------------------------------------------------*/
 #define countof(a)   (sizeof(a) / sizeof(*(a)))
 
 /* Private variables ---------------------------------------------------------*/
-USART_InitTypeDef USART_InitStructure;
-uint8_t TxBuffer1[] = "串口中断收发示例: 串口1 -> 串口2 (中断收发)";
-uint8_t TxBuffer2[] = "串口中断收发示例: 串口2 -> 串口1 (中断收发)";
-uint8_t RxBuffer1[RxBufferSize1];
-uint8_t RxBuffer2[RxBufferSize2];
-__IO uint8_t TxCounter1 = 0x00;
-__IO uint8_t TxCounter2 = 0x00;
-__IO uint8_t RxCounter1 = 0x00; 
-__IO uint8_t RxCounter2 = 0x00;
-uint8_t NbrOfDataToTransfer1 = TxBufferSize1;
-uint8_t NbrOfDataToTransfer2 = TxBufferSize2;
-uint8_t NbrOfDataToRead1 = RxBufferSize1;
-uint8_t NbrOfDataToRead2 = RxBufferSize2;
-__IO TestStatus TransferStatus1 = FAILED; 
-__IO TestStatus TransferStatus2 = FAILED;
+
 
 static u8  fac_us=0;//us微秒延时倍乘数
 static u16 fac_ms=0;//ms毫秒延时倍乘数
@@ -86,20 +75,22 @@ static volatile u16 last_key_value = 0x99;//上次按键值
 static volatile u16 pressed_value =0x99;//按下后返回的键值（包括短按长按）
 static volatile u16 release_value =0x99;//释放返回的键值
 
-static KeyStatus_t KeyStatus = KEY_NOT_PRESS;
+//static KeyStatus_t KeyStatus = KEY_NOT_PRESS;
 
-volatile u8 key1_pressed_flag = 0;//key1
-volatile u8 key2_pressed_flag = 0;//key2
-volatile u8 key3_pressed_flag = 0;//key3
-volatile u8 key4_pressed_flag = 0;//key4
-volatile u8 key5_pressed_flag = 0;//key5
-volatile u8 key6_pressed_flag = 0;//key6
-volatile u8 key7_pressed_flag = 0;//key7
-volatile u8 key8_pressed_flag = 0;//key8
+volatile u16 key1_pressed_flag = 0;//key1
+volatile u16 key2_pressed_flag = 0;//key2
+volatile u16 key3_pressed_flag = 0;//key3
+volatile u16 key4_pressed_flag = 0;//key4
+volatile u16 key5_pressed_flag = 0;//key5
+volatile u16 key6_pressed_flag = 0;//key6
+volatile u16 key7_pressed_flag = 0;//key7
+volatile u16 key8_pressed_flag = 0;//key8
 
  NVIC_InitTypeDef NVIC_InitStructure;
+ USART_InitTypeDef USART_InitStructure;
 
 /* Private function prototypes -----------------------------------------------*/
+void USART2_Init(void);
 void USART1_Init(void);
 void KEY_Init(void);
 void NVIC_Configuration(void);
@@ -109,7 +100,7 @@ void delay_init(void);
 void delay_ms(u16 xms);
 void delay_us(u32 xus);
 
-TestStatus Buffercmp(uint8_t* pBuffer1, uint8_t* pBuffer2, uint16_t BufferLength);
+//TestStatus Buffercmp(uint8_t* pBuffer1, uint8_t* pBuffer2, uint16_t BufferLength);
 
 /* Private functions ---------------------------------------------------------*/
 
@@ -126,8 +117,8 @@ int main(void)
        To reconfigure the default setting of SystemInit() function, refer to
        system_stm32f10x.c file
      */     
-  int counter =0;
-  u16 ReadVale =0x00;
+  //int counter =0;
+ //u16 ReadVale =0x00;
   delay_init();	    	 //延时函数初始化	
 
   NVIC_Configuration();//设置中断优先级分组
@@ -137,15 +128,25 @@ int main(void)
   EXTI_USER_Init();//外部中断初始化，在这里初始化8个对应按键的中断输入
   
   USART1_Init();//串口1初始化,带打印调试
+  
+  //USART2_Init();
     
   //TIM3_Int_Init(100-1, 7199);//定时器3初始化,10Khz的计数频率，计数到100为10ms  
   
   GPIO_SetBits(GPIO_LED, DS1_PIN|DS2_PIN|DS3_PIN|DS4_PIN);/*关闭所有的LED指示灯*/
   
-  printf("\r\n/***********************key scan start*********************/\r\n");
+  //printf("\r\n/***********************key scan start*********************/\r\n");
   while(1)
   {     
-      delay_ms(1);    
+      delay_ms(100); 
+      GPIO_ResetBits(GPIO_LED, DS1_PIN);
+      delay_ms(200); 
+      GPIO_SetBits(GPIO_LED, DS1_PIN);
+//      delay_ms(300); 
+//      GPIO_ResetBits(GPIO_LED, DS1_PIN);
+//      delay_ms(400); 
+//      GPIO_SetBits(GPIO_LED, DS1_PIN);
+            
   }
         
     
@@ -343,21 +344,23 @@ int main(void)
 //    }
 //    //delay_ms(1);
 //    
-    *****/
+ 
 
    
-    //delay_ms(10);
-//    if((release_value !=0x99) && (pressed_value !=0x99))
-//    {
-//
-//      last_key_value = pressed_value;
-//      printf("pressed_value : 0x%X\r\n", pressed_value);
-//      counter++;
-//      printf("release_value : 0x%X, %d\r\n", release_value, counter);
-//      
-//      release_value = 0x99;
-//      pressed_value = 0x99;
-//    }
+    delay_ms(10);
+    if((release_value !=0x99) && (pressed_value !=0x99))
+    {
+
+      last_key_value = pressed_value;
+      printf("pressed_value : 0x%X\r\n", pressed_value);
+      counter++;
+      printf("release_value : 0x%X, %d\r\n", release_value, counter);
+      
+      release_value = 0x99;
+      pressed_value = 0x99;
+    }
+    
+    ****/
   
     
   }
@@ -425,10 +428,76 @@ void USART1_Init(void)
   /* 使能串口1 */
   USART_Cmd(USART1, ENABLE);
   USART_ClearFlag(USART1,USART_FLAG_TC); //清除USART_FLAG_TC，解决第一个字节不能发出的问题 
+  while (USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET)
+    {}
   
 
 
 }
+
+
+void USART2_Init(void)
+{   
+   GPIO_InitTypeDef GPIO_InitStructure;
+   
+  /*使能串口2使用的GPIO时钟*/
+  RCC_APB2PeriphClockCmd(USART2_GPIO_CLK , ENABLE);
+
+  /*使能串口2时钟*/
+  RCC_APB1PeriphClockCmd(USART2_CLK, ENABLE); 
+  
+    /*串口2 RX管脚配置*/
+  /* Configure USART1 Rx as input floating */
+  GPIO_InitStructure.GPIO_Pin = USART2_RxPin;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+  GPIO_Init(USART2_GPIO, &GPIO_InitStructure);
+
+  /*串口2 TX管脚配置*/ 
+  /* Configure USART1 Tx as alternate function push-pull */
+  GPIO_InitStructure.GPIO_Pin = USART2_TxPin;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+  GPIO_Init(USART2_GPIO, &GPIO_InitStructure);
+  
+  /* USART1 configuration ------------------------------------------------------*/
+
+  /* USART1 configured as follow:
+        - BaudRate = 115200 baud  
+        - Word Length = 8 Bits
+        - One Stop Bit
+        - No parity
+        - Hardware flow control disabled (RTS and CTS signals)
+        - Receive and transmit enabled
+  */
+  USART_InitStructure.USART_BaudRate = 115200;               /*设置波特率为115200*/
+  USART_InitStructure.USART_WordLength = USART_WordLength_8b;/*设置数据位为8*/
+  USART_InitStructure.USART_StopBits = USART_StopBits_1;     /*设置停止位为1位*/
+  USART_InitStructure.USART_Parity = USART_Parity_No;        /*无奇偶校验*/
+  USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;/*无硬件流控*/
+  USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;  /*发送和接收*/
+
+  /*配置串口2 */
+  USART_Init(USART2, &USART_InitStructure);
+ 
+  /*使能串口2的发送和接收中断*/
+  //USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);
+  //USART_ITConfig(USART2, USART_IT_TC, ENABLE);
+  
+  /* Enable the USART1 Interrupt */
+  NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0;	        //抢占优先级0
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x01;			//子优先级1
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  NVIC_Init(&NVIC_InitStructure);
+
+  /* 使能串口2 */
+  USART_Cmd(USART2, ENABLE);
+  USART_ClearFlag(USART2,USART_FLAG_TC); //清除USART_FLAG_TC，解决第一个字节不能发出的问题 
+  
+
+
+}
+
 
 
 /**
@@ -660,21 +729,21 @@ void TIM3_Int_Init(u16 arr,u16 psc)
   * @retval PASSED: pBuffer1 identical to pBuffer2
   *   FAILED: pBuffer1 differs from pBuffer2
   */
-TestStatus Buffercmp(uint8_t* pBuffer1, uint8_t* pBuffer2, uint16_t BufferLength)
-{
-  while(BufferLength--)
-  {
-    if(*pBuffer1 != *pBuffer2)
-    {
-      return FAILED;
-    }
-
-    pBuffer1++;
-    pBuffer2++;
-  }
-
-  return PASSED;
-}
+//TestStatus Buffercmp(uint8_t* pBuffer1, uint8_t* pBuffer2, uint16_t BufferLength)
+//{
+//  while(BufferLength--)
+//  {
+//    if(*pBuffer1 != *pBuffer2)
+//    {
+//      return FAILED;
+//    }
+//
+//    pBuffer1++;
+//    pBuffer2++;
+//  }
+//
+//  return PASSED;
+//}
 
 #ifdef  USE_FULL_ASSERT
 

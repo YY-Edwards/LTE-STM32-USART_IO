@@ -2121,7 +2121,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>11111110</state>
+          <state>00000000</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -2196,6 +2196,7 @@
           <state>$PROJ_DIR$\..\..\..\Utilities\STM32_EVAL</state>
           <state>$PROJ_DIR$\..\..\..\Utilities\STM32_EVAL\Common</state>
           <state>$PROJ_DIR$\..\..\..\Utilities\STM32_EVAL\STM3210E_EVAL</state>
+          <state>G:\IAR\IAR\Project\keyscanf_usart\protocol</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2215,7 +2216,7 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>3</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
@@ -2224,7 +2225,7 @@
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>3</state>
+          <state>1</state>
         </option>
         <option>
           <name>CompilerMisraRules98</name>
@@ -2605,7 +2606,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>lnk0t.icf</state>
+          <state>$TOOLKIT_DIR$\config\linker\ST\stm32f103xE.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -2665,7 +2666,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state></state>
+          <state>__iar_program_start</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -4874,6 +4875,15 @@
   </group>
   <group>
     <name>User</name>
+    <group>
+      <name>protocol</name>
+      <file>
+        <name>$PROJ_DIR$\..\protocol\pro_slip.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\protocol\pro_slip.h</name>
+      </file>
+    </group>
     <file>
       <name>$PROJ_DIR$\..\main.c</name>
     </file>
