@@ -14,7 +14,7 @@
 /*
 checksum = key_value  + status
 key_value =0xA00x;x= 1,2,3,4...8
-status = 0 / 1; 0:release, 1:press
+status = 0 / 1; 0:release, 1:press (status = 0x03 ; set volume(value:0x00~0x3E (attenuation); 0xFF:Mute))
 */
 
 #define END             (char)0xC0    /* indicates end of packet */
@@ -38,6 +38,8 @@ typedef ScanKeyProtocol_t * datapro_t;
 
 
 int data_packet_send(u16 value, u16 status);
+
+int packet_analysis(void *packet, u8 length);
 
 #endif
 

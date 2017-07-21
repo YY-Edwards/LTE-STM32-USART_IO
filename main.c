@@ -58,12 +58,12 @@ typedef enum key_states_e{
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 #define countof(a)   (sizeof(a) / sizeof(*(a)))
+#define UART_RE_LEN    256
 
 /* Private variables ---------------------------------------------------------*/
 
 
-static u8  fac_us=0;//us微秒延时倍乘数
-static u16 fac_ms=0;//ms毫秒延时倍乘数
+u8 USART_RX[UART_RE_LEN]={0};
 
 
 //列如按下键为key0,则短按键值为0xA0, 长按键值为0xB0,释放键值为0xC0
@@ -88,6 +88,7 @@ volatile u16 key8_pressed_flag = 0;//key8
 
  NVIC_InitTypeDef NVIC_InitStructure;
  USART_InitTypeDef USART_InitStructure;
+ DMA_InitTypeDef  DMA_InitStructure; 
 
 /* Private function prototypes -----------------------------------------------*/
 void USART2_Init(void);
@@ -96,11 +97,31 @@ void KEY_Init(void);
 void NVIC_Configuration(void);
 void EXTI_USER_Init(void);
 void TIM3_Int_Init(u16 arr,u16 psc);
-void delay_init(void);
-void delay_ms(u16 xms);
-void delay_us(u32 xus);
+void Write_Volume(unsigned short dat);
 
 //TestStatus Buffercmp(uint8_t* pBuffer1, uint8_t* pBuffer2, uint16_t BufferLength);
+
+
+
+void Write_Volume(unsigned short dat)
+{
+    SCLK = 0;
+    LOAD = 0;
+    
+    for(int i = 15; i >= 0; i--)
+    {     
+      DATA = (dat  >> i) & 1;
+        delay_us(1);
+        SCLK =1;
+        delay_us(1);
+        SCLK =0;       
+    }
+    delay_us(1);   
+    LOAD = 1;
+    delay_us(5);
+    SCLK =1;       
+}
+
 
 /* Private functions ---------------------------------------------------------*/
 
@@ -119,7 +140,7 @@ int main(void)
      */     
   //int counter =0;
  //u16 ReadVale =0x00;
-  delay_init();	    	 //延时函数初始化	
+  delay_init(72);	    	 //延时函数初始化	
 
   NVIC_Configuration();//设置中断优先级分组
   
@@ -127,7 +148,7 @@ int main(void)
   
   EXTI_USER_Init();//外部中断初始化，在这里初始化8个对应按键的中断输入
   
-  USART1_Init();//串口1初始化,带打印调试
+  USART1_Init();//串口1初始化,带打印调试, 开启串口中断接收功能
   
   //USART2_Init();
     
@@ -149,221 +170,8 @@ int main(void)
             
   }
         
-    
-    
-    /******
-//    switch(KeyStatus)
-//    {
-//      case KEY_NOT_PRESS:
-//        
-//        //有键值被按下
-//        if(key1_pressed_flag | key2_pressed_flag |key3_pressed_flag |key4_pressed_flag
-//           | key5_pressed_flag |key6_pressed_flag  |key7_pressed_flag |key8_pressed_flag)
-//        {
-//          
-//          if(key1_pressed_flag)
-//            current_key_value = 0x01;
-//          else if(key2_pressed_flag)
-//            current_key_value = 0x02;
-//          else if(key3_pressed_flag)
-//            current_key_value = 0x03;
-//          else if(key4_pressed_flag)
-//            current_key_value = 0x04;
-//          else if(key5_pressed_flag)
-//            current_key_value = 0x05;
-//          else if(key6_pressed_flag)
-//            current_key_value = 0x06;
-//          else if(key7_pressed_flag)
-//            current_key_value = 0x07;
-//          else if(key8_pressed_flag)
-//            current_key_value = 0x08;
-//          else
-//          {
-//            
-//            printf("key_pressed_flag err !!!\n");
-//            KeyStatus = KEY_NOT_PRESS;
-//            break;
-//          }
-//          KeyStatus = KEY_PRESSED;
-//          TIM_Cmd(TIM3, ENABLE);  //开启TIM3
-//           
-//        }
-//          
-//        break;
-//        
-//    case KEY_PRESSED:
-//      
-//          switch(current_key_value)
-//          {
-//            case 0x01: 
-//              if(press_counter > 40)//超过400ms
-//                pressed_value = 0xB1;//长按的键值
-//              else
-//                pressed_value = 0xA1;//短按的键值
-//              //等待按键释放
-//              if(!key1_pressed_flag) KeyStatus = KEY_RELEASE;
-//       
-//              break;
-//              
-//            case 0x02: 
-//               if(press_counter > 40)
-//                pressed_value = 0xB2;
-//              else
-//                pressed_value = 0xA2;
-//              if(!key2_pressed_flag) KeyStatus = KEY_RELEASE;
-//              
-//              break;
-//            case 0x03: 
-//               if(press_counter > 40)
-//                pressed_value = 0xB3;
-//              else
-//                pressed_value = 0xA3;
-//              if(!key3_pressed_flag) KeyStatus = KEY_RELEASE;
-//              
-//              break;
-//            case 0x04:
-//               if(press_counter > 40)
-//                pressed_value = 0xB4;
-//              else
-//                pressed_value = 0xA4;
-//              if(!key4_pressed_flag) KeyStatus = KEY_RELEASE;
-//              
-//              break;
-//            case 0x05: 
-//               if(press_counter > 40)
-//                pressed_value = 0xB5;
-//              else
-//                pressed_value = 0xA5;
-//              if(!key5_pressed_flag) KeyStatus = KEY_RELEASE;
-//             
-//              break;
-//          
-//            case 0x06: 
-//               if(press_counter > 40)
-//                pressed_value = 0xB6;
-//              else
-//                pressed_value = 0xA6;
-//              if(!key6_pressed_flag) KeyStatus = KEY_RELEASE;
-//              break;
-//              
-//            case 0x07:
-//               if(press_counter > 40)
-//                pressed_value = 0xB7;
-//              else
-//                pressed_value = 0xA7;
-//              if(!key7_pressed_flag) KeyStatus = KEY_RELEASE;
-//              
-//              break;
-//              
-//            case 0x08: 
-//               if(press_counter > 40)
-//                pressed_value = 0xB8;
-//              else
-//                pressed_value = 0xA8;
-//              if(!key8_pressed_flag) KeyStatus = KEY_RELEASE;              
-//              break;
-//              
-//            default:
-//               printf("current_key_value err !!!\n");
-//              KeyStatus = KEY_NOT_PRESS;
-//              break;
-//          
-//          }
-//          
-//          if(KeyStatus == KEY_RELEASE)
-//          {
-//            TIM_Cmd(TIM3, DISABLE);  //关闭TIM3
-//            press_counter = 0;//清空计数
-//          }
-//          
-//        break;
-//                
-//      case KEY_RELEASE:
-//        
-//         switch(pressed_value)
-//          {
-//            case 0xA1:
-//            case 0xB1:
-//             release_value = 0xC1; 
-//              break;
-//              
-//            case 0xA2:
-//            case 0xB2:
-//             release_value = 0xC2; 
-//              break;
-//              
-//            case 0xA3:
-//            case 0xB3:
-//             release_value = 0xC3; 
-//              break;
-//              
-//            case 0xA4:
-//            case 0xB4:
-//             release_value = 0xC4; 
-//              break;
-//              
-//            case 0xA5:
-//            case 0xB5:
-//             release_value = 0xC5; 
-//              break;
-//              
-//            case 0xA6:
-//            case 0xB6:
-//             release_value = 0xC6; 
-//              break;
-//              
-//            case 0xA7:
-//            case 0xB7:
-//             release_value = 0xC7; 
-//              break;
-//              
-//            case 0xA8:
-//            case 0xB8:
-//             release_value = 0xC8; 
-//              break;
-//                
-//            default:
-//               printf("pressed_value err !!!\n");
-//              KeyStatus = KEY_PRESSED;
-//              break;
-//          
-//          }
-// 
-//        
-//        KeyStatus = KEY_NOT_PRESS;
-//        
-//        break;
-//        
-//        
-//      default:
-//        printf("key status err !!!\n");
-//        KeyStatus = KEY_NOT_PRESS;
-//        break;
-//     
-//    
-//    }
-//    //delay_ms(1);
-//    
- 
-
-   
-    delay_ms(10);
-    if((release_value !=0x99) && (pressed_value !=0x99))
-    {
-
-      last_key_value = pressed_value;
-      printf("pressed_value : 0x%X\r\n", pressed_value);
-      counter++;
-      printf("release_value : 0x%X, %d\r\n", release_value, counter);
-      
-      release_value = 0x99;
-      pressed_value = 0x99;
-    }
-    
-    ****/
-  
-    
-  }
+       
+ }
 
 
 /**
@@ -416,7 +224,40 @@ void USART1_Init(void)
  
   /*使能串口1的发送和接收中断*/
   //USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
-  //USART_ITConfig(USART1, USART_IT_TC, ENABLE);
+  //USART_ClearFlag(USART1,USART_FLAG_RXNE); 	
+  
+  
+  USART_ITConfig(USART1, USART_IT_RXNE, DISABLE);
+  USART_ITConfig(USART1, USART_IT_TC, DISABLE);
+  USART_ITConfig(USART1,USART_IT_IDLE,ENABLE);//空闲中断（接收未知长度，则使用空闲中断来判断是否接收完毕） 
+  USART_ClearFlag(USART1,USART_FLAG_IDLE); 				//清USART_FLAG_IDLE标志 
+
+
+  //采用DMA方式接收  
+  USART_DMACmd(USART1,USART_DMAReq_Rx ,ENABLE);
+    
+  //开启DMA1的时钟
+  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
+  
+  /* DMA1 channel 5 configuration */ //USART1_RX  
+  DMA_DeInit(DMA1_Channel5);  
+  DMA_InitStructure.DMA_PeripheralBaseAddr      =(u32)(&USART1->DR);  			//外设串口1地址  
+ 
+  DMA_InitStructure.DMA_MemoryBaseAddr          =(u32)USART_RX;
+  DMA_InitStructure.DMA_DIR                     =DMA_DIR_PeripheralSRC;   	//外设作为目的地址   //DMA_DIR_PeripheralSRC;   //外设作为DMA的源端  
+  DMA_InitStructure.DMA_BufferSize              =256; 				//BufferSize;      //传输缓冲器大小 
+  DMA_InitStructure.DMA_PeripheralInc           =DMA_PeripheralInc_Disable; 	//外设递增模式禁止   DMA_PeripheralInc_Enable;            //外设地址增加  
+  DMA_InitStructure.DMA_MemoryInc               =DMA_MemoryInc_Enable;   	//内存地址自增  
+  DMA_InitStructure.DMA_PeripheralDataSize      =DMA_PeripheralDataSize_Byte; 	//传输方式：字节   DMA_PeripheralDataSize_Word;    //字（32位）  
+  DMA_InitStructure.DMA_MemoryDataSize          =DMA_MemoryDataSize_Byte;  	//内存存储方式：字节  DMA_MemoryDataSize_Word;  
+  DMA_InitStructure.DMA_Mode                    =DMA_Mode_Normal;  		//DMA_Mode_Normal 正常模式，只传送一次;  DMA_Mode_Circular:循环模式，不停的传送;  
+  DMA_InitStructure.DMA_Priority                =DMA_Priority_VeryHigh;  	//串口1的接收作为最高优先级
+  DMA_InitStructure.DMA_M2M                     =DMA_M2M_Disable;             	//DMA_M2M_Enable;      
+  DMA_Init(DMA1_Channel5,&DMA_InitStructure); 
+
+	//使能通道5  
+  DMA_Cmd(DMA1_Channel5,ENABLE);  
+  
   
   /* Enable the USART1 Interrupt */
   NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
@@ -512,7 +353,7 @@ void KEY_Init(void)
   //使能时钟
   /*使能LED灯使用的GPIO时钟*/
   /*使能KEY扫描按键使用的GPIO时钟*/
-  RCC_APB2PeriphClockCmd(RCC_GPIO_LED | RCC_GPIO_KEY, ENABLE);
+  RCC_APB2PeriphClockCmd(RCC_GPIO_LED | RCC_GPIO_KEY | RCC_GPIO_VOLUME_CTL, ENABLE);
   
    /* KEY按键使用的GPIO管脚模式*/
   GPIO_InitStructure.GPIO_Pin = KEY1_PIN|KEY2_PIN|KEY3_PIN|KEY4_PIN|KEY5_PIN|KEY6_PIN|KEY7_PIN|KEY8_PIN; 
@@ -525,6 +366,16 @@ void KEY_Init(void)
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
   GPIO_Init(GPIO_LED, &GPIO_InitStructure); 
+  
+   /* Configure Volume control pins: LOAD, SCLK, DATA */
+  GPIO_InitStructure.GPIO_Pin = VOLUME_LOAD_PIN | VOLUME_DATA_PIN | VOLUME_SCLK_PIN;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_Init(GPIO_VOLUME_CTL, &GPIO_InitStructure);
+    
+  GPIO_SetBits(GPIO_VOLUME_CTL, VOLUME_LOAD_PIN);//LOAD
+  GPIO_SetBits(GPIO_VOLUME_CTL, VOLUME_SCLK_PIN);//SCLK
+  GPIO_SetBits(GPIO_VOLUME_CTL, VOLUME_DATA_PIN);//DATA
   
 }
 
@@ -622,23 +473,23 @@ void EXTI_USER_Init(void)
   EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling; 
   EXTI_InitStructure.EXTI_LineCmd = ENABLE;
   EXTI_Init(&EXTI_InitStructure);		//根据EXTI_InitStruct中指定的参数初始化外设EXTI寄存器
-//  
-//  //PA7
-//  GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,GPIO_PinSource7);     //把GPIOA的Pin7设置为EXTI的输入线
-//  EXTI_InitStructure.EXTI_Line=EXTI_Line7;                       //中断线7
-//  EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;	         
-//  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling; 
-//  EXTI_InitStructure.EXTI_LineCmd = ENABLE;
-//  EXTI_Init(&EXTI_InitStructure);		//根据EXTI_InitStruct中指定的参数初始化外设EXTI寄存器
-//  
   
-  //PA8
-  GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,GPIO_PinSource8);     //把GPIOA的Pin8设置为EXTI的输入线
-  EXTI_InitStructure.EXTI_Line=EXTI_Line8;                       //中断线8
+  //PA7
+  GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,GPIO_PinSource7);     //把GPIOA的Pin7设置为EXTI的输入线
+  EXTI_InitStructure.EXTI_Line=EXTI_Line7;                       //中断线7
   EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;	         
   EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling; 
   EXTI_InitStructure.EXTI_LineCmd = ENABLE;
   EXTI_Init(&EXTI_InitStructure);		//根据EXTI_InitStruct中指定的参数初始化外设EXTI寄存器
+  
+  
+  //PA8
+//  GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,GPIO_PinSource8);     //把GPIOA的Pin8设置为EXTI的输入线
+//  EXTI_InitStructure.EXTI_Line=EXTI_Line8;                       //中断线8
+//  EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;	         
+//  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling; 
+//  EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+//  EXTI_Init(&EXTI_InitStructure);		//根据EXTI_InitStruct中指定的参数初始化外设EXTI寄存器
   
   
   
@@ -766,47 +617,7 @@ void assert_failed(uint8_t* file, uint32_t line)
 }
 #endif
 
-void delay_init()	 
-{
 
-  SysTick_CLKSourceConfig(SysTick_CLKSource_HCLK_Div8);	//此处选择外部时钟，HCLK/8
-  fac_us = SystemCoreClock/8000000;//fac_us定义为系统时钟的1/8	
-  fac_ms = (u16)fac_us*1000; //每个ms需要的systick时钟数
-
-}
-
-void delay_us(u32 xus)	//延时xus个微秒
-{		
-    u32 temp;	    	 
-    SysTick->LOAD=xus*fac_us;                         //时间加载	  		 
-    SysTick->VAL=0x00;                                //清空计数器
-    SysTick->CTRL|=SysTick_CTRL_ENABLE_Msk ;       //设置开始倒数计时的掩码
-
-    do
-    {
-            temp=SysTick->CTRL;
-    }
-    while(temp&0x01&&!(temp&(1<<16)));            //等待时间到达  
-            SysTick->CTRL&=~SysTick_CTRL_ENABLE_Msk;       //关闭计数器
-
-    SysTick->VAL =0X00;                            //清空计数器	 
-}
-
-//延时xms 72mhz下，xms<=1864
-void delay_ms(u16 xms)
-{	 		  	  
-    u32 temp;		   
-    SysTick->LOAD=(u32)xms*fac_ms; //时间加载
-    SysTick->VAL =0x00;            //清空计数器
-    SysTick->CTRL|=SysTick_CTRL_ENABLE_Msk ;          //开始倒数 
-    do
-    {
-            temp=SysTick->CTRL;
-    }
-    while(temp&0x01&&!(temp&(1<<16)));//等待时间到达哦
-    SysTick->CTRL&=~SysTick_CTRL_ENABLE_Msk;       //关闭计数器
-    SysTick->VAL =0X00;       //清空计数器  	    
-} 
 /**
   * @}
   */ 

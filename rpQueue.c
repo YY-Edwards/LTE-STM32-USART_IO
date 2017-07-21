@@ -62,7 +62,7 @@ int queuePush(m_qpointer *qp, char *i_buffer, unsigned int length)
 
     if (qp == NULL)
     {	
-        printf("qp is NULL \n");
+        //printf("qp is NULL \n");
         free(p->data);
         free(p);
         p->data = NULL;
@@ -106,7 +106,7 @@ int queuePop(m_qpointer *qp, char *o_buffer, unsigned int length)
     //printf("4.1\n");
 
     if (qp == NULL){
-        printf("qp is NULL \n");
+        //printf("qp is NULL \n");
         free(q->data);
         free(q);
         q->data = NULL;

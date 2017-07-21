@@ -2983,7 +2983,7 @@
         </option>
         <option>
           <name>OGUseCmsis</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGUseCmsisDspLib</name>
@@ -3142,6 +3142,7 @@
           <state>$PROJ_DIR$\..\..\..\Utilities\STM32_EVAL</state>
           <state>$PROJ_DIR$\..\..\..\Utilities\STM32_EVAL\Common</state>
           <state>$PROJ_DIR$\..\..\..\Utilities\STM32_EVAL\STM3210B_EVAL</state>
+          <state>G:\IAR\IAR\Project\keyscanf_usart\protocol</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3487,7 +3488,7 @@
         </option>
         <option>
           <name>IlinkOutputFile</name>
-          <state>###Unitialized###</state>
+          <state>Project.out</state>
         </option>
         <option>
           <name>IlinkDebugInfoEnable</name>
@@ -4817,6 +4818,9 @@
       <name>$PROJ_DIR$\..\..\..\Libraries\STM32F10x_StdPeriph_Driver\src\misc.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\..\..\..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dma.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\..\..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_exti.c</name>
     </file>
     <file>
@@ -4884,6 +4888,12 @@
         <name>$PROJ_DIR$\..\protocol\pro_slip.h</name>
       </file>
     </group>
+    <file>
+      <name>$PROJ_DIR$\..\delay.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\delay.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$\..\main.c</name>
     </file>

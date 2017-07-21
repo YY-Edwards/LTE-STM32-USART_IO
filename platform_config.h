@@ -24,6 +24,8 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stdio.h"
+#include <sys.h>
+#include <delay.h>
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /* Uncomment the line corresponding to the STMicroelectronics evaluation board
@@ -61,14 +63,14 @@
   
   
 /*LED灯相关定义*/
-  #define RCC_GPIO_LED                    RCC_APB2Periph_GPIOF    /*LED使用的GPIO时钟*/
+  #define RCC_GPIO_LED                    RCC_APB2Periph_GPIOC    /*LED使用的GPIO时钟*/
   #define LEDn                            4                       /*LED数量*/
-  #define GPIO_LED                        GPIOF  //GPIOC           /*LED灯使用的GPIO组*/
+  #define GPIO_LED                        GPIOC           /*LED灯使用的GPIO组*/
   
-  #define DS1_PIN                         GPIO_Pin_6              /*DS1使用的GPIO管脚*/
-  #define DS2_PIN                         GPIO_Pin_7		  /*DS2使用的GPIO管脚*/
-  #define DS3_PIN                         GPIO_Pin_8  	          /*DS3使用的GPIO管脚*/
-  #define DS4_PIN                         GPIO_Pin_9		  /*DS4使用的GPIO管脚*/
+  #define DS1_PIN                         GPIO_Pin_0              /*DS1使用的GPIO管脚*/
+  #define DS2_PIN                         GPIO_Pin_1		  /*DS2使用的GPIO管脚*/
+  #define DS3_PIN                         GPIO_Pin_2  	          /*DS3使用的GPIO管脚*/
+  #define DS4_PIN                         GPIO_Pin_3		  /*DS4使用的GPIO管脚*/
 
 /*KEY独立按键相关定义*///8
   #define RCC_GPIO_KEY                    RCC_APB2Periph_GPIOA    /*KEY使用的GPIO时钟*/
@@ -82,7 +84,25 @@
   #define KEY5_PIN                         GPIO_Pin_4 	          /*K5使用的GPIO管脚*/
   #define KEY6_PIN                         GPIO_Pin_5		  /*K6使用的GPIO管脚*/
   #define KEY7_PIN                         GPIO_Pin_6		  /*K7使用的GPIO管脚*/
-  #define KEY8_PIN                         GPIO_Pin_8//		  /*K8使用的GPIO管脚*/
+  #define KEY8_PIN                         GPIO_Pin_7//		  /*K8使用的GPIO管脚*/
+
+/*LM1971接口相关定义*/
+#define RCC_GPIO_VOLUME_CTL             RCC_APB2Periph_GPIOB          /*CTL使用的GPIO时钟*/
+#define CTLn                            3                             /*CTL数量*/
+#define GPIO_VOLUME_CTL                 GPIOB                      /*VOLUME_CTL灯使用的GPIO组*/
+
+#define VOLUME_LOAD_PIN                         GPIO_Pin_13              /*LOAD使用的GPIO管脚*/
+#define VOLUME_DATA_PIN                         GPIO_Pin_14		  /*DATA使用的GPIO管脚*/
+#define VOLUME_SCLK_PIN                         GPIO_Pin_15  	          /*SCLK使用的GPIO管脚*/
+
+#define LOAD PBout(13)
+#define SCLK PBout(15)
+#define DATA PBout(14)
+     
+#define LED4 PCout(3)    
+
+
+
 
 
 /* Exported macro ------------------------------------------------------------*/
