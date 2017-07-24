@@ -111,12 +111,12 @@ void Write_Volume(unsigned short dat)
     for(int i = 15; i >= 0; i--)
     {     
       DATA = (dat  >> i) & 1;
-        delay_us(1);
+        delay_us(3);
         SCLK =1;
-        delay_us(1);
+        delay_us(3);
         SCLK =0;       
     }
-    delay_us(1);   
+    delay_us(3);   
     LOAD = 1;
     delay_us(5);
     SCLK =1;       

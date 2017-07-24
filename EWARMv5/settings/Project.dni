@@ -21,7 +21,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=-806245932
+Checksum=783130115
 [JLinkDriver]
 CStepIntDis=_ 0
 [Exceptions]
@@ -67,6 +67,21 @@ Fmt1=u8[20]	4	0
 Fmt2=u8[256]	4	0
 [watch_formats]
 Fmt0={W}0:sizeof(ScanKeyProtocol_t)	4	0
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
+[CallStackLog]
+Enabled=0
+[DriverProfiling]
+Enabled=0
+Mode=0
+Graph=0
+Symbiont=0
+Exclusions=
 [Disassemble mode]
 mode=0
 [Breakpoints2]
@@ -76,21 +91,6 @@ Bp2=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\stm32f10x_it.c}.236.1" 0 0 1 "" 0 "" 0
 Bp3=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\protocol\pro_slip.c}.68.5" 0 0 1 "" 0 "" 0
 Bp4=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\stm32f10x_it.c}.236.1" 0 0 1 "" 0 "" 0
 Count=5
-[Log file]
-LoggingEnabled=_ 0
-LogFile=_ ""
-Category=_ 0
-[TermIOLog]
-LoggingEnabled=_ 0
-LogFile=_ ""
 [Aliases]
 Count=0
 SuppressDialog=0
-[CallStackLog]
-Enabled=0
-[DriverProfiling]
-Enabled=0
-Mode=0
-Graph=0
-Symbiont=0
-Exclusions=
