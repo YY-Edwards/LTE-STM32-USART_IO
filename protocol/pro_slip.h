@@ -10,11 +10,11 @@
 #define HEADER             (u16)0xABCD    /* indicates Header of protocol */
 #define TERMINATOR         (u16)0x00BA    /* indicates Terminator of protocol */
 /*little endian*/
-/*header(2) + checksum(2) + key_value(2) + statux(2) + terminator(2)*/
+/*header(2) + checksum(2) + key_value(2) + status(2) + terminator(2)*/
 /*
 checksum = key_value  + status
 key_value =0xA00x;x= 1,2,3,4...8
-status = 0 / 1; 0:release, 1:press (status = 0x03 ; set volume(value:0x00~0x3E (attenuation); 0xFF:Mute))
+status = 0 / 1; 0:release, 1:press (status = 0x0003 ; set volume(key_value:0x00~0x0A (attenuation); 0x00:Mute))
 */
 
 #define END             (char)0xC0    /* indicates end of packet */

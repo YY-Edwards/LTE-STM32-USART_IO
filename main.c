@@ -156,6 +156,8 @@ int main(void)
   
   GPIO_SetBits(GPIO_LED, DS1_PIN|DS2_PIN|DS3_PIN|DS4_PIN);/*关闭所有的LED指示灯*/
   
+  Write_Volume(0x06);//set default volume at 5
+  
   //printf("\r\n/***********************key scan start*********************/\r\n");
   while(1)
   {     

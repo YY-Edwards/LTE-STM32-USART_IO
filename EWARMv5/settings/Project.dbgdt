@@ -147,7 +147,7 @@
           
           
           
-        <item>ReadValue</item><item>(*((u8 *)datapro))</item><item>sizeof(ScanKeyProtocol_t)</item><item>datapro</item><item>((u8 *)datapro + i)</item><item>&amp;ptr</item><item>USART_RX</item><item>volume_value[(ptr.KeyValue &amp; 0xff)]</item><item></item></expressions>
+        <item>ReadValue</item><item>(*((u8 *)datapro))</item><item>sizeof(ScanKeyProtocol_t)</item><item>datapro</item><item>((u8 *)datapro + i)</item><item>&amp;ptr</item><item>USART_RX</item><item>volume_value[(ptr.KeyValue &amp; 0xff)]</item><item/></expressions>
         <col-names>
           
           
