@@ -261,8 +261,8 @@ void TIM3_IRQHandler(void)   //TIM3中断
 void EXTI0_IRQHandler(void)
 {
   static volatile u8 ReadValue =1;
-  key_value = 0xA001;
-  
+  //key_value = 0xA001;
+   key_value = 0xA008;
   if(EXTI_GetITStatus(EXTI_Line0)!= RESET)
   {
     delay_ms(15);//延时防抖动
@@ -302,7 +302,8 @@ void EXTI0_IRQHandler(void)
 void EXTI1_IRQHandler(void)
 {
   static volatile u8 ReadValue =1;
-  key_value = 0xA002;
+  //key_value = 0xA002;
+   key_value = 0xA007;
   
   if(EXTI_GetITStatus(EXTI_Line1)!= RESET)
   {
@@ -340,7 +341,8 @@ void EXTI1_IRQHandler(void)
 void EXTI2_IRQHandler(void)
 {
    static volatile u8 ReadValue =1;
-   key_value = 0xA003;
+   //key_value = 0xA003;
+    key_value = 0xA006;
    
   if(EXTI_GetITStatus(EXTI_Line2)!= RESET)
   {
@@ -379,7 +381,8 @@ void EXTI2_IRQHandler(void)
 void EXTI3_IRQHandler(void)
 {
    static volatile u8 ReadValue =1;
-   key_value = 0xA004;
+   //key_value = 0xA004;
+    key_value = 0xA005;
    
   if(EXTI_GetITStatus(EXTI_Line3)!= RESET)
   {
@@ -419,7 +422,8 @@ void EXTI3_IRQHandler(void)
 void EXTI4_IRQHandler(void)
 {
    static volatile u8 ReadValue =1;
-   key_value = 0xA005;
+   //key_value = 0xA005;
+    key_value = 0xA004;
    
   if(EXTI_GetITStatus(EXTI_Line4)!= RESET)
   {
@@ -465,7 +469,8 @@ void EXTI9_5_IRQHandler(void)
   
   if(EXTI_GetITStatus(EXTI_Line5)!= RESET)
   {
-    key_value = 0xA006;
+    //key_value = 0xA006;
+     key_value = 0xA003;
     delay_ms(15);//延时防抖动
     ReadValue = GPIO_ReadInputDataBit(GPIO_KEY, KEY6_PIN);
    if(ReadValue == 0)//key6按下
@@ -492,7 +497,8 @@ void EXTI9_5_IRQHandler(void)
   
   if(EXTI_GetITStatus(EXTI_Line6)!= RESET)
   {
-    key_value = 0xA007;
+    //key_value = 0xA007;
+     key_value = 0xA002;
     delay_ms(15);//延时防抖动
     ReadValue = GPIO_ReadInputDataBit(GPIO_KEY, KEY7_PIN);
     if(ReadValue == 0)//key7按下
@@ -518,7 +524,8 @@ void EXTI9_5_IRQHandler(void)
   
   if(EXTI_GetITStatus(EXTI_Line7)!= RESET)
   {
-    key_value = 0xA008;
+    //key_value = 0xA008;
+     key_value = 0xA001;
     delay_ms(15);//延时防抖动
     ReadValue = GPIO_ReadInputDataBit(GPIO_KEY, KEY8_PIN);
     if(ReadValue == 0)//key8按下

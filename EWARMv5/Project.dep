@@ -937,6 +937,10 @@
       <name>$PROJ_DIR$\..\main.c</name>
       <outputs>
         <tool>
+          <name>ICCARM</name>
+          <file> 29</file>
+        </tool>
+        <tool>
           <name>BICOMP</name>
           <file> 40</file>
         </tool>
@@ -944,11 +948,11 @@
       <inputs>
         <tool>
           <name>ICCARM</name>
-          <file> 94 14 96 2 1 104 103 17 100 19 86 88 12 87 4 93 76 102 5 92 3 98 16 101 10 89 83 84 77 59 57 91 15 97</file>
+          <file> 94 14 96 2 1 104 103 17 100 19 86 88 12 87 4 93 76 102 5 92 3 98 16 101 10 89 83 84 77 59</file>
         </tool>
         <tool>
           <name>BICOMP</name>
-          <file> 94 14 96 2 1 104 103 17 100 19 86 88 12 87 4 93 76 102 5 92 3 98 16 101 10 89 83 84 77 59 57 91 15 97</file>
+          <file> 94 14 96 2 1 104 103 17 100 19 86 88 12 87 4 93 76 102 5 92 3 98 16 101 10 89 83 84 77 59</file>
         </tool>
       </inputs>
     </file>
