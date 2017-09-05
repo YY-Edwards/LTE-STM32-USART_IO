@@ -17,12 +17,31 @@ key_value =0xA00x;x= 1,2,3,4...8
 status = 0 / 1; 0:release, 1:press (status = 0x0003 ; set volume(key_value:0x00~0x0A (attenuation); 0x00:Mute))
 */
 
+//Add by Edwards
+/*
+checksum = key_value  + status
+
+status:0x0004 //¿ØÖÆLEDÃüÁî
+
+key_value¡ª¡ªHigh8:              //¸ß°ËÎ»
+            0x00:OFF            //Ï¨Ãð
+            0x01:ON             //µãÁÁ
+
+key_value¡ª¡ªLow8:               //µÍ°ËÎ»
+            0x01:RED1           //ºì1µÆ
+            0x02:YELLOW         //»ÆµÆ
+            0x03:GREEN          //ÂÌµÆ
+            0x04:RED2           //ºì2µÆ
+  
+*/
+
 #define END             (char)0xC0    /* indicates end of packet */
 #define ESC             (char)0xD0    /* indicates byte stuffing */
 #define ESC_END         (char)0xD1   /* ESC ESC_END means END data byte */
 #define ESC_ESC         (char)0xD2   /* ESC ESC_ESC means ESC data byte */
 
-
+#define ON 1
+#define OFF 0
 
 typedef struct
 {

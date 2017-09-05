@@ -13,6 +13,8 @@ int packet_analysis(void *packet, u8 length)
   char buf[10];
   memset(buf, 0x00, 10);
   u8 counter = 0;
+  u8 LED_ID=0;
+  u8 LED_Action =0;
   
   if(length > 12)return 1;
     
@@ -68,11 +70,61 @@ int packet_analysis(void *packet, u8 length)
     if((ptr.Header == 0xABCD) && (ptr.Terminator == 0x00BA)){
     
       if(ptr.Checksum == Checksum){
-        if(ptr.Status == 0x0003){           
+        if(ptr.Status == 0x0003){//控制音量           
             Write_Volume(volume_value[(ptr.KeyValue & 0xff)]);//write volume_value to LM1971
-            LED4 = !LED4;
+            LED2 = !LED2;
             //printf("Set volume is : %02d\r\n", (u8)(ptr.KeyValue));
         }
+        else if (ptr.Status == 0x0004){//控制LED
+  
+             LED_ID = (ptr.KeyValue & 0xFF);//低8位
+    
+             LED_Action = ((ptr.KeyValue>>8)&0xFF);//高8位
+    
+            switch(LED_ID){
+                  
+                  case 0x01://RED1
+                    
+                      if(LED_Action == ON)
+                        GPIO_SetBits(GPIO_LED, RED1_PIN);/*关闭RED1信号灯*///输出高电平，驱动三极管导通
+                      else
+                        GPIO_ResetBits(GPIO_LED, RED1_PIN);
+                      
+                      break;
+              
+                  case 0x02://YELLOW
+                        
+                     if(LED_Action == ON)
+                        GPIO_SetBits(GPIO_LED, YELLOW_PIN);/*关闭RED1信号灯*///输出高电平，驱动三极管导通
+                      else
+                        GPIO_ResetBits(GPIO_LED, YELLOW_PIN);
+                    
+                      break;
+                  
+                  case 0x03://GREEEN
+                    
+                     if(LED_Action == ON)
+                        GPIO_SetBits(GPIO_LED, GREEN_PIN);/*关闭RED1信号灯*///输出高电平，驱动三极管导通
+                      else
+                        GPIO_ResetBits(GPIO_LED, GREEN_PIN);
+                      
+                      break;
+                  
+                  case 0x04://RED2
+                    
+                     if(LED_Action == ON)
+                        GPIO_SetBits(GPIO_LED, RED2_PIN);/*关闭RED1信号灯*///输出高电平，驱动三极管导通
+                      else
+                        GPIO_ResetBits(GPIO_LED, RED2_PIN);
+                    
+                      break;
+                  
+                  default://Other err
+                      break;
+            
+            }
+    
+         }
       }
     }
     memset(&ptr, 0x00 ,10);

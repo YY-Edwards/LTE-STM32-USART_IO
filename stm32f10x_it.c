@@ -266,22 +266,22 @@ void EXTI0_IRQHandler(void)
   if(EXTI_GetITStatus(EXTI_Line0)!= RESET)
   {
     delay_ms(15);//延时防抖动
-    ReadValue = GPIO_ReadInputDataBit(GPIO_KEY, KEY1_PIN);
-    if(ReadValue == 0)//key1按下
+    ReadValue = GPIO_ReadInputDataBit(GPIO_KEY_5_8, KEY8_PIN);
+    if(ReadValue == 0)//key8按下
     {
-      if(!key1_pressed_flag){
-        key1_pressed_flag = 0x0001;
-        data_packet_send(key_value, key1_pressed_flag);
+      if(!key8_pressed_flag){
+        key8_pressed_flag = 0x0001;
+        data_packet_send(key_value, key8_pressed_flag);
         //printf("\r\nkey1 pressed\r\n");
         
       }
  
     }
-    else//key1释放
+    else//key8释放
     {
-      if(key1_pressed_flag){       
-        key1_pressed_flag = 0x0000;
-        data_packet_send(key_value, key1_pressed_flag);
+      if(key8_pressed_flag){       
+        key8_pressed_flag = 0x0000;
+        data_packet_send(key_value, key8_pressed_flag);
         //printf("\r\n**key1 release\r\n");
         
       }
@@ -308,20 +308,20 @@ void EXTI1_IRQHandler(void)
   if(EXTI_GetITStatus(EXTI_Line1)!= RESET)
   {
     delay_ms(15);//延时防抖动
-    ReadValue = GPIO_ReadInputDataBit(GPIO_KEY, KEY2_PIN);
-    if(ReadValue == 0)//key2按下
+    ReadValue = GPIO_ReadInputDataBit(GPIO_KEY_5_8, KEY7_PIN);
+    if(ReadValue == 0)//key7按下
     {
-      if(!key2_pressed_flag){
-        key2_pressed_flag = 0x0001;
-        data_packet_send(key_value, key2_pressed_flag);
+      if(!key7_pressed_flag){
+        key7_pressed_flag = 0x0001;
+        data_packet_send(key_value, key7_pressed_flag);
         //printf("key2 pressed\r\n");
       }
     }
-    else//key2释放
+    else//key7释放
     {
-      if(key2_pressed_flag){
-        key2_pressed_flag = 0x0000;
-        data_packet_send(key_value, key2_pressed_flag);
+      if(key7_pressed_flag){
+        key7_pressed_flag = 0x0000;
+        data_packet_send(key_value, key7_pressed_flag);
         //printf("key2 release\r\n");
       }
     
@@ -347,21 +347,21 @@ void EXTI2_IRQHandler(void)
   if(EXTI_GetITStatus(EXTI_Line2)!= RESET)
   {
     delay_ms(15);//延时防抖动
-    ReadValue = GPIO_ReadInputDataBit(GPIO_KEY, KEY3_PIN);
-    if(ReadValue == 0)//key3按下
+    ReadValue = GPIO_ReadInputDataBit(GPIO_KEY_5_8, KEY6_PIN);
+    if(ReadValue == 0)//key6按下
     {
-      if(!key3_pressed_flag){
-        key3_pressed_flag = 0x0001;
-        data_packet_send(key_value, key3_pressed_flag);
+      if(!key6_pressed_flag){
+        key6_pressed_flag = 0x0001;
+        data_packet_send(key_value, key6_pressed_flag);
         
        //printf("key3 pressed\r\n");
       }
     }
-    else//key3放
+    else//key6放
     {
-      if(key3_pressed_flag){
-        key3_pressed_flag = 0x0000;
-        data_packet_send(key_value, key3_pressed_flag);
+      if(key6_pressed_flag){
+        key6_pressed_flag = 0x0000;
+        data_packet_send(key_value, key6_pressed_flag);
       //  printf("key3 release\r\n");
       }
     
@@ -387,20 +387,20 @@ void EXTI3_IRQHandler(void)
   if(EXTI_GetITStatus(EXTI_Line3)!= RESET)
   {
     delay_ms(10);//延时防抖动
-    ReadValue = GPIO_ReadInputDataBit(GPIO_KEY, KEY4_PIN);
-   if(ReadValue == 0)//key3按下
+    ReadValue = GPIO_ReadInputDataBit(GPIO_KEY_5_8, KEY5_PIN);
+   if(ReadValue == 0)//key5按下
     {
-      if(!key4_pressed_flag){
-        key4_pressed_flag = 0x0001;
-        data_packet_send(key_value, key4_pressed_flag);
+      if(!key5_pressed_flag){
+        key5_pressed_flag = 0x0001;
+        data_packet_send(key_value, key5_pressed_flag);
        //printf("key4 pressed\r\n");
       }
     }
-    else//key3放
+    else//key5放
     {
-      if(key4_pressed_flag){
-        key4_pressed_flag = 0x0000;
-        data_packet_send(key_value, key4_pressed_flag);
+      if(key5_pressed_flag){
+        key5_pressed_flag = 0x0000;
+        data_packet_send(key_value, key5_pressed_flag);
       //  printf("key4 release\r\n");
       }
     
@@ -424,35 +424,35 @@ void EXTI4_IRQHandler(void)
    static volatile u8 ReadValue =1;
    //key_value = 0xA005;
     key_value = 0xA004;
-   
-  if(EXTI_GetITStatus(EXTI_Line4)!= RESET)
-  {
-    delay_ms(10);//延时防抖动
-    ReadValue = GPIO_ReadInputDataBit(GPIO_KEY, KEY5_PIN);
-    if(ReadValue == 0)//key5按下
-    {
-      if(!key5_pressed_flag){
-        
-        key5_pressed_flag = 0x0001;
-        data_packet_send(key_value, key5_pressed_flag);
-        
-       //printf("key5 pressed\r\n");
-      }
-    }
-    else//key5放
-    {
-      if(key5_pressed_flag){
-        
-        key5_pressed_flag = 0x0000;
-        data_packet_send(key_value, key5_pressed_flag);
-      //  printf("key5 release\r\n");
-      }
-    
-    }
-           
-    EXTI_ClearITPendingBit(EXTI_Line4);
-  }
-  
+//   
+//  if(EXTI_GetITStatus(EXTI_Line4)!= RESET)
+//  {
+//    delay_ms(10);//延时防抖动
+//    ReadValue = GPIO_ReadInputDataBit(GPIO_KEY, KEY5_PIN);
+//    if(ReadValue == 0)//key5按下
+//    {
+//      if(!key5_pressed_flag){
+//        
+//        key5_pressed_flag = 0x0001;
+//        data_packet_send(key_value, key5_pressed_flag);
+//        
+//       //printf("key5 pressed\r\n");
+//      }
+//    }
+//    else//key5放
+//    {
+//      if(key5_pressed_flag){
+//        
+//        key5_pressed_flag = 0x0000;
+//        data_packet_send(key_value, key5_pressed_flag);
+//      //  printf("key5 release\r\n");
+//      }
+//    
+//    }
+//           
+//    EXTI_ClearITPendingBit(EXTI_Line4);
+//  }
+//  
   
 }
 
@@ -467,53 +467,53 @@ void EXTI9_5_IRQHandler(void)
   
   static volatile u8 ReadValue =1;
   
-  if(EXTI_GetITStatus(EXTI_Line5)!= RESET)
-  {
-    //key_value = 0xA006;
-     key_value = 0xA003;
-    delay_ms(15);//延时防抖动
-    ReadValue = GPIO_ReadInputDataBit(GPIO_KEY, KEY6_PIN);
-   if(ReadValue == 0)//key6按下
-    {
-      if(!key6_pressed_flag){
-        key6_pressed_flag = 0x0001;
-        data_packet_send(key_value, key6_pressed_flag);
-       //printf("key6 pressed\r\n");
-      }
-    }
-    else//key6放
-    {
-      if(key6_pressed_flag){
-        
-        key6_pressed_flag = 0x0000;
-        data_packet_send(key_value, key6_pressed_flag);
-      //  printf("key6 release\r\n");
-      }
-    
-    }
-          
-    EXTI_ClearITPendingBit(EXTI_Line5);
-  }
+//  if(EXTI_GetITStatus(EXTI_Line5)!= RESET)
+//  {
+//    //key_value = 0xA006;
+//     key_value = 0xA003;
+//    delay_ms(15);//延时防抖动
+//    ReadValue = GPIO_ReadInputDataBit(GPIO_KEY, KEY6_PIN);
+//   if(ReadValue == 0)//key6按下
+//    {
+//      if(!key6_pressed_flag){
+//        key6_pressed_flag = 0x0001;
+//        data_packet_send(key_value, key6_pressed_flag);
+//       //printf("key6 pressed\r\n");
+//      }
+//    }
+//    else//key6放
+//    {
+//      if(key6_pressed_flag){
+//        
+//        key6_pressed_flag = 0x0000;
+//        data_packet_send(key_value, key6_pressed_flag);
+//      //  printf("key6 release\r\n");
+//      }
+//    
+//    }
+//          
+//    EXTI_ClearITPendingBit(EXTI_Line5);
+//  }
   
   if(EXTI_GetITStatus(EXTI_Line6)!= RESET)
   {
     //key_value = 0xA007;
-     key_value = 0xA002;
+     key_value = 0xA004;
     delay_ms(15);//延时防抖动
-    ReadValue = GPIO_ReadInputDataBit(GPIO_KEY, KEY7_PIN);
-    if(ReadValue == 0)//key7按下
+    ReadValue = GPIO_ReadInputDataBit(GPIO_KEY_1_4, KEY4_PIN);
+    if(ReadValue == 0)//key4按下
     {
-      if(!key7_pressed_flag){
-        key7_pressed_flag = 0x0001;
-        data_packet_send(key_value, key7_pressed_flag);
+      if(!key4_pressed_flag){
+        key4_pressed_flag = 0x0001;
+        data_packet_send(key_value, key4_pressed_flag);
        //printf("key7 pressed\r\n");
       }
     }
-    else//key7放
+    else//key4放
     {
-      if(key7_pressed_flag){
-        key7_pressed_flag = 0x0000;
-        data_packet_send(key_value, key7_pressed_flag);
+      if(key4_pressed_flag){
+        key4_pressed_flag = 0x0000;
+        data_packet_send(key_value, key4_pressed_flag);
       //  printf("key7 release\r\n");
       }
     
@@ -525,54 +525,82 @@ void EXTI9_5_IRQHandler(void)
   if(EXTI_GetITStatus(EXTI_Line7)!= RESET)
   {
     //key_value = 0xA008;
-     key_value = 0xA001;
+     key_value = 0xA003;
     delay_ms(15);//延时防抖动
-    ReadValue = GPIO_ReadInputDataBit(GPIO_KEY, KEY8_PIN);
-    if(ReadValue == 0)//key8按下
+    ReadValue = GPIO_ReadInputDataBit(GPIO_KEY_1_4, KEY3_PIN);
+    if(ReadValue == 0)//key3按下
     {
-      if(!key8_pressed_flag){
-        key8_pressed_flag = 0x0001;
-        data_packet_send(key_value, key8_pressed_flag);
+      if(!key3_pressed_flag){
+        key3_pressed_flag = 0x0001;
+        data_packet_send(key_value, key3_pressed_flag);
         //printf("key8 pressed\r\n");
       }
     }
-    else//key8释放
+    else//key3释放
     {
-      if(key8_pressed_flag){
-        key8_pressed_flag = 0x0000;
-        data_packet_send(key_value, key8_pressed_flag);
+      if(key3_pressed_flag){
+        key3_pressed_flag = 0x0000;
+        data_packet_send(key_value, key3_pressed_flag);
       //printf("key8 release\r\n");
       }
     }
      EXTI_ClearITPendingBit(EXTI_Line7);
   }
     
-//   if(EXTI_GetITStatus(EXTI_Line8)!= RESET)
-//  {
-//    key_value = 0xA009;
-//    delay_ms(15);//延时防抖动
-//    ReadValue = GPIO_ReadInputDataBit(GPIO_KEY, KEY8_PIN);
-//    if(ReadValue == 0)//key8按下
-//    {
-//      if(!key8_pressed_flag){
-//        key8_pressed_flag = 0x0001;
-//        data_packet_send(key_value, key8_pressed_flag);
-//        //printf("\r\nkey9 pressed\r\n");
-//      }
-// 
-//    }
-//    else//key9释放
-//    {
-//      if(key8_pressed_flag){   
-//       key8_pressed_flag = 0x0000;
-//        data_packet_send(key_value, key8_pressed_flag);
-//        //printf("\r\n**key9 release\r\n");
-//      }
-//    
-//    }
-//  
-//    EXTI_ClearITPendingBit(EXTI_Line8);
-//  }
+   if(EXTI_GetITStatus(EXTI_Line8)!= RESET)
+  {
+    key_value = 0xA002;
+    delay_ms(15);//延时防抖动
+    ReadValue = GPIO_ReadInputDataBit(GPIO_KEY_1_4, KEY2_PIN);
+    if(ReadValue == 0)//key2按下
+    {
+      if(!key2_pressed_flag){
+        key2_pressed_flag = 0x0001;
+        data_packet_send(key_value, key2_pressed_flag);
+        //printf("\r\nkey9 pressed\r\n");
+      }
+ 
+    }
+    else//key2释放
+    {
+      if(key2_pressed_flag){   
+       key2_pressed_flag = 0x0000;
+        data_packet_send(key_value, key2_pressed_flag);
+        //printf("\r\n**key9 release\r\n");
+      }
+    
+    }
+  
+    EXTI_ClearITPendingBit(EXTI_Line8);
+  }
+  
+   
+   if(EXTI_GetITStatus(EXTI_Line9)!= RESET)
+  {
+    key_value = 0xA001;
+    delay_ms(15);//延时防抖动
+    ReadValue = GPIO_ReadInputDataBit(GPIO_KEY_1_4, KEY1_PIN);
+    if(ReadValue == 0)//key1按下
+    {
+      if(!key1_pressed_flag){
+        key1_pressed_flag = 0x0001;
+        data_packet_send(key_value, key1_pressed_flag);
+        //printf("\r\nkey9 pressed\r\n");
+      }
+ 
+    }
+    else//key1释放
+    {
+      if(key1_pressed_flag){   
+       key1_pressed_flag = 0x0000;
+        data_packet_send(key_value, key1_pressed_flag);
+        //printf("\r\n**key9 release\r\n");
+      }
+    
+    }
+  
+    EXTI_ClearITPendingBit(EXTI_Line9);
+  }
   
  
 

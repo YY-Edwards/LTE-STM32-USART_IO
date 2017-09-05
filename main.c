@@ -145,7 +145,7 @@ int main(void)
 
   NVIC_Configuration();//设置中断优先级分组
   
-  KEY_Init();//初始化按键的IO模式
+  KEY_Init();//初始化按键以及LED的IO模式
   
   EXTI_USER_Init();//外部中断初始化，在这里初始化8个对应按键的中断输入
   
@@ -155,7 +155,9 @@ int main(void)
     
   //TIM3_Int_Init(100-1, 7199);//定时器3初始化,10Khz的计数频率，计数到100为10ms  
   
-  GPIO_SetBits(GPIO_LED, DS1_PIN|DS2_PIN|DS3_PIN|DS4_PIN);/*关闭所有的LED指示灯*/
+  GPIO_SetBits(GPIO_LED, DS1_PIN|DS2_PIN);/*关闭所有的LED指示灯*/
+  
+  GPIO_ResetBits(GPIO_LED, RED1_PIN|YELLOW_PIN|GREEN_PIN|RED2_PIN);/*关闭所有的信号灯*///输出低电平
   
   Write_Volume(0x0001);//set default volume at 9
   
@@ -179,11 +181,7 @@ int main(void)
       GPIO_ResetBits(GPIO_LED, DS2_PIN);
       delay_ms(200); 
       GPIO_SetBits(GPIO_LED, DS2_PIN);
-      delay_ms(100);
-      GPIO_ResetBits(GPIO_LED, DS3_PIN);
-      delay_ms(200); 
-      GPIO_SetBits(GPIO_LED, DS3_PIN);
-      delay_ms(100); 
+      delay_ms(100);   
       if(first_set_volume_flag)
       {
           Write_Volume(0x0006);//set default volume at 9
@@ -375,16 +373,22 @@ void KEY_Init(void)
   //使能时钟
   /*使能LED灯使用的GPIO时钟*/
   /*使能KEY扫描按键使用的GPIO时钟*/
-  RCC_APB2PeriphClockCmd(RCC_GPIO_LED | RCC_GPIO_KEY | RCC_GPIO_VOLUME_CTL, ENABLE);
+  RCC_APB2PeriphClockCmd(RCC_GPIO_LED | RCC_GPIO_KEY_5_8 | RCC_GPIO_KEY_1_4| RCC_GPIO_VOLUME_CTL, ENABLE);
   
    /* KEY按键使用的GPIO管脚模式*/
-  GPIO_InitStructure.GPIO_Pin = KEY1_PIN|KEY2_PIN|KEY3_PIN|KEY4_PIN|KEY5_PIN|KEY6_PIN|KEY7_PIN|KEY8_PIN; 
+  GPIO_InitStructure.GPIO_Pin = KEY5_PIN|KEY6_PIN|KEY7_PIN|KEY8_PIN; 
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-  GPIO_Init(GPIO_KEY, &GPIO_InitStructure); 
+  GPIO_Init(GPIO_KEY_5_8, &GPIO_InitStructure); 
+  
+  GPIO_InitStructure.GPIO_Pin = KEY1_PIN|KEY2_PIN|KEY3_PIN|KEY4_PIN; 
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+  GPIO_Init(GPIO_KEY_1_4, &GPIO_InitStructure); 
+  
+  
   
 
   /* LED灯使用的GPIO管脚模式*/
-  GPIO_InitStructure.GPIO_Pin = DS1_PIN|DS2_PIN|DS3_PIN|DS4_PIN; 
+  GPIO_InitStructure.GPIO_Pin = DS1_PIN|DS2_PIN|RED1_PIN|YELLOW_PIN|GREEN_PIN|RED2_PIN; 
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
   GPIO_Init(GPIO_LED, &GPIO_InitStructure); 
@@ -464,60 +468,52 @@ void EXTI_USER_Init(void)
   EXTI_InitStructure.EXTI_LineCmd = ENABLE;
   EXTI_Init(&EXTI_InitStructure);		//根据EXTI_InitStruct中指定的参数初始化外设EXTI寄存器
   
-  //PA3
+   //PA3
   GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,GPIO_PinSource3);     //把GPIOA的Pin3设置为EXTI的输入线
   EXTI_InitStructure.EXTI_Line=EXTI_Line3;                       //中断线3
+  EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;	         
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling; 
+  EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+  EXTI_Init(&EXTI_InitStructure);		//根据EXTI_InitStruct中指定的参数初始化外设EXTI寄存器
+  
+  //PC6
+  GPIO_EXTILineConfig(GPIO_PortSourceGPIOC,GPIO_PinSource6);     //把GPIOC的Pin6设置为EXTI的输入线
+  EXTI_InitStructure.EXTI_Line=EXTI_Line6;                       //中断线6
   EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;	         
   EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling;
   EXTI_InitStructure.EXTI_LineCmd = ENABLE;
   EXTI_Init(&EXTI_InitStructure);		
   
-   //PA4
-  GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,GPIO_PinSource4);     //把GPIOA的Pin4设置为EXTI的输入线
-  EXTI_InitStructure.EXTI_Line=EXTI_Line4;                       //中断线4
+   //PC7
+  GPIO_EXTILineConfig(GPIO_PortSourceGPIOC,GPIO_PinSource7);     //把GPIOC的Pin7设置为EXTI的输入线
+  EXTI_InitStructure.EXTI_Line=EXTI_Line7;                       //中断线7
   EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;	         
   EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling; 
   EXTI_InitStructure.EXTI_LineCmd = ENABLE;
   EXTI_Init(&EXTI_InitStructure);		
   
-   //PA5
-  GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,GPIO_PinSource5);     //把GPIOA的Pin5设置为EXTI的输入线
-  EXTI_InitStructure.EXTI_Line=EXTI_Line5;                       //中断线5
+   //PC8
+  GPIO_EXTILineConfig(GPIO_PortSourceGPIOC,GPIO_PinSource8);     //把GPIOC的Pin8设置为EXTI的输入线
+  EXTI_InitStructure.EXTI_Line=EXTI_Line8;                       //中断线8
   EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;	         
   EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling; 
   EXTI_InitStructure.EXTI_LineCmd = ENABLE;
   EXTI_Init(&EXTI_InitStructure);		//根据EXTI_InitStruct中指定的参数初始化外设EXTI寄存器
   
-     //PA6
-  GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,GPIO_PinSource6);     //把GPIOA的Pin6设置为EXTI的输入线
-  EXTI_InitStructure.EXTI_Line=EXTI_Line6;                       //中断线6
+     //PC9
+  GPIO_EXTILineConfig(GPIO_PortSourceGPIOC,GPIO_PinSource9);     //把GPIOC的Pin9设置为EXTI的输入线
+  EXTI_InitStructure.EXTI_Line=EXTI_Line9;                       //中断线9
   EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;	         
   EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling; 
   EXTI_InitStructure.EXTI_LineCmd = ENABLE;
   EXTI_Init(&EXTI_InitStructure);		//根据EXTI_InitStruct中指定的参数初始化外设EXTI寄存器
   
-  //PA7
-  GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,GPIO_PinSource7);     //把GPIOA的Pin7设置为EXTI的输入线
-  EXTI_InitStructure.EXTI_Line=EXTI_Line7;                       //中断线7
-  EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;	         
-  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling; 
-  EXTI_InitStructure.EXTI_LineCmd = ENABLE;
-  EXTI_Init(&EXTI_InitStructure);		//根据EXTI_InitStruct中指定的参数初始化外设EXTI寄存器
-  
-  
-  //PA8
-//  GPIO_EXTILineConfig(GPIO_PortSourceGPIOA,GPIO_PinSource8);     //把GPIOA的Pin8设置为EXTI的输入线
-//  EXTI_InitStructure.EXTI_Line=EXTI_Line8;                       //中断线8
-//  EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;	         
-//  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising_Falling; 
-//  EXTI_InitStructure.EXTI_LineCmd = ENABLE;
-//  EXTI_Init(&EXTI_InitStructure);		//根据EXTI_InitStruct中指定的参数初始化外设EXTI寄存器
-  
+
   
   
   //中断线号的优先级配置
   
-   NVIC_InitStructure.NVIC_IRQChannel = EXTI0_IRQn;			//使能按键所在的外部中断通道
+  NVIC_InitStructure.NVIC_IRQChannel = EXTI0_IRQn;			//使能按键所在的外部中断通道
   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x01;          //抢占优先级1
   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x00;		        //子优先级0
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			//使能外部中断通道
@@ -543,11 +539,11 @@ void EXTI_USER_Init(void)
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			//使能外部中断通道
   NVIC_Init(&NVIC_InitStructure); 
   
-  NVIC_InitStructure.NVIC_IRQChannel = EXTI4_IRQn;			//使能按键所在的外部中断通道
-  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x01;	        //抢占优先级1 
-  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x04;			//子优先级4
-  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			//使能外部中断通道
-  NVIC_Init(&NVIC_InitStructure);
+//  NVIC_InitStructure.NVIC_IRQChannel = EXTI4_IRQn;			//使能按键所在的外部中断通道
+//  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x01;	        //抢占优先级1 
+//  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x04;			//子优先级4
+//  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			//使能外部中断通道
+//  NVIC_Init(&NVIC_InitStructure);
     
   NVIC_InitStructure.NVIC_IRQChannel = EXTI9_5_IRQn;			//使能按键所在的外部中断通道
   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x01;	        //抢占优先级1 

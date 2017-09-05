@@ -64,27 +64,32 @@
   
 /*LED灯相关定义*/
   #define RCC_GPIO_LED                    RCC_APB2Periph_GPIOC    /*LED使用的GPIO时钟*/
-  #define LEDn                            4                       /*LED数量*/
+  #define LEDn                            6                       /*LED数量*/
   #define GPIO_LED                        GPIOC           /*LED灯使用的GPIO组*/
   
   #define DS1_PIN                         GPIO_Pin_0              /*DS1使用的GPIO管脚*/
   #define DS2_PIN                         GPIO_Pin_1		  /*DS2使用的GPIO管脚*/
-  #define DS3_PIN                         GPIO_Pin_2  	          /*DS3使用的GPIO管脚*/
-  #define DS4_PIN                         GPIO_Pin_3		  /*DS4使用的GPIO管脚*/
+  #define RED1_PIN                        GPIO_Pin_2  	          /*DS3使用的GPIO管脚*/
+  #define YELLOW_PIN                      GPIO_Pin_3		  /*DS4使用的GPIO管脚*/
+  #define GREEN_PIN                       GPIO_Pin_4  	          /*DS3使用的GPIO管脚*/
+  #define RED2_PIN                        GPIO_Pin_5		  /*DS4使用的GPIO管脚*/
+
 
 /*KEY独立按键相关定义*///8
-  #define RCC_GPIO_KEY                    RCC_APB2Periph_GPIOA    /*KEY使用的GPIO时钟*/
-  #define KEYn                            8              /*KEY接口数量*/
-  #define GPIO_KEY                        GPIOA                   /*KEY灯使用的GPIO组*/
+  #define RCC_GPIO_KEY_5_8                    RCC_APB2Periph_GPIOA    /*KEY5-8使用的GPIO时钟*/
+  #define RCC_GPIO_KEY_1_4                    RCC_APB2Periph_GPIOC    /*KEY1-4使用的GPIO时钟*/
+  #define KEYn                                   8              /*KEY接口数量*/
+  #define GPIO_KEY_5_8                        GPIOA                   /*KEY灯使用的GPIO组*/
+  #define GPIO_KEY_1_4                        GPIOC                   /*KEY灯使用的GPIO组*/
   
-  #define KEY1_PIN                         GPIO_Pin_0              /*K1使用的GPIO管脚*/
-  #define KEY2_PIN                         GPIO_Pin_1		  /*K2使用的GPIO管脚*/
-  #define KEY3_PIN                         GPIO_Pin_2 	          /*K3使用的GPIO管脚*/
-  #define KEY4_PIN                         GPIO_Pin_3		  /*K4使用的GPIO管脚*/
-  #define KEY5_PIN                         GPIO_Pin_4 	          /*K5使用的GPIO管脚*/
-  #define KEY6_PIN                         GPIO_Pin_5		  /*K6使用的GPIO管脚*/
-  #define KEY7_PIN                         GPIO_Pin_6		  /*K7使用的GPIO管脚*/
-  #define KEY8_PIN                         GPIO_Pin_7//		  /*K8使用的GPIO管脚*/
+  #define KEY1_PIN                         GPIO_Pin_9              /*K1使用的GPIO管脚*/
+  #define KEY2_PIN                         GPIO_Pin_8		  /*K2使用的GPIO管脚*/
+  #define KEY3_PIN                         GPIO_Pin_7 	          /*K3使用的GPIO管脚*/
+  #define KEY4_PIN                         GPIO_Pin_6		  /*K4使用的GPIO管脚*/
+  #define KEY5_PIN                         GPIO_Pin_3 	          /*K5使用的GPIO管脚*/
+  #define KEY6_PIN                         GPIO_Pin_2		  /*K6使用的GPIO管脚*/
+  #define KEY7_PIN                         GPIO_Pin_1		  /*K7使用的GPIO管脚*/
+  #define KEY8_PIN                         GPIO_Pin_0		  /*K8使用的GPIO管脚*/
 
 /*LM1971接口相关定义*/
 #define RCC_GPIO_VOLUME_CTL             RCC_APB2Periph_GPIOB          /*CTL使用的GPIO时钟*/
@@ -99,7 +104,7 @@
 #define SCLK PBout(15)
 #define DATA PBout(14)
      
-#define LED4 PCout(3)    
+#define LED2 PCout(1)    
 
 
 
