@@ -74,6 +74,7 @@ static volatile u16 last_key_value = 0x99;//上次按键值
 
 static volatile u16 pressed_value =0x99;//按下后返回的键值（包括短按长按）
 static volatile u16 release_value =0x99;//释放返回的键值
+volatile u8 first_set_volume_flag =1;//
 
 //static KeyStatus_t KeyStatus = KEY_NOT_PRESS;
 
@@ -156,19 +157,38 @@ int main(void)
   
   GPIO_SetBits(GPIO_LED, DS1_PIN|DS2_PIN|DS3_PIN|DS4_PIN);/*关闭所有的LED指示灯*/
   
-  Write_Volume(0x06);//set default volume at 5
+  Write_Volume(0x0001);//set default volume at 9
+  
+  //delay_ms(1500); 
+  //delay_ms(1500); 
+  
+  //Write_Volume(0x06);//set default volume at 6
+  
+  //delay_ms(1500); 
+  //delay_ms(1500); 
+  
+  //Write_Volume(0x06);//set default volume at 5
   
   //printf("\r\n/***********************key scan start*********************/\r\n");
   while(1)
   {     
-      delay_ms(100); 
       GPIO_ResetBits(GPIO_LED, DS1_PIN);
       delay_ms(200); 
       GPIO_SetBits(GPIO_LED, DS1_PIN);
-//      delay_ms(300); 
-//      GPIO_ResetBits(GPIO_LED, DS1_PIN);
-//      delay_ms(400); 
-//      GPIO_SetBits(GPIO_LED, DS1_PIN);
+      delay_ms(100); 
+      GPIO_ResetBits(GPIO_LED, DS2_PIN);
+      delay_ms(200); 
+      GPIO_SetBits(GPIO_LED, DS2_PIN);
+      delay_ms(100);
+      GPIO_ResetBits(GPIO_LED, DS3_PIN);
+      delay_ms(200); 
+      GPIO_SetBits(GPIO_LED, DS3_PIN);
+      delay_ms(100); 
+      if(first_set_volume_flag)
+      {
+          Write_Volume(0x0006);//set default volume at 9
+          first_set_volume_flag =0;
+      }
             
   }
         

@@ -3142,7 +3142,7 @@
           <state>$PROJ_DIR$\..\..\..\Utilities\STM32_EVAL</state>
           <state>$PROJ_DIR$\..\..\..\Utilities\STM32_EVAL\Common</state>
           <state>$PROJ_DIR$\..\..\..\Utilities\STM32_EVAL\STM3210B_EVAL</state>
-          <state>G:\IAR\IAR\Project\keyscanf_usart\protocol</state>
+          <state>D:\IAR\IAR\Project\keyscanf_usart\protocol</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
