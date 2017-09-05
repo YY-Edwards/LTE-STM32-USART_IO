@@ -187,6 +187,13 @@ int main(void)
           Write_Volume(0x0006);//set default volume at 9
           first_set_volume_flag =0;
       }
+      
+      
+//      GPIO_ResetBits(GPIO_LED, RED1_PIN|YELLOW_PIN|GREEN_PIN|RED2_PIN);/*关闭所有的信号灯*///输出低电平
+//      delay_ms(1000); 
+//      delay_ms(1000); 
+//      GPIO_SetBits(GPIO_LED, RED1_PIN|YELLOW_PIN|GREEN_PIN|RED2_PIN);/*关闭所有的信号灯*///输出低电平
+//      delay_ms(1000); 
             
   }
         
