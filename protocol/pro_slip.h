@@ -21,17 +21,27 @@ status = 0 / 1; 0:release, 1:press (status = 0x0003 ; set volume(key_value:0x00~
 /*
 checksum = key_value  + status
 
-status:0x0004 //控制LED命令
+status:0x0004 //控制LED/LKJ命令
 
 key_value——High8:              //高八位
-            0x00:OFF            //熄灭
-            0x01:ON             //点亮
+  
+            0x00:OFF            //熄灭,对LKJ则为输出低电平
+            0x01:ON             //点亮，对LKJ则为输出高电平
 
 key_value——Low8:               //低八位
+  
             0x01:RED1           //红1灯
             0x02:YELLOW         //黄灯
             0x03:GREEN          //绿灯
             0x04:RED2           //红2灯
+            
+            0x10:LKJ1           //LKJ1
+            0x20:LKJ2           //LKJ2
+            0x30:LKJ3           //LKJ3
+            0x40:LKJ4           //LKJ4
+            0x50:LKJ5           //LKJ5
+            0x60:LKJ6           //LKJ6
+                          
   
 */
 

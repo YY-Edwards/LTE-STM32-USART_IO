@@ -73,6 +73,18 @@
   #define YELLOW_PIN                      GPIO_Pin_3		  /*DS4使用的GPIO管脚*/
   #define GREEN_PIN                       GPIO_Pin_4  	          /*DS3使用的GPIO管脚*/
   #define RED2_PIN                        GPIO_Pin_5		  /*DS4使用的GPIO管脚*/
+    
+/*GPIO_LKJ相关定义*/
+  #define RCC_GPIO_LKJ                    RCC_APB2Periph_GPIOB    /*LKJ使用的GPIO时钟*/
+  #define LKJn                            6                       /*LKJ数量*/
+  #define GPIO_LKJ                        GPIOB                   /*LKJ灯使用的GPIO组*/
+  
+  #define LKJ1_PIN                         GPIO_Pin_0             /*LKJ1使用的GPIO管脚*/
+  #define LKJ2_PIN                         GPIO_Pin_1		  /*LKJ2使用的GPIO管脚*/
+  #define LKJ3_PIN                         GPIO_Pin_6  	          /*LKJ3使用的GPIO管脚*/
+  #define LKJ4_PIN                         GPIO_Pin_7		  /*LKJ4使用的GPIO管脚*/
+  #define LKJ5_PIN                         GPIO_Pin_8  	          /*LKJ3使用的GPIO管脚*/
+  #define LKJ6_PIN                         GPIO_Pin_9		  /*LKJ4使用的GPIO管脚*/    
 
 
 /*KEY独立按键相关定义*///8

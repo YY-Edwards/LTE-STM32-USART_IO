@@ -145,7 +145,7 @@ int main(void)
 
   NVIC_Configuration();//设置中断优先级分组
   
-  KEY_Init();//初始化按键以及LED的IO模式
+  KEY_Init();//初始化KEY,LED,LKJ,Volume的IO模式
   
   EXTI_USER_Init();//外部中断初始化，在这里初始化8个对应按键的中断输入
   
@@ -178,9 +178,9 @@ int main(void)
       delay_ms(200); 
       GPIO_SetBits(GPIO_LED, DS1_PIN);
       delay_ms(100); 
-      GPIO_ResetBits(GPIO_LED, DS2_PIN);
+      //GPIO_ResetBits(GPIO_LED, DS2_PIN);
       delay_ms(200); 
-      GPIO_SetBits(GPIO_LED, DS2_PIN);
+      //GPIO_SetBits(GPIO_LED, DS2_PIN);
       delay_ms(100);   
       if(first_set_volume_flag)
       {
@@ -380,7 +380,9 @@ void KEY_Init(void)
   //使能时钟
   /*使能LED灯使用的GPIO时钟*/
   /*使能KEY扫描按键使用的GPIO时钟*/
-  RCC_APB2PeriphClockCmd(RCC_GPIO_LED | RCC_GPIO_KEY_5_8 | RCC_GPIO_KEY_1_4| RCC_GPIO_VOLUME_CTL, ENABLE);
+  RCC_APB2PeriphClockCmd(RCC_GPIO_KEY_5_8 | RCC_GPIO_KEY_1_4| RCC_GPIO_VOLUME_CTL, ENABLE);
+  
+  RCC_APB2PeriphClockCmd(RCC_GPIO_LED|RCC_GPIO_LKJ, ENABLE);
   
    /* KEY按键使用的GPIO管脚模式*/
   GPIO_InitStructure.GPIO_Pin = KEY5_PIN|KEY6_PIN|KEY7_PIN|KEY8_PIN; 
@@ -391,7 +393,11 @@ void KEY_Init(void)
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
   GPIO_Init(GPIO_KEY_1_4, &GPIO_InitStructure); 
   
-  
+  /* LKJ使用的GPIO管脚模式*/
+  GPIO_InitStructure.GPIO_Pin = LKJ1_PIN|LKJ2_PIN|LKJ3_PIN|LKJ4_PIN|LKJ5_PIN|LKJ6_PIN; 
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_Init(GPIO_LKJ, &GPIO_InitStructure); 
   
 
   /* LED灯使用的GPIO管脚模式*/

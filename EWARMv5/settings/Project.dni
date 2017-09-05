@@ -21,7 +21,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=-1931825271
+Checksum=1827694023
 [JLinkDriver]
 CStepIntDis=_ 0
 [Exceptions]
@@ -85,15 +85,12 @@ Exclusions=
 [Disassemble mode]
 mode=0
 [Breakpoints2]
-Bp0=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\stm32f10x_it.c}.236.1" 0 0 1 "" 0 "" 0
-Bp1=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\stm32f10x_it.c}.266.3" 0 0 1 "" 0 "" 0
-Bp2=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\stm32f10x_it.c}.236.1" 0 0 1 "" 0 "" 0
-Bp3=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\protocol\pro_slip.c}.70.5" 0 0 1 "" 0 "" 0
-Bp4=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\stm32f10x_it.c}.236.1" 0 0 1 "" 0 "" 0
-Bp5=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.162.3" 0 0 1 "" 0 "" 0
-Bp6=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.181.7" 0 0 1 "" 0 "" 0
-Bp7=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.188.11" 0 0 1 "" 0 "" 0
-Count=8
+Bp0=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.162.3" 0 0 1 "" 0 "" 0
+Bp1=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\protocol\pro_slip.c}.73.9" 0 0 1 "" 0 "" 0
+Bp2=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\protocol\pro_slip.c}.85.13" 0 0 1 "" 0 "" 0
+Bp3=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\protocol\pro_slip.c}.72.7" 0 0 1 "" 0 "" 0
+Bp4=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.179.7" 0 0 1 "" 0 "" 0
+Count=5
 [Aliases]
 Count=0
 SuppressDialog=0

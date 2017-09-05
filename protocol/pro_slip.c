@@ -72,23 +72,29 @@ int packet_analysis(void *packet, u8 length)
       if(ptr.Checksum == Checksum){
         if(ptr.Status == 0x0003){//控制音量           
             Write_Volume(volume_value[(ptr.KeyValue & 0xff)]);//write volume_value to LM1971
-            LED2 = !LED2;
+            //LED2 = !LED2;
             //printf("Set volume is : %02d\r\n", (u8)(ptr.KeyValue));
         }
-        else if (ptr.Status == 0x0004){//控制LED
+        else if (ptr.Status == 0x0004){//控制LED/LKJ
   
              LED_ID = (ptr.KeyValue & 0xFF);//低8位
     
              LED_Action = ((ptr.KeyValue>>8)&0xFF);//高8位
-    
+              
+             LED2 = !LED2;
             switch(LED_ID){
                   
                   case 0x01://RED1
                     
                       if(LED_Action == ON)
-                        GPIO_SetBits(GPIO_LED, RED1_PIN);/*关闭RED1信号灯*///输出高电平，驱动三极管导通
-                      else
+                      {
+                         //GPIO_ResetBits(GPIO_LED, DS2_PIN);
+                         GPIO_SetBits(GPIO_LED, RED1_PIN);/*关闭RED1信号灯*///输出高电平，驱动三极管导通
+                      }
+                      else{
+                        //GPIO_SetBits(GPIO_LED, DS2_PIN);
                         GPIO_ResetBits(GPIO_LED, RED1_PIN);
+                      }
                       
                       break;
               
@@ -118,9 +124,63 @@ int packet_analysis(void *packet, u8 length)
                         GPIO_ResetBits(GPIO_LED, RED2_PIN);
                     
                       break;
-                  
-                  default://Other err
+                      
+                  case 0x10://LKJ1
+                    
+                     if(LED_Action == ON)
+                        GPIO_SetBits(GPIO_LKJ, LKJ1_PIN);//LKJ1输出高电平，驱动三极管导通
+                      else
+                        GPIO_ResetBits(GPIO_LKJ, LKJ1_PIN);
+                    
                       break;
+                      
+                 case 0x20://LKJ2
+                  
+                   if(LED_Action == ON)
+                      GPIO_SetBits(GPIO_LKJ, LKJ2_PIN);//LKJ2输出高电平，驱动三极管导通
+                    else
+                      GPIO_ResetBits(GPIO_LKJ, LKJ2_PIN);
+                  
+                    break;
+                      
+                 case 0x30://LKJ3
+                
+                    if(LED_Action == ON)
+                      GPIO_SetBits(GPIO_LKJ, LKJ3_PIN);//LKJ3输出高电平，驱动三极管导通
+                    else
+                      GPIO_ResetBits(GPIO_LKJ, LKJ3_PIN);
+                  
+                    break;
+                        
+                case 0x40://LKJ4
+                
+                 if(LED_Action == ON)
+                    GPIO_SetBits(GPIO_LKJ, LKJ4_PIN);//LKJ4输出高电平，驱动三极管导通
+                  else
+                    GPIO_ResetBits(GPIO_LKJ, LKJ4_PIN);
+                
+                  break;
+                      
+                case 0x50://LKJ5
+                
+                 if(LED_Action == ON)
+                    GPIO_SetBits(GPIO_LKJ, LKJ5_PIN);//LKJ5输出高电平，驱动三极管导通
+                  else
+                    GPIO_ResetBits(GPIO_LKJ, LKJ5_PIN);
+                
+                  break;
+                      
+                case 0x60://LKJ6
+              
+                   if(LED_Action == ON)
+                      GPIO_SetBits(GPIO_LKJ, LKJ6_PIN);//LKJ6输出高电平，驱动三极管导通
+                    else
+                      GPIO_ResetBits(GPIO_LKJ, LKJ6_PIN);
+                  
+                    break;
+                                                  
+                default://Other err
+                    break;
             
             }
     
