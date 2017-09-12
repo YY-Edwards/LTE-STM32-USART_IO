@@ -45,7 +45,7 @@ void GPIO_Configuration(void)
 {
   GPIO_InitTypeDef  GPIO_InitStructure; 
 
-  RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C1,ENABLE);
+  RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C2``,ENABLE);
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB,ENABLE);
     
   /* Configure I2C1 pins: SCL and SDA */
@@ -85,13 +85,13 @@ void I2C_Configuration(void)
 }
 
 /*******************************************************************************
-* Function Name  : I2C_EE_Init
+* Function Name  : I2C_TPA2016_Init
 * Description    : Initializes peripherals used by the I2C EEPROM driver.
 * Input          : None
 * Output         : None
 * Return         : None
 *******************************************************************************/
-void I2C_EE_Init()
+void I2C_TPA2016_Init()
 {
   /* GPIO configuration */
   GPIO_Configuration();
@@ -100,21 +100,9 @@ void I2C_EE_Init()
   I2C_Configuration();
 
   /* depending on the EEPROM Address selected in the i2c_ee.h file */
-#ifdef EEPROM_Block0_ADDRESS
-  /* Select the EEPROM Block0 to write on */
-  EEPROM_ADDRESS = EEPROM_Block0_ADDRESS;
-#endif
-#ifdef EEPROM_Block1_ADDRESS
-  /* Select the EEPROM Block1 to write on */
-  EEPROM_ADDRESS = EEPROM_Block1_ADDRESS;
-#endif
-#ifdef EEPROM_Block2_ADDRESS
-  /* Select the EEPROM Block2 to write on */
-  EEPROM_ADDRESS = EEPROM_Block2_ADDRESS;
-#endif
-#ifdef EEPROM_Block3_ADDRESS
-  /* Select the EEPROM Block3 to write on */
-  EEPROM_ADDRESS = EEPROM_Block3_ADDRESS;
+
+  //EEPROM_ADDRESS = EEPROM_Block3_ADDRESS;
+  
 #endif
 }
 

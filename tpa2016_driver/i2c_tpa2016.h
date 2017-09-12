@@ -8,15 +8,31 @@
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
-/* The M24C08W contains 4 blocks (128byte each) with the adresses below: E2 = 0 */
-/* EEPROM Addresses defines */
-#define EEPROM_Block0_ADDRESS 0xA0   /* E2 = 0 */
-//#define EEPROM_Block1_ADDRESS 0xA2 /* E2 = 0 */
-//#define EEPROM_Block2_ADDRESS 0xA4 /* E2 = 0 */
-//#define EEPROM_Block3_ADDRESS 0xA6 /* E2 = 0 */
-#define  EEPTx_BUFSIZE      sizeof(EEP_Tx_Buffer) / sizeof(EEP_Tx_Buffer[0])
-#define  EEP_Firstpage      0x00
-#define  EEP_Randompage	    0x06
+
+#define TPA2016_SETUP 0x1
+#define TPA2016_SETUP_R_EN 0x80
+#define TPA2016_SETUP_L_EN 0x40
+#define TPA2016_SETUP_SWS 0x20
+#define TPA2016_SETUP_R_FAULT 0x10
+#define TPA2016_SETUP_L_FAULT 0x08
+#define TPA2016_SETUP_THERMAL 0x04
+#define TPA2016_SETUP_NOISEGATE 0x01
+
+
+#define TPA2016_ATK 0x2
+#define TPA2016_REL 0x3
+#define TPA2016_HOLD 0x4
+#define TPA2016_GAIN 0x5
+#define TPA2016_AGCLIMIT 0x6
+#define TPA2016_AGC 0x7
+#define TPA2016_AGC_OFF 0x00
+#define TPA2016_AGC_2 0x01
+#define TPA2016_AGC_4 0x02
+#define TPA2016_AGC_8 0x03
+
+/* Addresses defines */
+#define TPA2016_I2CADDR 0x58
+
 
 //TestStatus TransferStatus;
 
@@ -25,16 +41,40 @@
 void GPIO_Configuration(void);
 void I2C_Configuration(void);
 
-void I2C_EE_Init(void);
-void I2C_EE_ByteWrite(u8* pBuffer, u8 WriteAddr);
-void I2C_EE_PageWrite(u8* pBuffer, u8 WriteAddr, u8 NumByteToWrite);
-void I2C_EE_BufferWrite(u8* pBuffer, u8 WriteAddr, u16 NumByteToWrite);
-void I2C_EE_BufferRead(u8* pBuffer, u8 ReadAddr, u16 NumByteToRead);
-void I2C_EE_WaitEepromStandbyState(void);
-void I2C_Test(void);
+void I2C_TPA2016_Init(void);
+void I2C_ByteWrite(u8* pBuffer, u8 WriteAddr);
+//void I2C_EE_PageWrite(u8* pBuffer, u8 WriteAddr, u8 NumByteToWrite);
+//void I2C_EE_BufferWrite(u8* pBuffer, u8 WriteAddr, u16 NumByteToWrite);
+//void I2C_BufferRead(u8* pBuffer, u8 ReadAddr, u16 NumByteToRead);
+void I2C_ByteRead(u8* pBuffer, u8 ReadAddr, u16 NumByteToRead);
+void I2C_WaitEepromStandbyState(void);
 
-#endif /* __I2C_EE_H */
+void enableChannel(boolean r, boolean l);
 
-/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
+// Register #5
+void setGain(int8_t g);
+int8_t getGain();
+
+// Register #3
+void setReleaseControl(uint8_t release);
+// Register #2
+void setAttackControl(uint8_t attack);
+// Register #4
+void setHoldControl(uint8_t hold);
+
+// Register #6
+void setLimitLevelOn(void);
+void setLimitLevelOff(void);
+void setLimitLevel(uint8_t limit);
+
+// Register #7
+void setAGCCompression(uint8_t x);
+void setAGCMaxGain(uint8_t x);
+
+
+//void I2C_Test(void);
+
+#endif /* __I2C_TPA2016_H */
+
 
 
