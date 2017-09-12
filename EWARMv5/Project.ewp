@@ -4880,6 +4880,15 @@
   <group>
     <name>User</name>
     <group>
+      <name>i2c_tpa2016</name>
+      <file>
+        <name>$PROJ_DIR$\..\tpa2016_driver\i2c_tpa2016.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\tpa2016_driver\i2c_tpa2016.h</name>
+      </file>
+    </group>
+    <group>
       <name>protocol</name>
       <file>
         <name>$PROJ_DIR$\..\protocol\pro_slip.c</name>
