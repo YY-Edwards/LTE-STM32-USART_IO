@@ -77,6 +77,7 @@ static volatile u16 pressed_value =0x99;//按下后返回的键值（包括短按长按）
 static volatile u16 release_value =0x99;//释放返回的键值
 volatile u8 first_set_volume_flag =1;//
 
+volatile int8_t  gain =0;;
 //static KeyStatus_t KeyStatus = KEY_NOT_PRESS;
 
 volatile u16 key1_pressed_flag = 0;//key1
@@ -140,7 +141,6 @@ int main(void)
        To reconfigure the default setting of SystemInit() function, refer to
        system_stm32f10x.c file
      */     
-  //int counter =0;
  //u16 ReadVale =0x00;
   delay_init(72);	    	 //延时函数初始化	
 
@@ -153,6 +153,19 @@ int main(void)
   USART1_Init();//串口1初始化,带打印调试, 开启串口中断接收功能
   
   I2C_TPA2016_Init();
+  
+  gain = getGain();
+  
+  setGain(0x07);
+  
+  enableChannel(false, true);
+  
+  //gain = getGain();
+  
+  //setGain(0x06);
+  
+  //gain = getGain();
+  
   
   //USART2_Init();
     
