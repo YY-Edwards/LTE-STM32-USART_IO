@@ -4,7 +4,7 @@
 #define __I2C_TPA2016_H
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f10x.h"
+#include "stdbool.h"
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
@@ -31,7 +31,7 @@
 #define TPA2016_AGC_8 0x03
 
 /* Addresses defines */
-#define TPA2016_I2CADDR 0x58
+//#define TPA2016_I2CADDR 0x58
 
 
 //TestStatus TransferStatus;
@@ -42,14 +42,13 @@ void GPIO_Configuration(void);
 void I2C_Configuration(void);
 
 void I2C_TPA2016_Init(void);
-void I2C_ByteWrite(u8* pBuffer, u8 WriteAddr);
+void I2C_TPA2016_ByteWrite(u8* pBuffer, u8 WriteAddr);
 //void I2C_EE_PageWrite(u8* pBuffer, u8 WriteAddr, u8 NumByteToWrite);
 //void I2C_EE_BufferWrite(u8* pBuffer, u8 WriteAddr, u16 NumByteToWrite);
-//void I2C_BufferRead(u8* pBuffer, u8 ReadAddr, u16 NumByteToRead);
-void I2C_ByteRead(u8* pBuffer, u8 ReadAddr, u16 NumByteToRead);
-void I2C_WaitEepromStandbyState(void);
+void I2C_TPA2016_BufferRead(u8* pBuffer, u8 ReadAddr, u16 NumByteToRead);
+void I2C_TPA2016_WaitEepromStandbyState(void);
 
-void enableChannel(boolean r, boolean l);
+void enableChannel(bool r, bool l);
 
 // Register #5
 void setGain(int8_t g);

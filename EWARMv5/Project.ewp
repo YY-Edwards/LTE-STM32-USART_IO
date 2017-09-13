@@ -3143,6 +3143,7 @@
           <state>$PROJ_DIR$\..\..\..\Utilities\STM32_EVAL\Common</state>
           <state>$PROJ_DIR$\..\..\..\Utilities\STM32_EVAL\STM3210B_EVAL</state>
           <state>D:\IAR\IAR\Project\keyscanf_usart\protocol</state>
+          <state>D:\IAR\IAR\Project\keyscanf_usart\tpa2016_driver</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3552,7 +3553,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>lnk0t.icf</state>
+          <state>$TOOLKIT_DIR$\config\linker\ST\stm32f103xB.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -3612,7 +3613,7 @@
         </option>
         <option>
           <name>IlinkProgramEntryLabel</name>
-          <state></state>
+          <state>__iar_program_start</state>
         </option>
         <option>
           <name>DoFill</name>
@@ -4825,6 +4826,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_gpio.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\..\..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_i2c.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\..\..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rcc.c</name>

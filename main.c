@@ -21,6 +21,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f10x.h"
 #include "platform_config.h"
+#include "i2c_tpa2016.h"
 
 /** @addtogroup STM32F10x_StdPeriph_Examples
   * @{
@@ -150,6 +151,8 @@ int main(void)
   EXTI_USER_Init();//外部中断初始化，在这里初始化8个对应按键的中断输入
   
   USART1_Init();//串口1初始化,带打印调试, 开启串口中断接收功能
+  
+  I2C_TPA2016_Init();
   
   //USART2_Init();
     
