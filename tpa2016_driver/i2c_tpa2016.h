@@ -65,13 +65,14 @@ void setHoldControl(uint8_t hold);
 void setLimitLevelOn(void);
 void setLimitLevelOff(void);
 void setLimitLevel(uint8_t limit);
+void setNoiseGateThreshold(uint8_t Threshold);
 
 // Register #7
 void setAGCCompression(uint8_t x);
 void setAGCMaxGain(uint8_t x);
 
 
-//void I2C_Test(void);
+void I2C_Test(void);
 
 #endif /* __I2C_TPA2016_H */
 

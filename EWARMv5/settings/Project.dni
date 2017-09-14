@@ -21,7 +21,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=7910018
+Checksum=-296208409
 [JLinkDriver]
 CStepIntDis=_ 0
 [Exceptions]
@@ -66,7 +66,8 @@ Fmt0=char[10]	4	0
 Fmt1=u8[20]	4	0
 Fmt2=u8[256]	4	0
 [watch_formats]
-Fmt0={W}0:sizeof(ScanKeyProtocol_t)	4	0
+Fmt0={W}0:Threshold<<4	4	0
+Fmt1={W}0:sizeof(ScanKeyProtocol_t)	4	0
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -85,13 +86,9 @@ Exclusions=
 [Disassemble mode]
 mode=0
 [Breakpoints2]
-Bp0=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\protocol\pro_slip.c}.73.9" 0 0 1 "" 0 "" 0
-Bp1=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\protocol\pro_slip.c}.85.13" 0 0 1 "" 0 "" 0
-Bp2=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\protocol\pro_slip.c}.72.7" 0 0 1 "" 0 "" 0
-Bp3=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.155.3" 0 0 1 "" 0 "" 0
-Bp4=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.174.3" 0 0 1 "" 0 "" 0
-Bp5=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.157.10" 0 0 1 "" 0 "" 0
-Count=6
+Bp0=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.165.3" 0 0 1 "" 0 "" 0
+Bp1=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\tpa2016_driver\i2c_tpa2016.c}.572.3" 0 0 1 "" 0 "" 0
+Count=2
 [Aliases]
 Count=0
 SuppressDialog=0

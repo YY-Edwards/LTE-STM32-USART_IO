@@ -463,13 +463,24 @@ void enableChannel(bool r, bool l) {
   I2C_TPA2016_BufferRead(&setup, TPA2016_SETUP, 1);
   
   if (r)
+  {
     setup |= TPA2016_SETUP_R_EN;
+    //setup |= TPA2016_SETUP_R_FAULT;
+    //setup &= ~TPA2016_SETUP_R_FAULT;
+  }
   else 
     setup &= ~TPA2016_SETUP_R_EN;
-  if (l)
+  if (l){
+    
     setup |= TPA2016_SETUP_L_EN;
+    //setup |= TPA2016_SETUP_L_FAULT;
+    //setup &= ~TPA2016_SETUP_L_FAULT;
+  }
   else 
     setup &= ~TPA2016_SETUP_L_EN;
+  
+  //setup &= ~TPA2016_SETUP_R_FAULT;
+  //setup &= ~TPA2016_SETUP_L_FAULT;
   
   I2C_TPA2016_ByteWrite(&setup, TPA2016_SETUP);
   
@@ -554,6 +565,22 @@ void setLimitLevel(uint8_t limit) {
   //write8(TPA2016_AGCLIMIT, agc);
 }
 
+void setNoiseGateThreshold(u8 Threshold)
+{
+  if (Threshold > 0x60) return;
+  uint8_t agc =0;
+  I2C_TPA2016_BufferRead(&agc, TPA2016_AGCLIMIT, 1);
+
+  agc &= ~(0x60);  // mask off middle 2 bits
+  agc |= ((Threshold));        // set the Threshold level.
+  
+  I2C_TPA2016_ByteWrite(&agc, TPA2016_AGCLIMIT);
+
+
+}
+
+
+
 void setAGCMaxGain(uint8_t x) {
   if (x > 12) return; // max gain max is 12 (30dB)
   
@@ -570,9 +597,43 @@ void setAGCMaxGain(uint8_t x) {
 }
 
 
+volatile int8_t  gain =0;
+u8  setup =0;
+
+void I2C_Test(void)
+{
+
+  I2C_TPA2016_Init();
+  
+  gain = getGain();
+  
+  setGain(0x03);
+  
+  I2C_TPA2016_BufferRead(&setup, TPA2016_SETUP, 1);
+  I2C_TPA2016_BufferRead(&setup, TPA2016_ATK, 1);
+  I2C_TPA2016_BufferRead(&setup, TPA2016_REL, 1);
+  I2C_TPA2016_BufferRead(&setup, TPA2016_HOLD, 1);
+  I2C_TPA2016_BufferRead(&setup, TPA2016_GAIN, 1);
+  I2C_TPA2016_BufferRead(&setup, TPA2016_AGCLIMIT, 1);
+  setNoiseGateThreshold(0x20);
+  I2C_TPA2016_BufferRead(&setup, TPA2016_AGCLIMIT, 1);
+  I2C_TPA2016_BufferRead(&setup, TPA2016_AGC, 1);
+  
+  //enableChannel(false, false);
+   //enableChannel(false, true);
+  
+   //enableChannel(true, true);
+   //enableChannel(true, true);
+  
+  //gain = getGain();
+  
+  //setGain(0x06);
+  
+  //gain = getGain();
 
 
 
+}
 
 
 
