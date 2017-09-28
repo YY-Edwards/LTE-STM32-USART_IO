@@ -1,0 +1,17 @@
+Removed Pin From Net: NetName=UART_TXD Pin=U1003-11
+Removed Pin From Net: NetName=UART_RXD Pin=U1003-12
+Added Component: Designator=R1028(0603)
+Added Component: Designator=R1029(0603)
+Added Pin To Net: NetName=UART_TXD Pin=R1028-1
+Added Pin To Net: NetName=UART_RXD Pin=R1029-1
+Added Pin To Net: NetName=NetR1028_2 Pin=R1028-2
+Added Pin To Net: NetName=NetR1028_2 Pin=U1003-11
+Added Net: Name=NetR1028_2
+Added Pin To Net: NetName=NetR1029_2 Pin=R1029-2
+Added Pin To Net: NetName=NetR1029_2 Pin=U1003-12
+Added Net: Name=NetR1029_2
+Added Member To Class: ClassName=Sheet1 Member=Component R1028 0
+Added Member To Class: ClassName=Sheet1 Member=Component R1029 0
+Added Room: Name=Sheet1
+Added Room: Name=Sheet2
+Added Room: Name=Sheet3

@@ -1,0 +1,17 @@
+Added Pin To Net: NetName=KEY1 Pin=J7-3
+Added Pin To Net: NetName=KEY2 Pin=J7-4
+Added Pin To Net: NetName=KEY3 Pin=J7-5
+Added Pin To Net: NetName=KEY4 Pin=J7-6
+Added Pin To Net: NetName=KEY5 Pin=J7-7
+Added Pin To Net: NetName=KEY6 Pin=J7-8
+Added Pin To Net: NetName=KEY7 Pin=J7-9
+Added Pin To Net: NetName=KEY1-1 Pin=J8-3
+Added Pin To Net: NetName=KEY2-1 Pin=J8-4
+Added Pin To Net: NetName=KEY3-1 Pin=J8-5
+Added Pin To Net: NetName=KEY4-1 Pin=J8-6
+Added Pin To Net: NetName=KEY5-1 Pin=J8-7
+Added Pin To Net: NetName=KEY6-1 Pin=J8-8
+Added Pin To Net: NetName=KEY7-1 Pin=J8-9
+Added Pin To Net: NetName=KEY8-1 Pin=J8-10
+Added Pin To Net: NetName=KEY8 Pin=J7-10
+Added Net: Name=KEY8
