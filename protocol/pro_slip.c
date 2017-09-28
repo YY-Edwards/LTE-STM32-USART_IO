@@ -89,11 +89,11 @@ int packet_analysis(void *packet, u8 length)
                       if(LED_Action == ON)
                       {
                          //GPIO_ResetBits(GPIO_LED, DS2_PIN);
-                         GPIO_SetBits(GPIO_LED, RED1_PIN);/*关闭RED1信号灯*///输出高电平，驱动三极管导通
+                         GPIO_SetBits(GPIO_LED_3_6, RED1_PIN);/*关闭RED1信号灯*///输出高电平，驱动三极管导通
                       }
                       else{
                         //GPIO_SetBits(GPIO_LED, DS2_PIN);
-                        GPIO_ResetBits(GPIO_LED, RED1_PIN);
+                        GPIO_ResetBits(GPIO_LED_3_6, RED1_PIN);
                       }
                       
                       break;
@@ -101,81 +101,81 @@ int packet_analysis(void *packet, u8 length)
                   case 0x02://YELLOW
                         
                      if(LED_Action == ON)
-                        GPIO_SetBits(GPIO_LED, YELLOW_PIN);/*关闭RED1信号灯*///输出高电平，驱动三极管导通
+                        GPIO_SetBits(GPIO_LED_3_6, YELLOW_PIN);/*关闭RED1信号灯*///输出高电平，驱动三极管导通
                       else
-                        GPIO_ResetBits(GPIO_LED, YELLOW_PIN);
+                        GPIO_ResetBits(GPIO_LED_3_6, YELLOW_PIN);
                     
                       break;
                   
                   case 0x03://GREEEN
                     
                      if(LED_Action == ON)
-                        GPIO_SetBits(GPIO_LED, GREEN_PIN);/*关闭RED1信号灯*///输出高电平，驱动三极管导通
+                        GPIO_SetBits(GPIO_LED_3_6, GREEN_PIN);/*关闭RED1信号灯*///输出高电平，驱动三极管导通
                       else
-                        GPIO_ResetBits(GPIO_LED, GREEN_PIN);
+                        GPIO_ResetBits(GPIO_LED_3_6, GREEN_PIN);
                       
                       break;
                   
                   case 0x04://RED2
                     
                      if(LED_Action == ON)
-                        GPIO_SetBits(GPIO_LED, RED2_PIN);/*关闭RED1信号灯*///输出高电平，驱动三极管导通
+                        GPIO_SetBits(GPIO_LED_3_6, RED2_PIN);/*关闭RED1信号灯*///输出高电平，驱动三极管导通
                       else
-                        GPIO_ResetBits(GPIO_LED, RED2_PIN);
+                        GPIO_ResetBits(GPIO_LED_3_6, RED2_PIN);
                     
                       break;
                       
                   case 0x10://LKJ1
                     
                      if(LED_Action == ON)
-                        GPIO_SetBits(GPIO_LKJ, LKJ1_PIN);//LKJ1输出高电平，驱动三极管导通
+                        GPIO_SetBits(GPIO_LKJ_1_4, LKJ1_PIN);//LKJ1输出高电平，驱动三极管导通
                       else
-                        GPIO_ResetBits(GPIO_LKJ, LKJ1_PIN);
+                        GPIO_ResetBits(GPIO_LKJ_1_4, LKJ1_PIN);
                     
                       break;
                       
                  case 0x20://LKJ2
                   
                    if(LED_Action == ON)
-                      GPIO_SetBits(GPIO_LKJ, LKJ2_PIN);//LKJ2输出高电平，驱动三极管导通
+                      GPIO_SetBits(GPIO_LKJ_1_4, LKJ2_PIN);//LKJ2输出高电平，驱动三极管导通
                     else
-                      GPIO_ResetBits(GPIO_LKJ, LKJ2_PIN);
+                      GPIO_ResetBits(GPIO_LKJ_1_4, LKJ2_PIN);
                   
                     break;
                       
                  case 0x30://LKJ3
                 
                     if(LED_Action == ON)
-                      GPIO_SetBits(GPIO_LKJ, LKJ3_PIN);//LKJ3输出高电平，驱动三极管导通
+                      GPIO_SetBits(GPIO_LKJ_1_4, LKJ3_PIN);//LKJ3输出高电平，驱动三极管导通
                     else
-                      GPIO_ResetBits(GPIO_LKJ, LKJ3_PIN);
+                      GPIO_ResetBits(GPIO_LKJ_1_4, LKJ3_PIN);
                   
                     break;
                         
                 case 0x40://LKJ4
                 
                  if(LED_Action == ON)
-                    GPIO_SetBits(GPIO_LKJ, LKJ4_PIN);//LKJ4输出高电平，驱动三极管导通
+                    GPIO_SetBits(GPIO_LKJ_1_4, LKJ4_PIN);//LKJ4输出高电平，驱动三极管导通
                   else
-                    GPIO_ResetBits(GPIO_LKJ, LKJ4_PIN);
+                    GPIO_ResetBits(GPIO_LKJ_1_4, LKJ4_PIN);
                 
                   break;
                       
                 case 0x50://LKJ5
                 
                  if(LED_Action == ON)
-                    GPIO_SetBits(GPIO_LKJ, LKJ5_PIN);//LKJ5输出高电平，驱动三极管导通
+                    GPIO_SetBits(GPIO_LKJ_5_6, LKJ5_PIN);//LKJ5输出高电平，驱动三极管导通
                   else
-                    GPIO_ResetBits(GPIO_LKJ, LKJ5_PIN);
+                    GPIO_ResetBits(GPIO_LKJ_5_6, LKJ5_PIN);
                 
                   break;
                       
                 case 0x60://LKJ6
               
                    if(LED_Action == ON)
-                      GPIO_SetBits(GPIO_LKJ, LKJ6_PIN);//LKJ6输出高电平，驱动三极管导通
+                      GPIO_SetBits(GPIO_LKJ_5_6, LKJ6_PIN);//LKJ6输出高电平，驱动三极管导通
                     else
-                      GPIO_ResetBits(GPIO_LKJ, LKJ6_PIN);
+                      GPIO_ResetBits(GPIO_LKJ_5_6, LKJ6_PIN);
                   
                     break;
                                                   

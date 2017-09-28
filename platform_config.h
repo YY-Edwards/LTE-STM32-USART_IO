@@ -64,36 +64,40 @@
   
   
 /*LED灯相关定义*/
-  #define RCC_GPIO_LED                    RCC_APB2Periph_GPIOC    /*LED使用的GPIO时钟*/
-  #define LEDn                            6                       /*LED数量*/
-  #define GPIO_LED                        GPIOC           /*LED灯使用的GPIO组*/
+  #define RCC_GPIO_LED_1_2                    RCC_APB2Periph_GPIOC    /*LED指示灯使用的GPIO时钟*/
+  #define RCC_GPIO_LED_3_6                    RCC_APB2Periph_GPIOB    /*LED信号灯使用的GPIO时钟*/
+  #define LEDn                                  6                       /*LED数量*/
+  #define GPIO_LED_1_2                        GPIOC                     /*LED指示灯使用的GPIO组*/
+  #define GPIO_LED_3_6                        GPIOB                     /*LED信号灯使用的GPIO组*/
   
   #define DS1_PIN                         GPIO_Pin_0              /*DS1使用的GPIO管脚*/
   #define DS2_PIN                         GPIO_Pin_1		  /*DS2使用的GPIO管脚*/
-  #define RED1_PIN                        GPIO_Pin_2  	          /*DS3使用的GPIO管脚*/
-  #define YELLOW_PIN                      GPIO_Pin_3		  /*DS4使用的GPIO管脚*/
-  #define GREEN_PIN                       GPIO_Pin_4  	          /*DS3使用的GPIO管脚*/
-  #define RED2_PIN                        GPIO_Pin_5		  /*DS4使用的GPIO管脚*/
+  #define RED1_PIN                        GPIO_Pin_6  	          /*DS3使用的GPIO管脚*/
+  #define YELLOW_PIN                      GPIO_Pin_7		  /*DS4使用的GPIO管脚*/
+  #define GREEN_PIN                       GPIO_Pin_8  	          /*DS3使用的GPIO管脚*/
+  #define RED2_PIN                        GPIO_Pin_9		  /*DS4使用的GPIO管脚*/
     
 /*GPIO_LKJ相关定义*/
-  #define RCC_GPIO_LKJ                    RCC_APB2Periph_GPIOB    /*LKJ使用的GPIO时钟*/
+  #define RCC_GPIO_LKJ_1_4                RCC_APB2Periph_GPIOC   /*LKJ_1-4使用的GPIO时钟*/
+  #define RCC_GPIO_LKJ_5_6                RCC_APB2Periph_GPIOA   /*LKJ_5-6使用的GPIO时钟*/
   #define LKJn                            6                       /*LKJ数量*/
-  #define GPIO_LKJ                        GPIOB                   /*LKJ灯使用的GPIO组*/
+  #define GPIO_LKJ_1_4                    GPIOC                   /*LKJ_1-4灯使用的GPIO组*/
+  #define GPIO_LKJ_5_6                    GPIOA                  /*LKJ_5-6灯使用的GPIO组*/
   
-  #define LKJ1_PIN                         GPIO_Pin_0             /*LKJ1使用的GPIO管脚*/
-  #define LKJ2_PIN                         GPIO_Pin_1		  /*LKJ2使用的GPIO管脚*/
-  #define LKJ3_PIN                         GPIO_Pin_6  	          /*LKJ3使用的GPIO管脚*/
-  #define LKJ4_PIN                         GPIO_Pin_7		  /*LKJ4使用的GPIO管脚*/
-  #define LKJ5_PIN                         GPIO_Pin_8  	          /*LKJ3使用的GPIO管脚*/
-  #define LKJ6_PIN                         GPIO_Pin_9		  /*LKJ4使用的GPIO管脚*/    
+  #define LKJ1_PIN                         GPIO_Pin_2             /*LKJ1使用的GPIO管脚*/
+  #define LKJ2_PIN                         GPIO_Pin_3		  /*LKJ2使用的GPIO管脚*/
+  #define LKJ3_PIN                         GPIO_Pin_4  	          /*LKJ3使用的GPIO管脚*/
+  #define LKJ4_PIN                         GPIO_Pin_5		  /*LKJ4使用的GPIO管脚*/
+  #define LKJ5_PIN                         GPIO_Pin_7  	          /*LKJ5使用的GPIO管脚*/
+  #define LKJ6_PIN                         GPIO_Pin_8		  /*LKJ6使用的GPIO管脚*/    
 
 
 /*KEY独立按键相关定义*///8
-  #define RCC_GPIO_KEY_5_8                    RCC_APB2Periph_GPIOA    /*KEY5-8使用的GPIO时钟*/
-  #define RCC_GPIO_KEY_1_4                    RCC_APB2Periph_GPIOC    /*KEY1-4使用的GPIO时钟*/
+  #define RCC_GPIO_KEY_5_8                    RCC_APB2Periph_GPIOA    /*KEY_5-8使用的GPIO时钟*/
+  #define RCC_GPIO_KEY_1_4                    RCC_APB2Periph_GPIOC    /*KEY_1-4使用的GPIO时钟*/
   #define KEYn                                   8              /*KEY接口数量*/
-  #define GPIO_KEY_5_8                        GPIOA                   /*KEY灯使用的GPIO组*/
-  #define GPIO_KEY_1_4                        GPIOC                   /*KEY灯使用的GPIO组*/
+  #define GPIO_KEY_1_4                        GPIOC                   /*KEY_5-8灯使用的GPIO组*/
+  #define GPIO_KEY_5_8                        GPIOA                   /*KEY_1-4灯使用的GPIO组*/
   
   #define KEY1_PIN                         GPIO_Pin_9              /*K1使用的GPIO管脚*/
   #define KEY2_PIN                         GPIO_Pin_8		  /*K2使用的GPIO管脚*/

@@ -1,0 +1,15 @@
+Removed Pin From Net: NetName=GND Pin=J5-1
+Change Component DesignItemId : Designator=J2002 Old DesignItemId=SIP4 New DesignItemId=SIP6
+Change Component Footprint: Designator=J2002 Old Footprint=SIP4 New Footprint=SIP6
+Change Component Comment : Designator=J2002 Old Comment=SIP4 New Comment=SIP6
+Added Pin To Net: NetName=NetJ2002_5 Pin=J2002-5
+Added Pin To Net: NetName=NetJ2002_5 Pin=R1014-2
+Added Pin To Net: NetName=NetJ2002_5 Pin=U1003-13
+Added Net: Name=NetJ2002_5
+Added Pin To Net: NetName=NetJ2002_6 Pin=J2002-6
+Added Pin To Net: NetName=NetJ2002_6 Pin=R1015-2
+Added Pin To Net: NetName=NetJ2002_6 Pin=U1003-14
+Added Net: Name=NetJ2002_6
+Added Room: Name=Sheet1
+Added Room: Name=Sheet2
+Added Room: Name=Sheet3

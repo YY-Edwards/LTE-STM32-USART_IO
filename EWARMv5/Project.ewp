@@ -3142,8 +3142,8 @@
           <state>$PROJ_DIR$\..\..\..\Utilities\STM32_EVAL</state>
           <state>$PROJ_DIR$\..\..\..\Utilities\STM32_EVAL\Common</state>
           <state>$PROJ_DIR$\..\..\..\Utilities\STM32_EVAL\STM3210B_EVAL</state>
-          <state>D:\IAR\IAR\Project\keyscanf_usart\protocol</state>
-          <state>D:\IAR\IAR\Project\keyscanf_usart\tpa2016_driver</state>
+          <state>$PROJ_DIR$\..\protocol</state>
+          <state>$PROJ_DIR$\..\tpa2016_driver</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>

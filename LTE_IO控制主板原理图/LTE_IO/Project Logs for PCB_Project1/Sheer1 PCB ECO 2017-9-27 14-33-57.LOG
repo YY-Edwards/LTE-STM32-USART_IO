@@ -1,0 +1,76 @@
+Removed Pin From Net: NetName=PC11 Pin=J6-15
+Removed Pin From Net: NetName=PC10 Pin=J6-16
+Removed Member From Class: ClassName=Sheet2 Member=J2001
+Removed Member From Class: ClassName=Sheet2 Member=JP2001
+Removed Member From Class: ClassName=Sheet2 Member=Q2001
+Removed Member From Class: ClassName=Sheet2 Member=Q2002
+Removed Member From Class: ClassName=Sheet2 Member=Q2003
+Removed Member From Class: ClassName=Sheet2 Member=Q2004
+Removed Member From Class: ClassName=Sheet2 Member=Q2005
+Removed Member From Class: ClassName=Sheet2 Member=Q2006
+Removed Member From Class: ClassName=Sheet2 Member=R2004
+Removed Member From Class: ClassName=Sheet2 Member=R2005
+Removed Member From Class: ClassName=Sheet2 Member=R2006
+Removed Member From Class: ClassName=Sheet2 Member=R2007
+Removed Member From Class: ClassName=Sheet2 Member=R2008
+Removed Member From Class: ClassName=Sheet2 Member=R2009
+Removed Member From Class: ClassName=Sheet2 Member=R2010
+Removed Member From Class: ClassName=Sheet2 Member=R2011
+Removed Member From Class: ClassName=Sheet2 Member=R2012
+Removed Member From Class: ClassName=Sheet2 Member=R2013
+Removed Member From Class: ClassName=Sheet2 Member=R2014
+Removed Member From Class: ClassName=Sheet2 Member=R2015
+Added Pin To Net: NetName=PC11 Pin=J6-17
+Added Pin To Net: NetName=PC10 Pin=J6-18
+Change Net Name : Old Net Name=NetR2004_1 New Net Name=LKJ1
+Change Net Name : Old Net Name=NetR2006_1 New Net Name=LKJ2
+Change Net Name : Old Net Name=NetR2008_1 New Net Name=LKJ3
+Change Net Name : Old Net Name=NetR2010_1 New Net Name=LKJ4
+Change Net Name : Old Net Name=NetR2012_1 New Net Name=LKJ5
+Change Net Name : Old Net Name=NetR2014_1 New Net Name=LKJ6
+Added Pin To Net: NetName=NetJ6_5 Pin=J6-5
+Added Pin To Net: NetName=NetJ6_5 Pin=Q2001-3
+Added Pin To Net: NetName=NetJ6_5 Pin=R2005-2
+Added Net: Name=NetJ6_5
+Added Pin To Net: NetName=NetJ6_7 Pin=J6-7
+Added Pin To Net: NetName=NetJ6_7 Pin=Q2002-3
+Added Pin To Net: NetName=NetJ6_7 Pin=R2007-1
+Added Net: Name=NetJ6_7
+Added Pin To Net: NetName=NetJ6_9 Pin=J6-9
+Added Pin To Net: NetName=NetJ6_9 Pin=Q2003-3
+Added Pin To Net: NetName=NetJ6_9 Pin=R2009-1
+Added Net: Name=NetJ6_9
+Added Pin To Net: NetName=NetJ6_11 Pin=J6-11
+Added Pin To Net: NetName=NetJ6_11 Pin=Q2004-3
+Added Pin To Net: NetName=NetJ6_11 Pin=R2011-1
+Added Net: Name=NetJ6_11
+Added Pin To Net: NetName=NetJ6_13 Pin=J6-13
+Added Pin To Net: NetName=NetJ6_13 Pin=Q2005-3
+Added Pin To Net: NetName=NetJ6_13 Pin=R2013-1
+Added Net: Name=NetJ6_13
+Added Pin To Net: NetName=NetJ6_15 Pin=J6-15
+Added Pin To Net: NetName=NetJ6_15 Pin=Q2006-3
+Added Pin To Net: NetName=NetJ6_15 Pin=R2015-1
+Added Net: Name=NetJ6_15
+Added Member To Class: ClassName=Sheet1 Member=Component JP2001 SIP3
+Added Member To Class: ClassName=Sheet1 Member=Component Q2001 BC-817
+Added Member To Class: ClassName=Sheet1 Member=Component Q2002 BC-817
+Added Member To Class: ClassName=Sheet1 Member=Component Q2003 BC-817
+Added Member To Class: ClassName=Sheet1 Member=Component Q2004 BC-817
+Added Member To Class: ClassName=Sheet1 Member=Component Q2005 BC-817
+Added Member To Class: ClassName=Sheet1 Member=Component Q2006 BC-817
+Added Member To Class: ClassName=Sheet1 Member=Component R2004 3.3K
+Added Member To Class: ClassName=Sheet1 Member=Component R2005 10K
+Added Member To Class: ClassName=Sheet1 Member=Component R2006 3.3K
+Added Member To Class: ClassName=Sheet1 Member=Component R2007 10K
+Added Member To Class: ClassName=Sheet1 Member=Component R2008 3.3K
+Added Member To Class: ClassName=Sheet1 Member=Component R2009 10K
+Added Member To Class: ClassName=Sheet1 Member=Component R2010 3.3K
+Added Member To Class: ClassName=Sheet1 Member=Component R2011 10K
+Added Member To Class: ClassName=Sheet1 Member=Component R2012 3.3K
+Added Member To Class: ClassName=Sheet1 Member=Component R2013 10K
+Added Member To Class: ClassName=Sheet1 Member=Component R2014 3.3K
+Added Member To Class: ClassName=Sheet1 Member=Component R2015 10K
+Added Room: Name=Sheet1
+Added Room: Name=Sheet2
+Added Room: Name=Sheet3

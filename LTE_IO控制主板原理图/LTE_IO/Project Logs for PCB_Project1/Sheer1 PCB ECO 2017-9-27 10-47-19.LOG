@@ -1,0 +1,140 @@
+Removed Pin From Net: NetName=LINEIN_OUT Pin=C2015-1
+Removed Pin From Net: NetName=LINEIN_OUT Pin=C2062-1
+Removed Pin From Net: NetName=LINEIN_OUT Pin=R2020-1
+Removed Pin From Net: NetName=LINEIN_OUT Pin=R2057-1
+Removed Pin From Net: NetName=NetR2056_1 Pin=U2002-6
+Removed Pin From Net: NetName=NetC2064_1 Pin=U2002-7
+Removed Pin From Net: NetName=NetC2012_1 Pin=U2002-8
+Removed Pin From Net: NetName=GND Pin=U2002-9
+Removed Pin From Net: NetName=NetC2013_1 Pin=U2002-10
+Removed Pin From Net: NetName=NetR2017_2 Pin=U2002-11
+Removed Pin From Net: NetName=GND Pin=U2002-12
+Removed Pin From Net: NetName=GND Pin=U2002-13
+Removed Pin From Net: NetName=NetC2017_1 Pin=U2002-14
+Removed Pin From Net: NetName=NetC2017_2 Pin=U2002-15
+Removed Pin From Net: NetName=VCC-5V Pin=U2002-16
+Removed Pin From Net: NetName=NetC2029_1 Pin=U2003-6
+Removed Pin From Net: NetName=DGND Pin=U2003-7
+Removed Pin From Net: NetName=NetC2030_1 Pin=U2003-8
+Removed Pin From Net: NetName=GND Pin=U2003-9
+Removed Pin From Net: NetName=NetR2024_2 Pin=U2003-10
+Removed Pin From Net: NetName=NetC2031_1 Pin=U2003-11
+Removed Pin From Net: NetName=GND Pin=U2003-12
+Removed Pin From Net: NetName=GND Pin=U2003-13
+Removed Pin From Net: NetName=NetC2025_1 Pin=U2003-14
+Removed Pin From Net: NetName=NetC2023_1 Pin=U2003-15
+Removed Pin From Net: NetName=VCC-5V Pin=U2003-16
+Removed Pin From Net: NetName=NetC2042_1 Pin=U2004-6
+Removed Pin From Net: NetName=DGND Pin=U2004-7
+Removed Pin From Net: NetName=NetC2043_1 Pin=U2004-8
+Removed Pin From Net: NetName=GND Pin=U2004-9
+Removed Pin From Net: NetName=NetR2035_2 Pin=U2004-10
+Removed Pin From Net: NetName=NetC2044_1 Pin=U2004-11
+Removed Pin From Net: NetName=GND Pin=U2004-12
+Removed Pin From Net: NetName=GND Pin=U2004-13
+Removed Pin From Net: NetName=NetC2039_1 Pin=U2004-14
+Removed Pin From Net: NetName=NetC2037_1 Pin=U2004-15
+Removed Pin From Net: NetName=VCC-5V Pin=U2004-16
+Change Component Footprint: Designator=U2002 Old Footprint=SP3232E-SOIC New Footprint=TEA2025B
+Change Component Footprint: Designator=U2003 Old Footprint=SP3232E-SOIC New Footprint=TEA2025B
+Change Component Footprint: Designator=U2004 Old Footprint=SP3232E-SOIC New Footprint=TEA2025B
+Added Component: Designator=C2066(0603)
+Added Component: Designator=C2067(0603)
+Added Component: Designator=R2061(0603)
+Added Component: Designator=R2062(0603)
+Added Component: Designator=R2063(0603)
+Added Component: Designator=R2064(0603)
+Added Component: Designator=R2065(0603)
+Added Component: Designator=R2066(0603)
+Added Component: Designator=R2067(0603)
+Added Component: Designator=R2068(0603)
+Added Pin To Net: NetName=NetC2064_1 Pin=R2062-2
+Added Pin To Net: NetName=LINEIN_OUT Pin=R2063-2
+Added Pin To Net: NetName=LINEIN_OUT Pin=R2064-2
+Added Pin To Net: NetName=NetC2013_1 Pin=R2066-1
+Added Pin To Net: NetName=LINEIN_OUT Pin=R2067-2
+Added Pin To Net: NetName=LINEIN_OUT Pin=R2068-1
+Added Pin To Net: NetName=GND Pin=U2002-6
+Added Pin To Net: NetName=GND Pin=U2002-7
+Added Pin To Net: NetName=NetR2056_1 Pin=U2002-8
+Added Pin To Net: NetName=NetC2012_1 Pin=U2002-10
+Added Pin To Net: NetName=GND Pin=U2002-11
+Added Pin To Net: NetName=NetR2017_2 Pin=U2002-13
+Added Pin To Net: NetName=GND Pin=U2002-14
+Added Pin To Net: NetName=GND Pin=U2002-15
+Added Pin To Net: NetName=GND Pin=U2002-16
+Added Pin To Net: NetName=GND Pin=U2002-17
+Added Pin To Net: NetName=NetC2017_1 Pin=U2002-18
+Added Pin To Net: NetName=NetC2017_2 Pin=U2002-19
+Added Pin To Net: NetName=VCC-5V Pin=U2002-20
+Added Pin To Net: NetName=GND Pin=U2003-6
+Added Pin To Net: NetName=GND Pin=U2003-7
+Added Pin To Net: NetName=NetC2029_1 Pin=U2003-8
+Added Pin To Net: NetName=DGND Pin=U2003-9
+Added Pin To Net: NetName=NetC2030_1 Pin=U2003-10
+Added Pin To Net: NetName=GND Pin=U2003-11
+Added Pin To Net: NetName=NetR2024_2 Pin=U2003-12
+Added Pin To Net: NetName=NetC2031_1 Pin=U2003-13
+Added Pin To Net: NetName=GND Pin=U2003-14
+Added Pin To Net: NetName=GND Pin=U2003-15
+Added Pin To Net: NetName=GND Pin=U2003-16
+Added Pin To Net: NetName=GND Pin=U2003-17
+Added Pin To Net: NetName=NetC2025_1 Pin=U2003-18
+Added Pin To Net: NetName=NetC2023_1 Pin=U2003-19
+Added Pin To Net: NetName=VCC-5V Pin=U2003-20
+Added Pin To Net: NetName=GND Pin=U2004-6
+Added Pin To Net: NetName=GND Pin=U2004-7
+Added Pin To Net: NetName=NetC2042_1 Pin=U2004-8
+Added Pin To Net: NetName=DGND Pin=U2004-9
+Added Pin To Net: NetName=NetC2043_1 Pin=U2004-10
+Added Pin To Net: NetName=GND Pin=U2004-11
+Added Pin To Net: NetName=NetR2035_2 Pin=U2004-12
+Added Pin To Net: NetName=NetC2044_1 Pin=U2004-13
+Added Pin To Net: NetName=GND Pin=U2004-14
+Added Pin To Net: NetName=GND Pin=U2004-15
+Added Pin To Net: NetName=GND Pin=U2004-16
+Added Pin To Net: NetName=GND Pin=U2004-17
+Added Pin To Net: NetName=NetC2039_1 Pin=U2004-18
+Added Pin To Net: NetName=NetC2037_1 Pin=U2004-19
+Added Pin To Net: NetName=VCC-5V Pin=U2004-20
+Added Pin To Net: NetName=NetC2015_1 Pin=C2015-1
+Added Pin To Net: NetName=NetC2015_1 Pin=R2020-1
+Added Pin To Net: NetName=NetC2015_1 Pin=R2068-2
+Added Net: Name=NetC2015_1
+Added Pin To Net: NetName=NetC2062_1 Pin=C2062-1
+Added Pin To Net: NetName=NetC2062_1 Pin=R2057-1
+Added Pin To Net: NetName=NetC2062_1 Pin=R2063-1
+Added Net: Name=NetC2062_1
+Added Pin To Net: NetName=NetC2066_1 Pin=C2066-1
+Added Pin To Net: NetName=NetC2066_1 Pin=R2061-2
+Added Net: Name=NetC2066_1
+Added Pin To Net: NetName=NetC2066_2 Pin=C2066-2
+Added Pin To Net: NetName=NetC2066_2 Pin=R2064-1
+Added Net: Name=NetC2066_2
+Added Pin To Net: NetName=NetC2067_1 Pin=C2067-1
+Added Pin To Net: NetName=NetC2067_1 Pin=R2067-1
+Added Net: Name=NetC2067_1
+Added Pin To Net: NetName=NetC2067_2 Pin=C2067-2
+Added Pin To Net: NetName=NetC2067_2 Pin=R2065-1
+Added Net: Name=NetC2067_2
+Added Pin To Net: NetName=NetR2061_1 Pin=R2061-1
+Added Pin To Net: NetName=NetR2061_1 Pin=R2062-1
+Added Pin To Net: NetName=NetR2061_1 Pin=U2002-9
+Added Net: Name=NetR2061_1
+Added Pin To Net: NetName=NetR2065_2 Pin=R2065-2
+Added Pin To Net: NetName=NetR2065_2 Pin=R2066-2
+Added Pin To Net: NetName=NetR2065_2 Pin=U2002-12
+Added Net: Name=NetR2065_2
+Added Member To Class: ClassName=Sheet2 Member=Component C2066 0.22UF
+Added Member To Class: ClassName=Sheet2 Member=Component C2067 0.22UF
+Added Member To Class: ClassName=Sheet2 Member=Component R2061 0
+Added Member To Class: ClassName=Sheet2 Member=Component R2062 0
+Added Member To Class: ClassName=Sheet2 Member=Component R2063 0
+Added Member To Class: ClassName=Sheet2 Member=Component R2064 0
+Added Member To Class: ClassName=Sheet2 Member=Component R2065 0
+Added Member To Class: ClassName=Sheet2 Member=Component R2066 0
+Added Member To Class: ClassName=Sheet2 Member=Component R2067 0
+Added Member To Class: ClassName=Sheet2 Member=Component R2068 0
+Added Room: Name=Sheet1
+Added Room: Name=Sheet2
+Added Room: Name=Sheet3

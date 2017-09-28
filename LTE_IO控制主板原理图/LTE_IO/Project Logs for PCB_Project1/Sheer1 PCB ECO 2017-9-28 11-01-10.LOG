@@ -1,0 +1,15 @@
+Removed Pin From Net: NetName=NetJ6_5 Pin=Q2001-3
+Removed Pin From Net: NetName=NetJ6_7 Pin=Q2002-3
+Removed Pin From Net: NetName=LKJ1 Pin=R2004-1
+Removed Pin From Net: NetName=NetJ6_5 Pin=R2005-2
+Removed Pin From Net: NetName=LKJ2 Pin=R2006-1
+Removed Pin From Net: NetName=NetJ6_7 Pin=R2007-1
+Added Pin To Net: NetName=NetJ6_7 Pin=Q2001-3
+Added Pin To Net: NetName=NetJ6_5 Pin=Q2002-3
+Added Pin To Net: NetName=LKJ2 Pin=R2004-1
+Added Pin To Net: NetName=NetJ6_7 Pin=R2005-2
+Added Pin To Net: NetName=LKJ1 Pin=R2006-1
+Added Pin To Net: NetName=NetJ6_5 Pin=R2007-1
+Added Room: Name=Sheet1
+Added Room: Name=Sheet2
+Added Room: Name=Sheet3

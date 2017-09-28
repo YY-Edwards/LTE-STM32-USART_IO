@@ -1,0 +1,48 @@
+Removed Pin From Net: NetName=GND Pin=J7-1
+Removed Pin From Net: NetName=GND Pin=J7-2
+Removed Pin From Net: NetName=GND Pin=J7-12
+Removed Pin From Net: NetName=GND Pin=J8-1
+Removed Pin From Net: NetName=GND Pin=J8-2
+Removed Pin From Net: NetName=GND Pin=J8-12
+Removed Pin From Net: NetName=NetC2008_2 Pin=P2001-1
+Removed Pin From Net: NetName=BGND Pin=P2001-2
+Removed Pin From Net: NetName=NetC2019_2 Pin=P2002-1
+Removed Pin From Net: NetName=BGND Pin=P2002-2
+Removed Member From Class: ClassName=Sheet2 Member=P2001
+Removed Member From Class: ClassName=Sheet2 Member=P2002
+Added Pin To Net: NetName=BGND Pin=J7-1
+Added Pin To Net: NetName=NetC2019_2 Pin=J7-2
+Added Pin To Net: NetName=NetC2008_2 Pin=J7-12
+Added Pin To Net: NetName=NetJ8_1 Pin=J8-1
+Added Pin To Net: NetName=NetJ8_1 Pin=P2001-2
+Added Pin To Net: NetName=NetJ8_1 Pin=P2002-2
+Added Net: Name=NetJ8_1
+Added Pin To Net: NetName=NetJ8_2 Pin=J8-2
+Added Pin To Net: NetName=NetJ8_2 Pin=P2001-1
+Added Net: Name=NetJ8_2
+Added Pin To Net: NetName=NetJ8_12 Pin=J8-12
+Added Pin To Net: NetName=NetJ8_12 Pin=P2002-1
+Added Net: Name=NetJ8_12
+Added Pin To Net: NetName=PA4 Pin=J6-10
+Added Pin To Net: NetName=PA4 Pin=U1002-20
+Added Net: Name=PA4
+Added Pin To Net: NetName=PA5 Pin=J6-8
+Added Pin To Net: NetName=PA5 Pin=U1002-21
+Added Net: Name=PA5
+Added Pin To Net: NetName=PA6 Pin=J6-6
+Added Pin To Net: NetName=PA6 Pin=U1002-22
+Added Net: Name=PA6
+Added Pin To Net: NetName=PA12 Pin=J6-16
+Added Pin To Net: NetName=PA12 Pin=U1002-45
+Added Net: Name=PA12
+Added Pin To Net: NetName=PB5 Pin=J6-12
+Added Pin To Net: NetName=PB5 Pin=U1002-57
+Added Net: Name=PB5
+Added Pin To Net: NetName=PC12 Pin=J6-14
+Added Pin To Net: NetName=PC12 Pin=U1002-53
+Added Net: Name=PC12
+Added Member To Class: ClassName=Sheet1 Member=Component P2001 SIP2
+Added Member To Class: ClassName=Sheet1 Member=Component P2002 SIP2
+Added Room: Name=Sheet1
+Added Room: Name=Sheet2
+Added Room: Name=Sheet3

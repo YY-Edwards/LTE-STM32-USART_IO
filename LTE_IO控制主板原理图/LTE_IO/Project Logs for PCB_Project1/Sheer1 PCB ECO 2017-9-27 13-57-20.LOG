@@ -1,0 +1,13 @@
+Removed Pin From Net: NetName=GND Pin=J5-1
+Removed Member From Class: ClassName=Sheet1 Member=J5
+Change Component DesignItemId : Designator=J2002 Old DesignItemId=SIP4 New DesignItemId=SIP7
+Change Component Comment : Designator=J2002 Old Comment=SIP4 New Comment=SIP7
+Added Pin To Net: NetName=NetJ2002_6 Pin=R1014-2
+Added Pin To Net: NetName=NetJ2002_6 Pin=U1003-13
+Added Net: Name=NetJ2002_6
+Added Pin To Net: NetName=NetJ2002_7 Pin=R1015-2
+Added Pin To Net: NetName=NetJ2002_7 Pin=U1003-14
+Added Net: Name=NetJ2002_7
+Added Room: Name=Sheet1
+Added Room: Name=Sheet2
+Added Room: Name=Sheet3
