@@ -21,7 +21,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=-296208409
+Checksum=199743907
 [JLinkDriver]
 CStepIntDis=_ 0
 [Exceptions]
@@ -87,7 +87,7 @@ Exclusions=
 mode=0
 [Breakpoints2]
 Bp0=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.165.3" 0 0 1 "" 0 "" 0
-Bp1=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\tpa2016_driver\i2c_tpa2016.c}.572.3" 0 0 1 "" 0 "" 0
+Bp1=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\tpa2016_driver\i2c_tpa2016.c}.572.3" 0 0 1 "" 0 "" 0
 Count=2
 [Aliases]
 Count=0

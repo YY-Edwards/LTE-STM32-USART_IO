@@ -191,9 +191,27 @@ int main(void)
       delay_ms(100);   
       if(first_set_volume_flag)
       {
-          Write_Volume(0x0001);//set default volume at 9
+          Write_Volume(0x0000);//set default volume at 10
           first_set_volume_flag =0;
       }
+      
+      
+//      GPIO_ResetBits(GPIO_LED, RED1_PIN);
+//      
+//      GPIO_SetBits(GPIO_LED, RED1_PIN);
+//      
+//      GPIO_ResetBits(GPIO_LED, YELLOW_PIN);
+//      
+//      GPIO_SetBits(GPIO_LED, YELLOW_PIN);
+//      
+//      GPIO_ResetBits(GPIO_LED, GREEN_PIN);
+//      
+//      GPIO_SetBits(GPIO_LED, GREEN_PIN);
+//      
+//      GPIO_ResetBits(GPIO_LED, RED2_PIN);
+//      
+//      GPIO_SetBits(GPIO_LED, RED2_PIN);
+      
       
       
 //      GPIO_ResetBits(GPIO_LED, RED1_PIN|YELLOW_PIN|GREEN_PIN|RED2_PIN);/*关闭所有的信号灯*///输出低电平
