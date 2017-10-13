@@ -196,29 +196,45 @@ int main(void)
       }
       
       
-//      GPIO_ResetBits(GPIO_LED, RED1_PIN);
-//      
-//      GPIO_SetBits(GPIO_LED, RED1_PIN);
-//      
-//      GPIO_ResetBits(GPIO_LED, YELLOW_PIN);
-//      
-//      GPIO_SetBits(GPIO_LED, YELLOW_PIN);
-//      
-//      GPIO_ResetBits(GPIO_LED, GREEN_PIN);
-//      
-//      GPIO_SetBits(GPIO_LED, GREEN_PIN);
-//      
-//      GPIO_ResetBits(GPIO_LED, RED2_PIN);
-//      
-//      GPIO_SetBits(GPIO_LED, RED2_PIN);
+      GPIO_ResetBits(GPIO_LED_3_6, RED1_PIN);
+
+      delay_ms(1000); 
+      
+      GPIO_SetBits(GPIO_LED_3_6, RED1_PIN);
+      delay_ms(1000); 
+      
+      GPIO_ResetBits(GPIO_LED_3_6, YELLOW_PIN);
+      delay_ms(1000); 
+      
+      GPIO_SetBits(GPIO_LED_3_6, YELLOW_PIN);
+      delay_ms(1000); 
+      
+      GPIO_ResetBits(GPIO_LED_3_6, GREEN_PIN);
+      delay_ms(1000); 
+      
+      GPIO_SetBits(GPIO_LED_3_6, GREEN_PIN);
+      delay_ms(1000); 
+      
+      GPIO_ResetBits(GPIO_LED_3_6, RED2_PIN);
+      delay_ms(1000); 
+      
+      GPIO_SetBits(GPIO_LED_3_6, RED2_PIN);
+      delay_ms(1000); 
       
       
+      GPIO_ResetBits(GPIO_LED_3_6, RED1_PIN|YELLOW_PIN|GREEN_PIN|RED2_PIN);/*关闭所有的信号灯*///输出低电平
+      delay_ms(1000); 
+      delay_ms(1000); 
+      GPIO_SetBits(GPIO_LED_3_6, RED1_PIN|YELLOW_PIN|GREEN_PIN|RED2_PIN);/*关闭所有的信号灯*///输出低电平
+      delay_ms(1000); 
       
-//      GPIO_ResetBits(GPIO_LED, RED1_PIN|YELLOW_PIN|GREEN_PIN|RED2_PIN);/*关闭所有的信号灯*///输出低电平
-//      delay_ms(1000); 
-//      delay_ms(1000); 
-//      GPIO_SetBits(GPIO_LED, RED1_PIN|YELLOW_PIN|GREEN_PIN|RED2_PIN);/*关闭所有的信号灯*///输出低电平
-//      delay_ms(1000); 
+      GPIO_SetBits(GPIO_LKJ_5_6, LKJ5_PIN);//LKJ5输出高电平，驱动三极管导通
+      delay_ms(1000); 
+      delay_ms(1000); 
+      GPIO_ResetBits(GPIO_LKJ_5_6, LKJ5_PIN);
+      delay_ms(1000); 
+      delay_ms(1000); 
+      
             
   }
         
