@@ -292,40 +292,40 @@ void USART1_Init(void)
   USART_Init(USART1, &USART_InitStructure);
  
   /*使能串口1的发送和接收中断*/
-  //USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
-  //USART_ClearFlag(USART1,USART_FLAG_RXNE); 	
+  USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
+  USART_ClearFlag(USART1,USART_FLAG_RXNE); 	
   
   
-  USART_ITConfig(USART1, USART_IT_RXNE, DISABLE);
-  USART_ITConfig(USART1, USART_IT_TC, DISABLE);
-  USART_ITConfig(USART1,USART_IT_IDLE,ENABLE);//空闲中断（接收未知长度，则使用空闲中断来判断是否接收完毕） 
-  USART_ClearFlag(USART1,USART_FLAG_IDLE); 				//清USART_FLAG_IDLE标志 
-
-
-  //采用DMA方式接收  
-  USART_DMACmd(USART1,USART_DMAReq_Rx ,ENABLE);
-    
-  //开启DMA1的时钟
-  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
-  
-  /* DMA1 channel 5 configuration */ //USART1_RX  
-  DMA_DeInit(DMA1_Channel5);  
-  DMA_InitStructure.DMA_PeripheralBaseAddr      =(u32)(&USART1->DR);  			//外设串口1地址  
- 
-  DMA_InitStructure.DMA_MemoryBaseAddr          =(u32)USART_RX;
-  DMA_InitStructure.DMA_DIR                     =DMA_DIR_PeripheralSRC;   	//外设作为目的地址   //DMA_DIR_PeripheralSRC;   //外设作为DMA的源端  
-  DMA_InitStructure.DMA_BufferSize              =256; 				//BufferSize;      //传输缓冲器大小 
-  DMA_InitStructure.DMA_PeripheralInc           =DMA_PeripheralInc_Disable; 	//外设递增模式禁止   DMA_PeripheralInc_Enable;            //外设地址增加  
-  DMA_InitStructure.DMA_MemoryInc               =DMA_MemoryInc_Enable;   	//内存地址自增  
-  DMA_InitStructure.DMA_PeripheralDataSize      =DMA_PeripheralDataSize_Byte; 	//传输方式：字节   DMA_PeripheralDataSize_Word;    //字（32位）  
-  DMA_InitStructure.DMA_MemoryDataSize          =DMA_MemoryDataSize_Byte;  	//内存存储方式：字节  DMA_MemoryDataSize_Word;  
-  DMA_InitStructure.DMA_Mode                    =DMA_Mode_Normal;  		//DMA_Mode_Normal 正常模式，只传送一次;  DMA_Mode_Circular:循环模式，不停的传送;  
-  DMA_InitStructure.DMA_Priority                =DMA_Priority_VeryHigh;  	//串口1的接收作为最高优先级
-  DMA_InitStructure.DMA_M2M                     =DMA_M2M_Disable;             	//DMA_M2M_Enable;      
-  DMA_Init(DMA1_Channel5,&DMA_InitStructure); 
-
-	//使能通道5  
-  DMA_Cmd(DMA1_Channel5,ENABLE);  
+//  USART_ITConfig(USART1, USART_IT_RXNE, DISABLE);
+//  USART_ITConfig(USART1, USART_IT_TC, DISABLE);
+//  USART_ITConfig(USART1,USART_IT_IDLE,ENABLE);//空闲中断（接收未知长度，则使用空闲中断来判断是否接收完毕） 
+//  USART_ClearFlag(USART1,USART_FLAG_IDLE); 				//清USART_FLAG_IDLE标志 
+//
+//
+//  //采用DMA方式接收  
+//  USART_DMACmd(USART1,USART_DMAReq_Rx ,ENABLE);
+//    
+//  //开启DMA1的时钟
+//  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
+//  
+//  /* DMA1 channel 5 configuration */ //USART1_RX  
+//  DMA_DeInit(DMA1_Channel5);  
+//  DMA_InitStructure.DMA_PeripheralBaseAddr      =(u32)(&USART1->DR);  			//外设串口1地址  
+// 
+//  DMA_InitStructure.DMA_MemoryBaseAddr          =(u32)USART_RX;
+//  DMA_InitStructure.DMA_DIR                     =DMA_DIR_PeripheralSRC;   	//外设作为目的地址   //DMA_DIR_PeripheralSRC;   //外设作为DMA的源端  
+//  DMA_InitStructure.DMA_BufferSize              =256; 				//BufferSize;      //传输缓冲器大小 
+//  DMA_InitStructure.DMA_PeripheralInc           =DMA_PeripheralInc_Disable; 	//外设递增模式禁止   DMA_PeripheralInc_Enable;            //外设地址增加  
+//  DMA_InitStructure.DMA_MemoryInc               =DMA_MemoryInc_Enable;   	//内存地址自增  
+//  DMA_InitStructure.DMA_PeripheralDataSize      =DMA_PeripheralDataSize_Byte; 	//传输方式：字节   DMA_PeripheralDataSize_Word;    //字（32位）  
+//  DMA_InitStructure.DMA_MemoryDataSize          =DMA_MemoryDataSize_Byte;  	//内存存储方式：字节  DMA_MemoryDataSize_Word;  
+//  DMA_InitStructure.DMA_Mode                    =DMA_Mode_Normal;  		//DMA_Mode_Normal 正常模式，只传送一次;  DMA_Mode_Circular:循环模式，不停的传送;  
+//  DMA_InitStructure.DMA_Priority                =DMA_Priority_VeryHigh;  	//串口1的接收作为最高优先级
+//  DMA_InitStructure.DMA_M2M                     =DMA_M2M_Disable;             	//DMA_M2M_Enable;      
+//  DMA_Init(DMA1_Channel5,&DMA_InitStructure); 
+//
+//	//使能通道5  
+//  DMA_Cmd(DMA1_Channel5,ENABLE);  
   
   
   /* Enable the USART1 Interrupt */

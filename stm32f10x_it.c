@@ -193,45 +193,52 @@ void USART1_IRQHandler(void)
         temp = USART1->SR;	   //貌似根据手册说，先读SR，再读DR就可以清除IDLE位。。。。
         temp = USART1->DR;	        
         temp = 256 - DMA_GetCurrDataCounter(DMA1_Channel5);	//缓冲器数量够大//用缓冲器的设定值-当前指针数值（寄存器内容在每次DMA传输后递减）=接收的数据长度。 
-        //printf("\n\r-------Usart1 rx counter: %d\n\r",temp);       
+        //printf("\n\r-------Usart1 rx counter: %d\n\r",temp);     
+        
+//        RxCounter1=RxCounter1+temp;//计数
 //         for(i=0; i<temp; i++)
 //        {
 //
 //              Rebuf[i]=USART_RX[i]; //数据转移
-//              printf("\n--usart1 rx data is: 0x%02x\n",Rebuf[i]);
+//              //printf("\n--usart1 rx data is: 0x%02x\n",Rebuf[i]);
+//            
+//        }
+//        if(RxCounter1>=12){
 //        
-//        
+//          packet_analysis(Rebuf, RxCounter1);
+//          RxCounter1 = 0;
+//          memset(Rebuf, 0x00, sizeof(Rebuf));
 //        }
         
-       memcpy(Rebuf, USART_RX, temp);
-       packet_analysis(Rebuf, temp);
-       
-      memset(Rebuf, 0x00, sizeof(Rebuf));
-      memset(USART_RX, 0x00, 256);
-          //设置传输数据长度  
-      DMA_SetCurrDataCounter(DMA1_Channel5, 256);//即是通道可容纳的最大数据量。           
-      //重新打开DMA1_5（USART1_RX）  
-      DMA_Cmd(DMA1_Channel5,ENABLE);
-      
+        memcpy(Rebuf, USART_RX, temp);
+        packet_analysis(Rebuf, temp);
+         
+        //memset(Rebuf, 0x00, sizeof(Rebuf));
+        memset(USART_RX, 0x00, 256);
+        //设置传输数据长度  
+        DMA_SetCurrDataCounter(DMA1_Channel5, 256);//即是通道可容纳的最大数据量。           
+        //重新打开DMA1_5（USART1_RX）  
+        DMA_Cmd(DMA1_Channel5,ENABLE);
+
       //printf("\n\r Usart1 analysis end and exit....\n\r");
     
     }
   
-//  if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
-//  {
-//    /* Read one byte from the receive data register */
-//    RxBuffer1[RxCounter1++] = USART_ReceiveData(USART1);
-//
-//    if(RxCounter1 == 12)
-//    {
-//      /* Disable the USART1 Receive interrupt */
-//      //printf("\n\r Usart1 analysis data...\n\r");
-//      packet_analysis(RxBuffer1, RxCounter1);
-//      RxCounter1 = 0;
-//      memset(RxBuffer1, 0x00 , 20);
-//      
-//    }
-//  }
+  if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
+  {
+    /* Read one byte from the receive data register */
+    RxBuffer1[RxCounter1++] = USART_ReceiveData(USART1);
+
+    if(RxCounter1 == 12)
+    {
+      /* Disable the USART1 Receive interrupt */
+      //printf("\n\r Usart1 analysis data...\n\r");
+      packet_analysis(RxBuffer1, RxCounter1);
+      RxCounter1 = 0;
+      memset(RxBuffer1, 0x00 , 20);
+      
+    }
+  }
   
 }
 
