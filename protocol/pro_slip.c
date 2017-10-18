@@ -4,7 +4,7 @@
 extern int simple_uart_put(u8 ch);
 extern void Write_Volume(unsigned short dat);
 
-char volume_value[11]={62, 20, 14, 10, 8, 6, 4, 3, 2, 1, 0};//-db=20logR; R=Vo/Vi
+char volume_value[11]={62, 20, 14, 10, 8, 6, 4, 3, 2, 1, 0};//-db=20lgR; R=Vo/Vi
 
 int packet_analysis(void *packet, u8 length)
 {
