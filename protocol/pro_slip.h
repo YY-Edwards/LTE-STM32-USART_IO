@@ -53,6 +53,27 @@ key_value¡ª¡ªLow8:               //µÍ°ËÎ»
 #define ON 1
 #define OFF 0
 
+
+
+
+#define VolumeControl 0x0003
+#define LedDisplayOrLKJControl 0x0004
+
+#define LedRed1 0x01
+#define LedYellow 0x02
+#define LedGreen 0x03
+#define LedRed2 0x04
+
+
+#define LKJBit0 0x10
+#define LKJBit1 0x20
+#define LKJBit2 0x30
+#define LKJBit3 0x40
+#define LKJBit4 0x50
+#define LKJBit5 0x60
+
+                 
+#pragma   pack(1)
 typedef struct
 {
   unsigned short Header;
@@ -63,12 +84,25 @@ typedef struct
   
 }ScanKeyProtocol_t;
 
+#pragma   pack()
+
 typedef ScanKeyProtocol_t * datapro_t;
 
 
 int data_packet_send(u16 value, u16 status);
 
-int packet_analysis(void *packet, u8 length);
+//int packet_analysis(void *packet, u8 length);
+
+void USART_GetInputByte(void);
+
+unsigned char msg_receive(u8 *pro_data);
+
+
+
+int ReadSlipPackage(unsigned char * package);
+void SetVolume(unsigned char volume);
+void SetLedDisplay(unsigned char led, unsigned char istrunon);
+void SetLKJValue(unsigned char lkjbit, unsigned char value);
 
 #endif
 

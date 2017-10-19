@@ -3144,6 +3144,7 @@
           <state>$PROJ_DIR$\..\..\..\Utilities\STM32_EVAL\STM3210B_EVAL</state>
           <state>$PROJ_DIR$\..\protocol</state>
           <state>$PROJ_DIR$\..\tpa2016_driver</state>
+          <state>$PROJ_DIR$\..\lib</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4893,6 +4894,15 @@
       </file>
     </group>
     <group>
+      <name>lib</name>
+      <file>
+        <name>$PROJ_DIR$\..\lib\myqueue.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\lib\myqueue.h</name>
+      </file>
+    </group>
+    <group>
       <name>protocol</name>
       <file>
         <name>$PROJ_DIR$\..\protocol\pro_slip.c</name>
@@ -4909,12 +4919,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$\..\main.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\rpQueue.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\rpQueue.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\stm32f10x_it.c</name>

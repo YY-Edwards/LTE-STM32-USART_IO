@@ -56,6 +56,8 @@ typedef enum key_states_e{
     KEY_RELEASE,   //释放
 }KeyStatus_t; 
 
+
+
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 #define countof(a)   (sizeof(a) / sizeof(*(a)))
@@ -65,6 +67,8 @@ typedef enum key_states_e{
 
 
 u8 USART_RX[UART_RE_LEN]={0};
+Queue_t UsartRxQue = NULL;
+Queue_t QueueCommand = NULL;
 
 
 //列如按下键为key0,则短按键值为0xA0, 长按键值为0xB0,释放键值为0xC0
@@ -76,6 +80,7 @@ static volatile u16 last_key_value = 0x99;//上次按键值
 static volatile u16 pressed_value =0x99;//按下后返回的键值（包括短按长按）
 static volatile u16 release_value =0x99;//释放返回的键值
 volatile u8 first_set_volume_flag =1;//
+
 
 //static KeyStatus_t KeyStatus = KEY_NOT_PRESS;
 
@@ -166,6 +171,10 @@ int main(void)
   
   GPIO_SetBits(GPIO_LED_3_6, RED1_PIN|YELLOW_PIN|GREEN_PIN|RED2_PIN);/*熄灭所有的信号灯*///输出高电平
   
+  
+  QueueCommand =  QueueCreate(CommandQueueDeep, sizeof(ScanKeyProtocol_t));
+  
+  
   Write_Volume(0x0001);//set default volume at 9
   
   //delay_ms(1500); 
@@ -179,22 +188,56 @@ int main(void)
   //Write_Volume(0x06);//set default volume at 5
   
   //printf("\r\n/***********************key scan start*********************/\r\n");
-  while(1)
+  
+  ScanKeyProtocol_t Command , * pCommand = &Command;
+  memset(pCommand, 0x00, sizeof(ScanKeyProtocol_t));
+  while(1)   
   {     
-      GPIO_ResetBits(GPIO_LED_1_2, DS1_PIN);
-      delay_ms(200); 
-      GPIO_SetBits(GPIO_LED_1_2, DS1_PIN);
-      delay_ms(100); 
-      //GPIO_ResetBits(GPIO_LED, DS2_PIN);
-      delay_ms(200); 
-      //GPIO_SetBits(GPIO_LED, DS2_PIN);
-      delay_ms(100);   
-      if(first_set_volume_flag)
-      {
-          Write_Volume(0x0006);//set default volume at 5
-          first_set_volume_flag =0;
-          GPIO_ResetBits(GPIO_LED_3_6, RED1_PIN|YELLOW_PIN|GREEN_PIN|RED2_PIN);/*点亮所有的信号灯*///输出低电平
-      }
+     
+    
+    if(queue_ok == QueuePull(QueueCommand, pCommand))
+     {
+        
+       if(   pCommand->Header == 0xABCD
+          && pCommand->Terminator == 0x00BA
+          && pCommand->Checksum == pCommand->KeyValue + pCommand->Status)
+       {
+         
+         switch(pCommand->Status)
+         {
+           case VolumeControl:
+              SetVolume(pCommand->KeyValue & 0xFF);
+              break;
+           case LedDisplayOrLKJControl:
+             if((pCommand->KeyValue & 0x0F) > 0)SetLedDisplay(pCommand->KeyValue & 0xFF, (pCommand->KeyValue>> 8) & 0xFF);
+             else if((pCommand->KeyValue & 0xF0) > 0)SetLKJValue(pCommand->KeyValue & 0xFF, (pCommand->KeyValue>> 8) & 0xFF);
+            break;
+           default:break;          
+         }
+       }
+       else
+       {         
+         // checksum error
+       }
+           
+     }
+     else{
+   
+        GPIO_ResetBits(GPIO_LED_1_2, DS1_PIN);
+        delay_ms(200); 
+        GPIO_SetBits(GPIO_LED_1_2, DS1_PIN);
+        delay_ms(100); 
+        //GPIO_ResetBits(GPIO_LED, DS2_PIN);
+        delay_ms(200); 
+        //GPIO_SetBits(GPIO_LED, DS2_PIN);
+        delay_ms(100);   
+        if(first_set_volume_flag)
+        {
+            Write_Volume(0x0006);//set default volume at 5
+            first_set_volume_flag =0;
+            GPIO_ResetBits(GPIO_LED_3_6, RED1_PIN|YELLOW_PIN|GREEN_PIN|RED2_PIN);/*点亮所有的信号灯*///输出低电平
+        }
+     }
       
       
 //      GPIO_ResetBits(GPIO_LED_3_6, RED1_PIN);
@@ -251,6 +294,8 @@ int main(void)
 void USART1_Init(void)
 {   
    GPIO_InitTypeDef GPIO_InitStructure;
+   
+   UsartRxQue = QueueCreate(MAX_RX_DEEP, 1); 
    
   /*使能串口1使用的GPIO时钟*/
   RCC_APB2PeriphClockCmd(USART1_GPIO_CLK , ENABLE);

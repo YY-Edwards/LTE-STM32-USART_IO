@@ -26,6 +26,8 @@
 #include "stdio.h"
 #include <sys.h>
 #include <delay.h>
+#include "myqueue.h"
+#include "pro_slip.h"
 //#incldue <i2c_tpa2016.h>
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
@@ -45,7 +47,14 @@
     
 /* Define the STM32F10x hardware depending on the used evaluation board */
 
+  #define SUCCESS 1
+  #define FAILURE 0
 
+
+  #define MAX_RX_DEEP 512   
+  #define CommandQueueDeep 20
+     
+     
   #define USART1_GPIO              GPIOA
   #define USART1_CLK               RCC_APB2Periph_USART1
   #define USART1_GPIO_CLK          RCC_APB2Periph_GPIOA

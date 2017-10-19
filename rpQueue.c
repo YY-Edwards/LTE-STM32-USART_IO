@@ -133,7 +133,7 @@ int queuePop(m_qpointer *qp, char *o_buffer, unsigned int length)
         qp->rear = qp->front;
     }
     
-    free(q->data);
+    free(q ->data);
     q->data = NULL;
     free(q);
     q = NULL;
