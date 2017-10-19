@@ -291,7 +291,7 @@ void USART1_Init(void)
   /*配置串口1 */
   USART_Init(USART1, &USART_InitStructure);
  
-  /*使能串口1的发送和接收中断*/
+  /*使能串口1的接收中断*/
   USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
   USART_ClearFlag(USART1,USART_FLAG_RXNE); 	
   

@@ -33,7 +33,7 @@ int packet_analysis(void *packet, u8 length)
            case ESC_END:
                 buf[counter++] = END;
                 break;
-          case ESC_ESC:
+           case ESC_ESC:
                 buf[counter++] = ESC;
                 break;
                 

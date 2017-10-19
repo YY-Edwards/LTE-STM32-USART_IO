@@ -68,14 +68,6 @@ Fmt2=u8[256]	4	0
 [watch_formats]
 Fmt0={W}0:Threshold<<4	4	0
 Fmt1={W}0:sizeof(ScanKeyProtocol_t)	4	0
-[Disassemble mode]
-mode=0
-[Breakpoints2]
-Bp0=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\stm32f10x_it.c}.272.4" 0 0 1 "" 0 "" 0
-Bp1=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.196.11" 0 0 1 "" 0 "" 0
-Bp2=_ 0 "EMUL_TRACE_FILTER" "0x2000036A@2" 0 0 0 0 4294967295 1934450243 0 0
-Bp3=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\protocol\pro_slip.c}.78.14" 0 0 1 "" 0 "" 0
-Count=4
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
@@ -83,9 +75,6 @@ Category=_ 0
 [TermIOLog]
 LoggingEnabled=_ 0
 LogFile=_ ""
-[Aliases]
-Count=0
-SuppressDialog=0
 [CallStackLog]
 Enabled=0
 [DriverProfiling]
@@ -94,3 +83,14 @@ Mode=0
 Graph=0
 Symbiont=0
 Exclusions=
+[Disassemble mode]
+mode=0
+[Breakpoints2]
+Bp0=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\stm32f10x_it.c}.272.4" 0 0 1 "" 0 "" 0
+Bp1=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.196.11" 0 0 1 "" 0 "" 0
+Bp2=_ 0 "EMUL_TRACE_FILTER" "0x2000036A@2" 0 0 0 0 4294967295 1909481027 0 0
+Bp3=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\protocol\pro_slip.c}.78.14" 0 0 1 "" 0 "" 0
+Count=4
+[Aliases]
+Count=0
+SuppressDialog=0
