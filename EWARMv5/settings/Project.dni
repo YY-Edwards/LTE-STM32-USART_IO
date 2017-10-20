@@ -21,7 +21,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=-314634931
+Checksum=2111965439
 [JLinkDriver]
 CStepIntDis=_ 0
 [Exceptions]
@@ -65,15 +65,19 @@ Fmt4=ScanKeyProtocol_t-Terminator	4	0
 Fmt0=char[10]	4	0
 Fmt1=u8[20]	4	0
 Fmt2=u8[256]	4	0
+Fmt3=unsigned char[10]	4	0
 [watch_formats]
 Fmt0={W}0:Threshold<<4	4	0
-Fmt1={W}0:sizeof(ScanKeyProtocol_t)	4	0
+Fmt1={W}0:return_value	4	0
+Fmt2={W}0:sizeof(ScanKeyProtocol_t)	4	0
+Fmt3={W}0:value	4	0
 [Disassemble mode]
 mode=0
 [Breakpoints2]
 Bp0=_ 0 "EMUL_TRACE_FILTER" "0x2000036A@2" 0 0 0 0 4294967295 1739021891 0 0
 Bp1=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\protocol\pro_slip.c}.80.10" 0 0 1 "" 0 "" 0
-Count=2
+Bp2=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\protocol\pro_slip.c}.412.11" 0 0 1 "" 0 "" 0
+Count=3
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""

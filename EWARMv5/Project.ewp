@@ -3142,9 +3142,11 @@
           <state>$PROJ_DIR$\..\..\..\Utilities\STM32_EVAL</state>
           <state>$PROJ_DIR$\..\..\..\Utilities\STM32_EVAL\Common</state>
           <state>$PROJ_DIR$\..\..\..\Utilities\STM32_EVAL\STM3210B_EVAL</state>
+          <state>F:\IAR\IAR\Project\keyscanf_usart</state>
+          <state>$PROJ_DIR$\..\hardware\tpa2016_driver</state>
+          <state>$PROJ_DIR$\..\mylib</state>
+          <state>$PROJ_DIR$\..\hardware</state>
           <state>$PROJ_DIR$\..\protocol</state>
-          <state>$PROJ_DIR$\..\tpa2016_driver</state>
-          <state>$PROJ_DIR$\..\lib</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4885,21 +4887,33 @@
   <group>
     <name>User</name>
     <group>
-      <name>i2c_tpa2016</name>
+      <name>hardware</name>
       <file>
-        <name>$PROJ_DIR$\..\tpa2016_driver\i2c_tpa2016.c</name>
+        <name>$PROJ_DIR$\..\hardware\hardware.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\tpa2016_driver\i2c_tpa2016.h</name>
+        <name>$PROJ_DIR$\..\hardware\hardware.h</name>
       </file>
     </group>
     <group>
-      <name>lib</name>
+      <name>mylib</name>
       <file>
-        <name>$PROJ_DIR$\..\lib\myqueue.c</name>
+        <name>$PROJ_DIR$\..\mylib\delay.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$\..\lib\myqueue.h</name>
+        <name>$PROJ_DIR$\..\mylib\delay.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\mylib\mylock.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\mylib\mylock.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\mylib\myqueue.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\mylib\myqueue.h</name>
       </file>
     </group>
     <group>
@@ -4912,13 +4926,10 @@
       </file>
     </group>
     <file>
-      <name>$PROJ_DIR$\..\delay.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\delay.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$\..\main.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\platform_config.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\stm32f10x_it.c</name>

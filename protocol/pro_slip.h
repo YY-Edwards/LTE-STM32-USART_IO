@@ -4,6 +4,8 @@
 #include "stdlib.h"
 #include "string.h"
 #include "stm32f10x.h"
+#include "platform_config.h"
+
 
 #pragma once
 
@@ -99,10 +101,11 @@ unsigned char msg_receive(u8 *pro_data);
 
 
 
-int ReadSlipPackage(unsigned char * package);
+int ReadSlipPackage(unsigned char * package, unsigned int);
 void SetVolume(unsigned char volume);
 void SetLedDisplay(unsigned char led, unsigned char istrunon);
 void SetLKJValue(unsigned char lkjbit, unsigned char value);
+
 
 #endif
 

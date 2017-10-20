@@ -1,10 +1,10 @@
 #include "pro_slip.h"
-#include "platform_config.h"
 
 extern Queue_t UsartRxQue;
 extern Queue_t QueueCommand;
 extern int simple_uart_put(u8 ch);
 extern void Write_Volume(unsigned short dat);
+extern unsigned long *  QueueCommand_lock;
 
 char volume_value[11]={62, 20, 14, 10, 8, 6, 4, 3, 2, 1, 0};//-db=20lgR; R=Vo/Vi
 
@@ -395,65 +395,101 @@ int data_packet_send(u16 value, u16 status)
 void USART_GetInputByte(void)
 { 
   u8 c = USART_ReceiveData(USART1);
-  u8 temp=0;
+  bool return_value=false;
+  QueueSta_t queue_status = queue_empty;
+  
   QueuePush(UsartRxQue, &c);
   
   if(c== END)
   {
     unsigned char buffer[sizeof(ScanKeyProtocol_t)] = {0};
-    if(ReadSlipPackage(buffer) > 0)
+    if(ReadSlipPackage(buffer, sizeof(ScanKeyProtocol_t)) > 0)
     {      
-        QueuePush(QueueCommand, buffer);
+        return_value=sem_get(QueueCommand_lock);//lock
+        if(return_value==true)
+        {
+         
+          queue_status=QueuePush(QueueCommand, buffer);              
+          return_value=sem_free(QueueCommand_lock);//unlock   
+                                       
+        }
+        
+        
     }
-    
-    while(1)
+    else
     {
-      if(queue_ok != QueuePull(UsartRxQue, &temp))break;
-    }       
+        QueueClear(UsartRxQue);
+    
+   }
+    
+    
   }
 }
 
-int ReadSlipPackage(unsigned char * package)
+int ReadSlipPackage(unsigned char * package, unsigned int except_packagelength)
 {
-  
     unsigned int packagelength = 0;
     unsigned char chnext = 0;
+    //unsigned char c_value = 0;   
   
     while(1)
     {     
        unsigned char ch = 0;      
-       if(queue_ok != QueuePull(UsartRxQue, &ch))return 0;
-        
-      switch(ch)
-      {
-        
-      case END:
-        return packagelength;
-        
-      case ESC:
-              
-       if(queue_ok != QueuePull(UsartRxQue, &chnext))return 0;
-        if(chnext == ESC_END)
+       if(queue_ok != QueuePull(UsartRxQue, &ch))return 0; 
+       
+        switch(ch)
         {
-          package[packagelength++] = END;
-        }
-        else if(chnext == ESC_ESC)
-        {
-           package[packagelength++] = ESC;
-        }
-        else
-        {  
-           return 0;                        
-        }
           
-      default:
-        package[packagelength++] = ch;
-        
-        
-      }     
+        case END:
+          
+          if(packagelength !=0)
+            return packagelength;
+          else
+            return 0;
+          
+        case ESC:
+                
+           if(queue_ok != QueuePull(UsartRxQue, &chnext))return 0;
+            if(chnext == ESC_END)
+            {
+              if(packagelength < except_packagelength)package[packagelength++] = END;
+              else
+              {
+                return 0;
+              }
+              
+            }
+            else if(chnext == ESC_ESC)
+            {
+              if(packagelength < except_packagelength)package[packagelength++] = ESC;
+              else
+              {
+                return 0;
+              }
+            }
+            else
+            {  
+               return 0;                        
+            }
+           break;
+           
+        default:
+          
+            if(packagelength < except_packagelength)package[packagelength++] = ch;
+              else
+              {
+                return 0;
+              }
+          
+          break;
+          
+        }     
     }
                  
     //return 0;
 }
   
+
+
+
 

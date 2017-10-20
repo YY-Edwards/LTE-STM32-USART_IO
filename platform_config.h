@@ -24,9 +24,12 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stdio.h"
+#include "stm32f10x.h"
 #include <sys.h>
 #include <delay.h>
 #include "myqueue.h"
+#include "mylock.h"    
+#include "stdbool.h"
 #include "pro_slip.h"
 //#incldue <i2c_tpa2016.h>
 /* Exported types ------------------------------------------------------------*/
@@ -131,8 +134,6 @@
 #define DATA PBout(14)
      
 #define LED2 PCout(1)    
-
-
 
 
 

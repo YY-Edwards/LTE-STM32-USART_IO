@@ -30,4 +30,6 @@ Queue_t QueueCreate(unsigned short deep, unsigned short elementsize );
 QueueSta_t QueueDelete(Queue_t queue);
 QueueSta_t QueuePush(Queue_t queue, void * element);
 QueueSta_t QueuePull(Queue_t queue, void * element);
+QueueSta_t QueueClear(Queue_t queue);
+
 #endif

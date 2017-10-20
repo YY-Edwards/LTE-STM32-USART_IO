@@ -36,24 +36,31 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
+
+#define UART_RE_LEN    256
+    
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 
-extern volatile u16 key1_pressed_flag;//第一列
-extern volatile u16 key2_pressed_flag;//第二列
-extern volatile u16 key3_pressed_flag;//第三列
-extern volatile u16 key4_pressed_flag;//第四列
-extern volatile u16 key5_pressed_flag;//第key5
-extern volatile u16 key6_pressed_flag;//第key6
-extern volatile u16 key7_pressed_flag;//第key7
-extern volatile u16 key8_pressed_flag;//key8
+volatile u16 key1_pressed_flag = 0;//key1
+volatile u16 key2_pressed_flag = 0;//key2
+volatile u16 key3_pressed_flag = 0;//key3
+volatile u16 key4_pressed_flag = 0;//key4
+volatile u16 key5_pressed_flag = 0;//key5
+volatile u16 key6_pressed_flag = 0;//key6
+volatile u16 key7_pressed_flag = 0;//key7
+volatile u16 key8_pressed_flag = 0;//key8
+    
 
-extern volatile u8 press_counter;
 extern void delay_ms(u16 xms);
-extern volatile u8 time_out;
+
+
+volatile u8 press_counter = 0;
+volatile u8 time_out = 0;
 
 static u16 key_value = 0x0000;
-extern u8 USART_RX[];
+
+u8 USART_RX[256]={0};
 
 
 /* Private function prototypes -----------------------------------------------*/
@@ -171,10 +178,12 @@ void SysTick_Handler(void)
   */
 u8 RxBuffer1[20];
 static u32 ErrCounter =0;
+volatile uint16_t DMARxCounter = 0;  
+
 
 void USART1_IRQHandler(void)
 {
-  uint16_t temp = 0;  
+   uint16_t temp = 0;  
   //uint16_t i = 0;
   //static u8 RxCounter1 =0;
   
@@ -195,7 +204,7 @@ void USART1_IRQHandler(void)
         //printf("\n\r-------Usart1_Clear_Flag\n");
         temp = USART1->SR;	   //貌似根据手册说，先读SR，再读DR就可以清除IDLE位。。。。
         temp = USART1->DR;	        
-        temp = 256 - DMA_GetCurrDataCounter(DMA1_Channel5);	//缓冲器数量够大//用缓冲器的设定值-当前指针数值（寄存器内容在每次DMA传输后递减）=接收的数据长度。 
+        DMARxCounter = 256 - DMA_GetCurrDataCounter(DMA1_Channel5);	//缓冲器数量够大//用缓冲器的设定值-当前指针数值（寄存器内容在每次DMA传输后递减）=接收的数据长度。 
         //printf("\n\r-------Usart1 rx counter: %d\n\r",temp);     
         
 //        RxCounter1=RxCounter1+temp;//计数
@@ -213,16 +222,17 @@ void USART1_IRQHandler(void)
 //          memset(Rebuf, 0x00, sizeof(Rebuf));
 //        }
         
-        memcpy(Rebuf, USART_RX, temp);
-        packet_analysis(Rebuf, temp);
+        memcpy(Rebuf, USART_RX, DMARxCounter);
+        //packet_analysis(Rebuf, temp);
          
-        //memset(Rebuf, 0x00, sizeof(Rebuf));
+        memset(Rebuf, 0x00, sizeof(Rebuf));
         memset(USART_RX, 0x00, 256);
         //设置传输数据长度  
         DMA_SetCurrDataCounter(DMA1_Channel5, 256);//即是通道可容纳的最大数据量。           
         //重新打开DMA1_5（USART1_RX）  
         DMA_Cmd(DMA1_Channel5,ENABLE);
-
+        
+        DMARxCounter =0;
       //printf("\n\r Usart1 analysis end and exit....\n\r");
     
     }
