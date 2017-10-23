@@ -54,8 +54,8 @@
   #define FAILURE 0
 
 
-  #define MAX_RX_DEEP 512   
-  #define CommandQueueDeep 20
+  #define MAX_RX_DEEP 1024   
+  #define CommandQueueDeep 50
      
      
   #define USART1_GPIO              GPIOA

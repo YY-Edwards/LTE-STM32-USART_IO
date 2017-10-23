@@ -395,7 +395,7 @@ int data_packet_send(u16 value, u16 status)
 void USART_GetInputByte(void)
 { 
   u8 c = USART_ReceiveData(USART1);
-  bool return_value=false;
+  unsigned long return_value =0;
   QueueSta_t queue_status = queue_empty;
   
   QueuePush(UsartRxQue, &c);
@@ -411,7 +411,7 @@ void USART_GetInputByte(void)
          
           queue_status=QueuePush(QueueCommand, buffer);              
           return_value=sem_free(QueueCommand_lock);//unlock   
-                                       
+                                    
         }
         
         

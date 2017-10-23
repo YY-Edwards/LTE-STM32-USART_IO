@@ -44,7 +44,7 @@ PUTCHAR_PROTOTYPE
 extern Queue_t QueueCommand;
 volatile u8 first_set_volume_flag =1;
 unsigned long * QueueCommand_lock=NULL;
-    
+volatile u32 err_counter=0;
 //unsigned long QueueCommand_lockInstance, * QueueCommand_lock = &QueueCommand_lockInstance;
 
 /* Private functions ---------------------------------------------------------*/
@@ -62,13 +62,13 @@ int main(void)
        To reconfigure the default setting of SystemInit() function, refer to
        system_stm32f10x.c file
      */     
+  static unsigned long return_value=0x00;
   
   QueueCommand_lock = sem_init(true);    //≥ı ºªØ–≈∫≈ª•≥‚À¯
   
   ScanKeyProtocol_t Command , * pCommand = &Command;
   memset(pCommand, 0x00, sizeof(ScanKeyProtocol_t));
   
-  static unsigned long return_value=0;
   
   QueueSta_t queue_return = queue_empty;
   
@@ -83,9 +83,18 @@ int main(void)
       return_value=sem_get(QueueCommand_lock);//lock
       if(return_value)
       {            
-        queue_return=QueuePull(QueueCommand, pCommand);  
-        sem_free(QueueCommand_lock);//unlock      
-      }     
+        queue_return= QueuePull(QueueCommand, pCommand);  
+        return_value=sem_free(QueueCommand_lock);//unlock 
+//        if(return_value == 0x39)
+//       {
+//          return_value = 0x77;
+//        }
+      }  
+      else
+      {
+        return_value = 0x99;
+        err_counter++;
+      }
      
                          
       if(queue_ok == queue_return)
@@ -120,7 +129,7 @@ int main(void)
      {
    
         GPIO_ResetBits(GPIO_LED_1_2, DS1_PIN);
-        delay_ms(100); 
+        delay_ms(50); 
         GPIO_SetBits(GPIO_LED_1_2, DS1_PIN);
         delay_ms(100); 
         //GPIO_ResetBits(GPIO_LED, DS2_PIN);
