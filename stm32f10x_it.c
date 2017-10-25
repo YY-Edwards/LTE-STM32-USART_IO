@@ -178,7 +178,7 @@ void SysTick_Handler(void)
   */
 u8 RxBuffer1[20];
 static u32 ErrCounter =0;
-volatile uint16_t DMARxCounter = 0;  
+
 
 
 void USART1_IRQHandler(void)
@@ -186,7 +186,8 @@ void USART1_IRQHandler(void)
    uint16_t temp = 0;  
   //uint16_t i = 0;
   //static u8 RxCounter1 =0;
-  
+  volatile uint16_t DMARxCounter = 0;  
+   
   u8 Rebuf[256]={0};
   
   if(USART_GetITStatus(USART1, USART_IT_PE | USART_IT_FE | USART_IT_NE | USART_IT_ORE) != RESET)//出错
@@ -197,7 +198,7 @@ void USART1_IRQHandler(void)
     
     }
   
-#if 0
+#if 1
     if(USART_GetITStatus(USART1, USART_IT_IDLE) != RESET)//空闲接收串口数据
     {
         DMA_Cmd(DMA1_Channel5,DISABLE);						//关闭DMA1通道5（USART1_RX） 
@@ -205,27 +206,15 @@ void USART1_IRQHandler(void)
         temp = USART1->SR;	   //貌似根据手册说，先读SR，再读DR就可以清除IDLE位。。。。
         temp = USART1->DR;	        
         DMARxCounter = 256 - DMA_GetCurrDataCounter(DMA1_Channel5);	//缓冲器数量够大//用缓冲器的设定值-当前指针数值（寄存器内容在每次DMA传输后递减）=接收的数据长度。 
-        //printf("\n\r-------Usart1 rx counter: %d\n\r",temp);     
+        //printf("\n\r-------Usart1 rx counter: %d\n\r",DMARxCounter);     
+       
         
-//        RxCounter1=RxCounter1+temp;//计数
-//         for(i=0; i<temp; i++)
-//        {
-//
-//              Rebuf[i]=USART_RX[i]; //数据转移
-//              //printf("\n--usart1 rx data is: 0x%02x\n",Rebuf[i]);
-//            
-//        }
-//        if(RxCounter1>=12){
-//        
-//          packet_analysis(Rebuf, RxCounter1);
-//          RxCounter1 = 0;
-//          memset(Rebuf, 0x00, sizeof(Rebuf));
-//        }
+        DMA_GetInputBytes(USART_RX, DMARxCounter);
         
-        memcpy(Rebuf, USART_RX, DMARxCounter);
+        //memcpy(Rebuf, USART_RX, DMARxCounter);
         //packet_analysis(Rebuf, temp);
          
-        memset(Rebuf, 0x00, sizeof(Rebuf));
+        //memset(Rebuf, 0x00, sizeof(Rebuf));
         memset(USART_RX, 0x00, 256);
         //设置传输数据长度  
         DMA_SetCurrDataCounter(DMA1_Channel5, 256);//即是通道可容纳的最大数据量。           

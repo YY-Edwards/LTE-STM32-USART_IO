@@ -63,38 +63,7 @@ int main(void)
        system_stm32f10x.c file
      */     
   static unsigned long return_value=0x00;
-  
-  //QueueCommand_lock = sem_init(true);    //≥ı ºªØ–≈∫≈ª•≥‚À¯
-
-#if 0  
-  for(;;)
-  {
-  
-      return_value=sem_get(QueueCommand_lock);//lock
-      if(return_value)
-      {            
-
-        return_value=sem_free(QueueCommand_lock);//unlock 
-        if(return_value == 0x39)
-       {
-          return_value = 0x77;
-        }
-        //printf("\r\nsem okay...\r\n");
-      }  
-      else
-      {
-        return_value = 0x99;
-        err_counter++;
-        //printf("\r\n err_counter:%d \r\n", err_counter);
-      }
-  
-  
-  
-  
-  }
-#endif
-  
-  
+ 
   ScanKeyProtocol_t Command , * pCommand = &Command;
   memset(pCommand, 0x00, sizeof(ScanKeyProtocol_t));
   
@@ -109,29 +78,7 @@ int main(void)
   printf("\r\n----------test start--------------\r\n" );
   
   while(1)   
-  {   
-    
-#if 0   
-    return_value=sem_get(QueueCommand_lock);//lock
-      if(return_value)
-      {            
-        queue_return= QueuePull(QueueCommand, pCommand);  
-        return_value=sem_free(QueueCommand_lock);//unlock 
-        if(return_value == 0x39)
-       {
-          return_value = 0x77;
-          printf("\r\nsem fail...\r\n");
-          
-        }
-        //printf("\r\nsem okay...\r\n");
-      }  
-      else
-      {
-        return_value = 0x99;
-        err_counter++;
-        printf("\r\n err_counter:%d \r\n", err_counter);
-      }
-#endif
+  {  
       __disable_irq();
       queue_return= QueuePull(QueueCommand, pCommand); 
       __enable_irq();
@@ -170,7 +117,7 @@ int main(void)
         GPIO_ResetBits(GPIO_LED_1_2, DS1_PIN);
         delay_ms(30); 
         GPIO_SetBits(GPIO_LED_1_2, DS1_PIN);
-        delay_ms(80); 
+        delay_ms(60); 
         //GPIO_ResetBits(GPIO_LED, DS2_PIN);
         //delay_ms(200); 
         //GPIO_SetBits(GPIO_LED, DS2_PIN);
@@ -184,8 +131,6 @@ int main(void)
      }
             
   }
-        
-//  sem_destory(QueueCommand_lock);
   
  }
 

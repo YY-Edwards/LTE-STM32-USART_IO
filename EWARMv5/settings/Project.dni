@@ -21,7 +21,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=-413581749
+Checksum=-1765758023
 [JLinkDriver]
 CStepIntDis=_ 0
 [Exceptions]
@@ -74,7 +74,7 @@ Fmt3={W}0:value	4	0
 [Disassemble mode]
 mode=0
 [Breakpoints2]
-Bp0=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.67.3" 0 0 1 "" 0 "" 0
+Bp0=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.75.3" 0 0 1 "" 0 "" 0
 Count=1
 [Log file]
 LoggingEnabled=_ 0

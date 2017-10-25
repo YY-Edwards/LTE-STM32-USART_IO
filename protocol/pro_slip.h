@@ -96,6 +96,7 @@ int data_packet_send(u16 value, u16 status);
 //int packet_analysis(void *packet, u8 length);
 
 void USART_GetInputByte(void);
+void DMA_GetInputBytes(u8 * buff, u8 length);
 
 unsigned char msg_receive(u8 *pro_data);
 
