@@ -5,10 +5,10 @@
 #include "string.h"
 #include "stm32f10x.h"
 
-unsigned long * sem_init(unsigned long initvalue);
-unsigned long sem_get(unsigned long * sem);
-unsigned long sem_free(unsigned long * sem);
-void sem_destory(unsigned long * sem);
+volatile unsigned short * sem_init(unsigned short initvalue);
+unsigned short sem_get(volatile unsigned short * sem);
+unsigned short sem_free(volatile unsigned short * sem);
+void sem_destory(volatile unsigned short * sem);
 
 
 #endif

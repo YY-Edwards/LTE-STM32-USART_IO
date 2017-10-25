@@ -4,7 +4,7 @@ extern Queue_t UsartRxQue;
 extern Queue_t QueueCommand;
 extern int simple_uart_put(u8 ch);
 extern void Write_Volume(unsigned short dat);
-extern unsigned long *  QueueCommand_lock;
+extern unsigned short *  QueueCommand_lock;
 
 char volume_value[11]={62, 20, 14, 10, 8, 6, 4, 3, 2, 1, 0};//-db=20lgR; R=Vo/Vi
 
@@ -405,15 +405,15 @@ void USART_GetInputByte(void)
     unsigned char buffer[sizeof(ScanKeyProtocol_t)] = {0};
     if(ReadSlipPackage(buffer, sizeof(ScanKeyProtocol_t)) > 0)
     {      
-        return_value=sem_get(QueueCommand_lock);//lock
-        if(return_value==true)
-        {
-         
-          queue_status=QueuePush(QueueCommand, buffer);              
-          return_value=sem_free(QueueCommand_lock);//unlock   
-                                    
-        }
-        
+//        return_value=sem_get(QueueCommand_lock);//lock
+//        if(return_value==true)
+//        {
+//         
+//          queue_status=QueuePush(QueueCommand, buffer);              
+//          return_value=sem_free(QueueCommand_lock);//unlock   
+//                                    
+//        }
+        queue_status=QueuePush(QueueCommand, buffer); 
         
     }
     else

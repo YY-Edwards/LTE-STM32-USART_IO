@@ -43,7 +43,7 @@ PUTCHAR_PROTOTYPE
 /* Private variables ---------------------------------------------------------*/
 extern Queue_t QueueCommand;
 volatile u8 first_set_volume_flag =1;
-unsigned long * QueueCommand_lock=NULL;
+//volatile unsigned short * QueueCommand_lock=NULL;
 volatile u32 err_counter=0;
 //unsigned long QueueCommand_lockInstance, * QueueCommand_lock = &QueueCommand_lockInstance;
 
@@ -64,7 +64,36 @@ int main(void)
      */     
   static unsigned long return_value=0x00;
   
-  QueueCommand_lock = sem_init(true);    //初始化信号互斥锁
+  //QueueCommand_lock = sem_init(true);    //初始化信号互斥锁
+
+#if 0  
+  for(;;)
+  {
+  
+      return_value=sem_get(QueueCommand_lock);//lock
+      if(return_value)
+      {            
+
+        return_value=sem_free(QueueCommand_lock);//unlock 
+        if(return_value == 0x39)
+       {
+          return_value = 0x77;
+        }
+        //printf("\r\nsem okay...\r\n");
+      }  
+      else
+      {
+        return_value = 0x99;
+        err_counter++;
+        //printf("\r\n err_counter:%d \r\n", err_counter);
+      }
+  
+  
+  
+  
+  }
+#endif
+  
   
   ScanKeyProtocol_t Command , * pCommand = &Command;
   memset(pCommand, 0x00, sizeof(ScanKeyProtocol_t));
@@ -77,26 +106,36 @@ int main(void)
   Hardware_Init();               //硬件接口初始化
   //delay_ms(1500); 
   //delay_ms(1500); 
-
+  printf("\r\n----------test start--------------\r\n" );
+  
   while(1)   
-  {         
-      return_value=sem_get(QueueCommand_lock);//lock
+  {   
+    
+#if 0   
+    return_value=sem_get(QueueCommand_lock);//lock
       if(return_value)
       {            
         queue_return= QueuePull(QueueCommand, pCommand);  
         return_value=sem_free(QueueCommand_lock);//unlock 
-//        if(return_value == 0x39)
-//       {
-//          return_value = 0x77;
-//        }
+        if(return_value == 0x39)
+       {
+          return_value = 0x77;
+          printf("\r\nsem fail...\r\n");
+          
+        }
+        //printf("\r\nsem okay...\r\n");
       }  
       else
       {
         return_value = 0x99;
         err_counter++;
+        printf("\r\n err_counter:%d \r\n", err_counter);
       }
-     
-                         
+#endif
+      __disable_irq();
+      queue_return= QueuePull(QueueCommand, pCommand); 
+      __enable_irq();
+      
       if(queue_ok == queue_return)
       {
          if(   pCommand->Header == 0xABCD
@@ -129,9 +168,9 @@ int main(void)
      {
    
         GPIO_ResetBits(GPIO_LED_1_2, DS1_PIN);
-        delay_ms(50); 
+        delay_ms(30); 
         GPIO_SetBits(GPIO_LED_1_2, DS1_PIN);
-        delay_ms(100); 
+        delay_ms(80); 
         //GPIO_ResetBits(GPIO_LED, DS2_PIN);
         //delay_ms(200); 
         //GPIO_SetBits(GPIO_LED, DS2_PIN);
@@ -143,48 +182,6 @@ int main(void)
             GPIO_ResetBits(GPIO_LED_3_6, RED1_PIN|YELLOW_PIN|GREEN_PIN|RED2_PIN);/*点亮所有的信号灯*///输出低电平
         }
      }
-      
-      
-     
-//      GPIO_ResetBits(GPIO_LED_3_6, RED1_PIN);
-//
-//      delay_ms(1000); 
-//      
-//      GPIO_SetBits(GPIO_LED_3_6, RED1_PIN);
-//      delay_ms(1000); 
-//      
-//      GPIO_ResetBits(GPIO_LED_3_6, YELLOW_PIN);
-//      delay_ms(1000); 
-//      
-//      GPIO_SetBits(GPIO_LED_3_6, YELLOW_PIN);
-//      delay_ms(1000); 
-//      
-//      GPIO_ResetBits(GPIO_LED_3_6, GREEN_PIN);
-//      delay_ms(1000); 
-//      
-//      GPIO_SetBits(GPIO_LED_3_6, GREEN_PIN);
-//      delay_ms(1000); 
-//      
-//      GPIO_ResetBits(GPIO_LED_3_6, RED2_PIN);
-//      delay_ms(1000); 
-//      
-//      GPIO_SetBits(GPIO_LED_3_6, RED2_PIN);
-//      delay_ms(1000); 
-//      
-//      
-//      GPIO_ResetBits(GPIO_LED_3_6, RED1_PIN|YELLOW_PIN|GREEN_PIN|RED2_PIN);/*点亮所有的信号灯*///输出低电平
-//      delay_ms(1000); 
-//      delay_ms(1000); 
-//      GPIO_SetBits(GPIO_LED_3_6, RED1_PIN|YELLOW_PIN|GREEN_PIN|RED2_PIN);/*关闭所有的信号灯*///输出低电平
-//      delay_ms(1000); 
-//      
-//      GPIO_SetBits(GPIO_LKJ_5_6, LKJ5_PIN);//LKJ5输出高电平，驱动三极管导通
-//      delay_ms(1000); 
-//      delay_ms(1000); 
-//      GPIO_ResetBits(GPIO_LKJ_5_6, LKJ5_PIN);
-//      delay_ms(1000); 
-//      delay_ms(1000); 
-      
             
   }
         

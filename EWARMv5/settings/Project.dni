@@ -21,7 +21,7 @@ TriggerName=main
 LimitSize=0
 ByteLimit=50
 [DebugChecksum]
-Checksum=1377383819
+Checksum=-413581749
 [JLinkDriver]
 CStepIntDis=_ 0
 [Exceptions]
@@ -74,13 +74,15 @@ Fmt3={W}0:value	4	0
 [Disassemble mode]
 mode=0
 [Breakpoints2]
-Bp0=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\mylib\mylock.c}.40.2" 0 0 1 "" 0 "" 0
-Bp1=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.99.7" 0 0 1 "" 0 "" 0
-Count=2
+Bp0=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.67.3" 0 0 1 "" 0 "" 0
+Count=1
 [Log file]
 LoggingEnabled=_ 0
 LogFile=_ ""
 Category=_ 0
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
 [Aliases]
 Count=0
 SuppressDialog=0
@@ -92,6 +94,3 @@ Mode=0
 Graph=0
 Symbiont=0
 Exclusions=
-[TermIOLog]
-LoggingEnabled=_ 0
-LogFile=_ ""
